@@ -39,7 +39,7 @@ spec:
         #       - name: default
         #         protocol: layer2
       destination:
-        server: '{{server}}'
+        server: '{{address}}' #'{{server}}'
         namespace: metallb
       syncPolicy:
         automated:
