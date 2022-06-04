@@ -1,0 +1,61 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kube-components-stack
+  namespace: argocd
+spec:
+  generators:
+  # - clusters: {}
+  - git:
+      repoURL: https://github.com/kube-components-stack/kustomization.git
+      revision: HEAD
+      files:
+      - path: "apps/metallb/**.yaml"
+  template:
+    metadata:
+      name: '{{name}}-metallb'
+    spec:
+      project: "default"
+      source:
+        helm:
+          valueFiles:
+          - values.yaml
+          values: |-
+            {{values}}
+        repoURL: https://github.com/metallb/metallb.git
+        targetRevision: v0.12.1 # HEAD
+        path: "charts/metallb"
+        # chart: metallb
+        # repoURL: https://metallb.github.io/metallb
+        # targetRevision: v0.12.1
+        # helm:
+        #   values: |
+        #     ---
+        #     ## configInline specifies MetalLB's configuration directly, in yaml format. When configInline is used, Helm manages MetalLB's
+        #     ## configuration ConfigMap as part of the release, and existingConfigMap is ignored.
+        #     ## Refer to https://metallb.universe.tf/configuration/ for available options.
+        #     configInline:
+        #       address-pools:
+        #       - name: default
+        #         protocol: layer2
+      destination:
+        server: '{{server}}'
+        namespace: metallb
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true
+        retry:
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 2m
+          limit: 5
+        syncOptions:
+          - Validate=false
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+          - RespectIgnoreDifferences=true
+        # - PrunePropagationPolicy=foreground
+        # - PruneLast=true
