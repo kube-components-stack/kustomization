@@ -13,6 +13,7 @@ values: |
     allowSnippetAnnotations: false
     service:
       externalTrafficPolicy: "Local"
+      loadBalancerIP: 10.20.255.200
     metrics:
       enabled: true
       serviceMonitor:
