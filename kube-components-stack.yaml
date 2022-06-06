@@ -1,0 +1,209 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: kube-components-stack
+spec:
+  generators:
+    - merge:
+        mergeKeys:
+          - server
+        generators:
+          - clusters:
+              selector:
+                matchLabels:
+                  cluster-type: kind
+              values:
+                job:
+                  enabled: true
+                  env:
+                  - name: GRAFANA_ADMIN_USER
+                    valueFrom:
+                      secretKeyRef:
+                        name: grafana-secret
+                        key: admin-user
+                  - name: GRAFANA_ADMIN_PASSWORD
+                    valueFrom:
+                      secretKeyRef:
+                        name: grafana-secret
+                        key: admin-password
+                secondLevelDomain: k8s.lan
+                global:
+                  application:
+                    metadata:
+                      annotations:
+                        notifications.argoproj.io/subscribe.on-created.slack: devops
+                        notifications.argoproj.io/subscribe.on-deployed.slack: devops
+                        notifications.argoproj.io/subscribe.on-health-degraded.slack: devops
+                        notifications.argoproj.io/subscribe.on-deleted.slack: devops
+                        notifications.argoproj.io/subscribe.on-sync-succeeded.slack: devops
+                        notifications.argoproj.io/subscribe.on-sync-running.slack: devops
+                        notifications.argoproj.io/subscribe.on-sync-failed.slack: devops
+                        notifications.argoproj.io/subscribe.on-sync-status-unknown.slack: devops
+                apps:
+                  certificates: 
+                    enabled: true
+                    charts:
+                      certManager:
+                        spec:
+                          syncPolicy:
+                            retry:
+                              backoff:
+                                duration: 5s
+                  ingress:
+                    enabled: true
+                    charts:
+                      ingressNginx:
+                        spec:
+                          source:
+                            helm:
+                              parameters:
+                              - name: controller.service.loadBalancerIP
+                                value: 10.20.255.200
+                  loadBalancing:
+                    enabled: true
+                    charts:
+                      metallb:
+                        spec:
+                          source:
+                            helm:
+                              parameters:
+                              - name: configInline.address-pools[0].addresses[0]
+                                value: 10.20.255.0/24
+                  logging:
+                    enabled: true
+                    charts:
+                      lokiDistributed:
+                        spec:
+                          source:
+                            helm:
+                              parameters:
+                              - name: ingester.extraArgs[0]
+                                value: -config.expand-env=true
+                              - name: ingester.extraEnv[0].name
+                                value: AWS_ACCESS_KEY_ID
+                              - name: ingester.extraEnv[0].valueFrom.secretKeyRef.name
+                                value: vector
+                              - name: ingester.extraEnv[0].valueFrom.secretKeyRef.key
+                                value: awsAcessKeyId
+                              - name: ingester.extraEnv[1].name
+                                value: AWS_SECRET_ACCESS_KEY
+                              - name: ingester.extraEnv[1].valueFrom.secretKeyRef.name
+                                value: vector
+                              - name: ingester.extraEnv[1].valueFrom.secretKeyRef.key
+                                value: awsSecretAcessKey
+                              - name: querier.extraArgs[0]
+                                value: -config.expand-env=true
+                              - name: querier.extraEnv[0].name
+                                value: AWS_ACCESS_KEY_ID
+                              - name: querier.extraEnv[0].valueFrom.secretKeyRef.name
+                                value: vector
+                              - name: querier.extraEnv[0].valueFrom.secretKeyRef.key
+                                value: awsAcessKeyId
+                              - name: querier.extraEnv[1].name
+                                value: AWS_SECRET_ACCESS_KEY
+                              - name: querier.extraEnv[1].valueFrom.secretKeyRef.name
+                                value: vector
+                              - name: querier.extraEnv[1].valueFrom.secretKeyRef.key
+                                value: awsSecretAcessKey
+                      vector:
+                        spec:
+                          source:
+                            helm:
+                              parameters:
+                              - name: env[0].name
+                                value: AWS_ACCESS_KEY_ID
+                              - name: env[0].valueFrom.secretKeyRef.name
+                                value: vector
+                              - name: env[0].valueFrom.secretKeyRef.key
+                                value: awsAcessKeyId
+                              - name: env[1].name
+                                value: AWS_SECRET_ACCESS_KEY
+                              - name: env[1].valueFrom.secretKeyRef.name
+                                value: vector
+                              - name: env[1].valueFrom.secretKeyRef.key
+                                value: awsSecretAcessKey
+                  metrics:
+                    enabled: true
+                  monitoring:
+                    enabled: true
+                    charts:
+                      kubePrometheusStack:
+                        spec:
+                          syncPolicy:
+                            retry:
+                              backoff:
+                                duration: 5s
+                          source:
+                            helm:
+                              parameters:
+                              - name: kube-prometheus-stack.grafana.admin.existingSecret
+                                value: grafana-secret
+                              - name: kube-prometheus-stack.grafana.persistence.size
+                                value: 256Mi
+                              - name: kube-prometheus-stack.prometheus.prometheusSpec.retention
+                                value: 1d
+                              - name: kube-prometheus-stack.prometheus.prometheusSpec.retentionSize
+                                value: 1GB
+                              # - name: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.storageClassName
+                              #   value: local-path
+                              - name: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.accessModes[0]
+                                value: ReadWriteOnce
+                              - name: kube-prometheus-stack.prometheus.prometheusSpec.storageSpec.volumeClaimTemplate.spec.resources.requests.storage
+                                value: 1Gi
+                              # - name: kube-prometheus-stack.nodeExporter.enabled
+                              #   value: false
+                              # - name: nodeExporter.enabled
+                              #   value: false
+                  mutating:
+                    enabled: false
+                    protectedNamespaces:
+                    - argocd
+                    - kube-system
+                    - kubemod-system
+                    - kube-node-lease
+                    - local-path-storage
+                  notifications:
+                    enabled: false
+                  objectStorage:
+                    enabled: true
+                    charts:
+                      minio:
+                        spec:
+                          source:
+                            helm:
+                              parameters:
+                              - name: existingSecret
+                                value: minio
+  template:
+    metadata:
+      name: '{{name}}-kube-components-stack'
+    spec:
+      project: "default"
+      source:
+        chart: kube-components-stack
+        repoURL: https://kube-components-stack.github.io/helm-charts
+        targetRevision: 0.1.44
+        helm:
+          values: |-
+            {{values}}
+      destination:
+        server: '{{server}}'
+        namespace: argocd
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true
+        retry:
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 2m
+          limit: 5
+        syncOptions:
+          - Validate=false
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+          - RespectIgnoreDifferences=true
+        # - PrunePropagationPolicy=foreground
+        # - PruneLast=true
