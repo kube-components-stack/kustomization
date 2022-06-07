@@ -1,0 +1,8 @@
+helmChartInflationGenerator:
+- chartName: metallb
+  chartRepoUrl: https://metallb.github.io/metallb
+  chartVersion: v0.12.1
+  releaseName: metallb
+  releaseNamespace: metallb
+  # override with these custom values
+  values: values.yaml

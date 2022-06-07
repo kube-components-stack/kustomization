@@ -1,0 +1,25 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: metallb
+  namespace: argocd
+spec:
+  generators:
+  - git:
+      repoURL: https://github.com/kube-components-stack/kustomization.git
+      revision: HEAD
+      files:
+      - path: "cluster-config/**/config.yaml"
+  template:
+    metadata:
+      name: '{{cluster.name}}-metallb'
+    spec:
+      project: default
+      source:
+        repoURL: https://github.com/kube-components-stack/kustomization.git
+        targetRevision: HEAD
+        path: "apps/metallb"
+      destination:
+        server: '{{cluster.address}}'
+        namespace: argocd
