@@ -1,3 +1,6 @@
+
+# https://kubectl.docs.kubernetes.io/references/kustomize/builtins/
+
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -8,13 +11,27 @@ resources:
 - namespace.yaml
 
 helmChartInflationGenerator:
-- chartName: metallb
+- 
+  # The name of the chart that you want to use.
+  chartName: metallb
+  # [Optional] The URL of the repository which contains the chart. If this is provided, the generator will try to fetch remote charts. Otherwise it will try to load local chart in chartHome.
   chartRepoUrl: https://metallb.github.io/metallb
+  # [Optional] Version of the chart. Will use latest version if this is omitted.
   chartVersion: v0.12.1
-  releaseName: metallb
-  releaseNamespace: metallb
-  # override with these custom values
+  # [Optional] Provide the path to the parent directory for local chart.
+  # chartHome: charts
+  # [Optional] The name of the repo where to find the chart.
+  # chartRelease: ~
+  # [Optional] A path to the values file.
   # values: values.yaml
-  # includeCRDs: true
-  # valuesInline:
-  #   configInline: []
+  # [Optional] The release name that will be set in the chart.
+  releaseName: metallb
+  # [Optional] The namespace which will be used by --namespace flag in helm template command.
+  # releaseNamespace: ~
+  # [Optional] Path to helm binary. Default is helm.
+  # helmBin: helm
+  # [Optional] Path to helm home directory.
+  # helmHome: ~ 
+  # [Optional] A list of additional arguments that will be passed into helm template command.
+  # extraArgs:
+  #  - --include-crds
