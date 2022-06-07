@@ -2,12 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
   name: kube-components-stack
+  namespace: argocd
 spec:
   generators:
     - merge:
         mergeKeys:
           - server
         generators:
+          - clusters:
+              values: {}
           - clusters:
               selector:
                 matchLabels:
