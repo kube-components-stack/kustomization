@@ -1,6 +1,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
+namespace: metallb
+
+# make sure namespace exists
+resources:
+- namespace.yaml
+
 helmChartInflationGenerator:
 - chartName: metallb
   chartRepoUrl: https://metallb.github.io/metallb
@@ -9,3 +15,6 @@ helmChartInflationGenerator:
   releaseNamespace: metallb
   # override with these custom values
   # values: values.yaml
+  # includeCRDs: true
+  # valuesInline:
+  #   configInline: []
