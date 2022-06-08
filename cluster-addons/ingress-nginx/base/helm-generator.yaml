@@ -3,10 +3,27 @@ kind: HelmChartInflationGenerator
 metadata:
   name: ingress-nginx-helm-chart
 name: ingress-nginx
-version: ""
-repo: ""
+version:  v4.1.2
+repo: https://kubernetes.github.io/ingress-nginx
 releaseName: ingress-nginx
 valuesFile: values.yaml
-valuesInline: {}
+valuesInline:
+  controller:
+    config:      
+      enable-brotli: "true" # # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#enable-brotli
+    ingressClassResource:
+      name: nginx-01
+      controllerValue: k8s.io/ingress-nginx-01
+    ingressClassByName: true
+    ingressClass: nginx-01
+    allowSnippetAnnotations: false
+    service:
+      externalTrafficPolicy: "Local"
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          release: kube-prometheus-stack
 valuesMerge: override                 # merge, override or replace
 includeCRDs: false
