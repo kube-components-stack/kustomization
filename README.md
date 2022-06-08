@@ -3,7 +3,7 @@
 ## tree
 Git Generator: Files
 
-├── apps
+├── cluster-addons
 |   ├── metallb
 |   |   ├── base
 |   |   └── overlays
@@ -25,6 +25,9 @@ Git Generator: Files
 └── kube-components-stack.yaml
 
 
+addon=ingress-nginx
+suffix=kind
 
-mkdir -p {overlays/{dev,prod},base}
-mkdir -p {overlays/{dev,prod},base}
+mkdir -p cluster-addons/$addon/{overlays/$suffix-{dev,prod},base}
+
+touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$suffix-{dev,prod}/{kustomization.yaml,values.yaml}}
