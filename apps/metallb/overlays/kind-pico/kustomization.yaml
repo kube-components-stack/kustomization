@@ -4,3 +4,6 @@ kind: Kustomization
 
 bases:
 - ../../base/
+
+helmChartInflationGenerator:
+- values: values.yaml
