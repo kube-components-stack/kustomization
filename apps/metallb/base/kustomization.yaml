@@ -1,3 +1,4 @@
+# https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -7,16 +8,6 @@ namespace: metallb
 resources:
 - namespace.yaml
 
+# have to declared into overlays in order to use relative path values.yaml
 # generators:
-# - helm-generator.yaml
-
-
-transformers: []
-# - {pathOrUrl}
-# - ...
-
-validators: []
-# - {pathOrUrl}
-# - ...
-
-# https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/
+# - helm-generator.yaml 
