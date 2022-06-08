@@ -5,5 +5,5 @@ kind: Kustomization
 bases:
 - ../../base
 
-# helmChartInflationGenerator:
-# - values: values.yaml
+generators:
+- ../../base/helm-generator.yaml

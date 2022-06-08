@@ -9,3 +9,14 @@ resources:
 
 generators:
 - helm-generator.yaml
+
+
+transformers: []
+# - {pathOrUrl}
+# - ...
+
+validators: []
+# - {pathOrUrl}
+# - ...
+
+# https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/
