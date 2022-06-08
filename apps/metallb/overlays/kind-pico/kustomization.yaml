@@ -7,3 +7,5 @@ bases:
 
 generators:
 - ../../base/helm-generator.yaml
+
+# generatorOptions:

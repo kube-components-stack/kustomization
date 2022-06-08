@@ -7,8 +7,8 @@ namespace: metallb
 resources:
 - namespace.yaml
 
-generators:
-- helm-generator.yaml
+# generators:
+# - helm-generator.yaml
 
 
 transformers: []
