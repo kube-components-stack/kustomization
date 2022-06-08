@@ -1,38 +1,46 @@
 Git Generator: Files
 
 ├── apps
-│   └── metallb
-│   |   ├── helm.yaml
-│   |   └── kustomization.yaml
-│   └── ingress-nginx
-│       ├── helm.yaml
-│       └── kustomization.yaml
-├── cluster-config
-│   └── team1
-│   |   ├── dev
-│   |   │   └── config.json
-│   |   └── prod
-│   |       └── config.json
-│   └── team2
-│   |   ├── dev
-│   |   │   └── config.json
-│   |   └── prod
-│   |       └── config.json
-│   └── kind
-│       ├── aroma
-│       │   └── config.json
-│       ├── super
-│       │   └── config.json
-│       ├── stock
-│       │   └── config.json
-│       ├── full
-│       │   └── config.json
-│       ├── mini
-│       │   └── config.json
-│       ├── micro
-│       │   └── config.json
-│       ├── nano
-│       │   └── config.json
-│       └── pico
-│           └── config.json
+|   ├── metallb
+|   |   ├── base
+|   |   └── overlays
+|   |       ├── team1-dev
+|   |       |   ├── kustomization.yaml
+|   |       |   └── values.yaml
+|   |       ├── team1-prod
+|   |       |   ├── kustomization.yaml
+|   |       |   └── values.yaml
+|   |       ├── team2-dev
+|   |       |   ├── kustomization.yaml
+|   |       |   └── values.yaml
+|   |       ├── team2-prod
+|   |       |   ├── kustomization.yaml
+|   |       |   └── values.yaml
+|   |       ├── kind-aroma
+|   |       |   ├── kustomization.yaml
+|   |       |   └── values.yaml
+|   |       └── kind-pico
+|   |           ├── kustomization.yaml
+|   |           └── values.yaml
+|   └── ingress-nginx
+|       ├── base
+|       └── overlays
+|           ├── team1-dev
+|           |   ├── kustomization.yaml
+|           |   └── values.yaml
+|           ├── team1-prod
+|           |   ├── kustomization.yaml
+|           |   └── values.yaml
+|           ├── team2-dev
+|           |   ├── kustomization.yaml
+|           |   └── values.yaml
+|           ├── team2-prod
+|           |   ├── kustomization.yaml
+|           |   └── values.yaml
+|           ├── kind-aroma
+|           |   ├── kustomization.yaml
+|           |   └── values.yaml
+|           └── kind-pico
+|               ├── kustomization.yaml
+|               └── values.yaml
 └── kube-components-stack.yaml

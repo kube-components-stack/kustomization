@@ -12,19 +12,62 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               files:
-                - path: "cluster-config/**/config.yaml"
-          - list:
-              elements:
-                - suffix: 'metallb'
+                - path: "apps/*"
+          - clusters: {}
   template:
     metadata:
-      name: '{{suffix}}-{{cluster.name}}'
+      name: '{{path.basename}}-{{name}}'
     spec:
       project: default
+      info: []
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "apps/{{suffix}}"
+        path: "apps/{{path.basename}}/overlays/{{name}}"
+        # plugin:
+        #   name: argocd-lovely-plugin
+        # kustomize:
+
       destination:
-        server: '{{cluster.address}}'
-        namespace: '{{suffix}}'
+        server: '{{server}}'
+        namespace: '{{path.basename}}'
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true
+        retry:
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 2m
+          limit: 5
+        syncOptions:
+          - Validate=false
+          - CreateNamespace=true
+          - ApplyOutOfSyncOnly=true
+          - RespectIgnoreDifferences=true
+        # - PrunePropagationPolicy=foreground
+        # - PruneLast=true
+      ignoreDifferences:
+      - group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        jsonPointers:
+        - /status
+      - group: apps
+        kind: Deployment
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.securityContext'
+        - '.spec.template.spec.containers[]?.resources'
+      - group: apps
+        kind: Deployment
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
+      - group: apps
+        kind: DaemonSet
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
+      - group: apps
+        kind: StatefulSet
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
