@@ -1,9 +1,0 @@
-name: "in-cluster"
-address: "https://kubernetes.default.svc"
-values: |
-  configInline:
-    address-pools:
-    - name: default
-      protocol: layer2
-      addresses:
-      - 10.20.255.0/24

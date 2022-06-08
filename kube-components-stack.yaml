@@ -12,7 +12,7 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: "apps/*"
+                - path: "cluster-addons/*"
           - clusters: {}
   template:
     metadata:
@@ -23,7 +23,7 @@ spec:
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "apps/{{path.basename}}/overlays/{{name}}"
+        path: "cluster-addons/{{path.basename}}/overlays/{{name}}"
         # plugin:
         #   name: argocd-lovely-plugin
         # kustomize:
