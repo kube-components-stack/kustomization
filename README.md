@@ -1,24 +1,38 @@
 # kustomization
 
-## tree
-
+## structure
 ```
 .
 ├── cluster-addons
+│   ├── ingress-nginx
+│   │   ├── base
+│   │   │   ├── helm-generator.yaml
+│   │   │   ├── kustomization.yaml
+│   │   │   └── namespace.yaml
+│   │   └── overlays
+│   │       ├── kind-dev
+│   │       │   ├── kustomization.yaml
+│   │       │   └── values.yaml
+│   │       └── kind-prod
+│   │           ├── kustomization.yaml
+│   │           └── values.yaml
 │   └── metallb
 │       ├── base
 │       │   ├── helm-generator.yaml
 │       │   ├── kustomization.yaml
 │       │   └── namespace.yaml
 │       └── overlays
-│           └── kind-pico
+│           ├── kind-dev
+│           │   ├── kustomization.yaml
+│           │   └── values.yaml
+│           └── kind-prod
 │               ├── kustomization.yaml
 │               └── values.yaml
 └── kube-components-stack.yaml
 ```
 
-declare vars and create directory structure and files
-```bash
+## declare vars and create directory structure and files
+```zsh
 addon=ingress-nginx
 cluster=kind
 

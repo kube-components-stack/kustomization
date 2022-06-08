@@ -1,0 +1,12 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: ingress-nginx-helm-chart
+name: ingress-nginx
+version: ""
+repo: ""
+releaseName: ingress-nginx
+valuesFile: values.yaml
+valuesInline: {}
+valuesMerge: override                 # merge, override or replace
+includeCRDs: false
