@@ -2,11 +2,11 @@ apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
   name: cert-manager-helm-chart
-name: cert-manager
+name: &name cert-manager
 version: v1.6.1 #v1.8.0
 repo: https://charts.jetstack.io
-releaseName: cert-manager
-namespace: ~
+releaseName: *name
+namespace: *name
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
