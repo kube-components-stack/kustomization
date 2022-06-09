@@ -44,7 +44,7 @@ spec:
           limit: 5
         syncOptions:
           - Validate=false
-          - CreateNamespace=true
+        # - CreateNamespace=true
           - ApplyOutOfSyncOnly=true
           - RespectIgnoreDifferences=true
         # - PrunePropagationPolicy=foreground
