@@ -1,0 +1,59 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: cert-manager-helm-chart
+name: cert-manager
+version: v1.6.1 #v1.8.0
+repo: https://charts.jetstack.io
+releaseName: cert-manager
+valuesFile: values.yaml
+valuesInline:
+  fullnameOverride: cert-manager
+  installCRDs: true
+  securityContext:
+    runAsNonRoot: true
+    fsGroup: 1000
+    runAsUser: 1000
+  containerSecurityContext:
+    allowPrivilegeEscalation: false
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+  ingressShim:
+    defaultIssuerName: selfsigned-cluster-issuer
+    defaultIssuerKind: ClusterIssuer
+    defaultIssuerGroup: cert-manager.io
+  prometheus:
+    enabled: true
+    servicemonitor:
+      enabled: true
+      labels:
+        release: kube-prometheus-stack
+  webhook:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+  cainjector:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+  startupapicheck:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop:
+        - ALL
+      readOnlyRootFilesystem: true
+      runAsNonRoot: true
+valuesMerge: override                 # merge, override or replace
+includeCRDs: false
