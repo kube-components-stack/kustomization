@@ -39,7 +39,7 @@ cluster=kind
 mkdir -p cluster-addons/$addon/{overlays/$cluster-{dev,prod},base}
 touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,values.yaml}}
 
-cat << EOF >> cluster-addons/$addon/base/helm-generator.yaml
+cat << EOF > cluster-addons/$addon/base/helm-generator.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
@@ -54,14 +54,14 @@ valuesMerge: override                 # merge, override or replace
 includeCRDs: false
 EOF
 
-cat << EOF >> cluster-addons/$addon/base/namespace.yaml
+cat << EOF > cluster-addons/$addon/base/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
   name: $addon
 EOF
 
-cat << EOF >> cluster-addons/$addon/base/kustomization.yaml
+cat << EOF > cluster-addons/$addon/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $addon
@@ -69,11 +69,12 @@ resources:
 - namespace.yaml
 EOF
 
-cat << EOF >> cluster-addons/$addon/overlays/$cluster-{dev,prod}/kustomization.yaml
+cat << EOF > cluster-addons/$addon/overlays/$cluster-{dev,prod}/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: $addon
-resources:
-- namespace.yaml
+bases:
+- ../../base
+generators:
+- ../../base/helm-generator.yaml
 EOF
 ```
