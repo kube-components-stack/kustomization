@@ -44,11 +44,11 @@ apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
   name: $addon-helm-chart
-name: $addon
+name: &name $addon
 version: ""
 repo: ""
-releaseName: $addon
-namespace: ~
+releaseName: *name
+namespace: *name
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
