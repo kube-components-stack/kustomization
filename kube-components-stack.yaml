@@ -13,6 +13,14 @@ spec:
               revision: HEAD
               directories:
                 - path: "cluster-addons/*"
+                - path: cluster-addons/cert-manager
+                  exclude: false
+                - path: cluster-addons/ingress-nginx
+                  exclude: true
+                - path: cluster-addons/metallb
+                  exclude: true
+                - path: cluster-addons/metrics-server
+                  exclude: true
           - clusters: {}
   template:
     metadata:
