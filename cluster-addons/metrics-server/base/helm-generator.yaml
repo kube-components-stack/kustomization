@@ -1,0 +1,24 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: metrics-server-helm-chart
+name: &name metrics-server
+version: v3.8.2
+repo: https://kubernetes-sigs.github.io/metrics-server
+releaseName: *name
+namespace: kube-system
+includeCRDs: false
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline:
+  defaultArgs:
+  - --cert-dir=/tmp
+  - --kubelet-preferred-address-types=InternalIP,ExternalIP,Hostname
+  - --kubelet-use-node-status-port
+  - --metric-resolution=15s
+  - --kubelet-insecure-tls=true
+  # apiService:
+  #   create: true
+  # extraArgs:
+  #   kubelet-insecure-tls: true
+  #   kubelet-preferred-address-types: InternalIP

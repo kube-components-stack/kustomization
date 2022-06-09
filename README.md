@@ -33,7 +33,7 @@
 
 ## declare vars and create directory structure and files
 ```zsh
-addon=cert-manager
+addon=metrics-server
 cluster=kind
 
 mkdir -p cluster-addons/$addon/{overlays/$cluster-{dev,prod},base}
