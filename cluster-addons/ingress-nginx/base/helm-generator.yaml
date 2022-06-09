@@ -25,5 +25,5 @@ valuesInline:
         enabled: true
         additionalLabels:
           release: kube-prometheus-stack
-valuesMerge: replace                 # merge, override or replace
+valuesMerge: merge                 # merge, override or replace
 includeCRDs: false
