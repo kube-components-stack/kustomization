@@ -30,7 +30,7 @@ spec:
 
       destination:
         server: '{{server}}'
-        namespace: '{{path.basename}}'
+        # namespace: '{{path.basename}}'
       syncPolicy:
         automated:
           allowEmpty: true
