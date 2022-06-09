@@ -6,7 +6,10 @@ name: cert-manager
 version: v1.6.1 #v1.8.0
 repo: https://charts.jetstack.io
 releaseName: cert-manager
+namespace: ~
+includeCRDs: false
 valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
 valuesInline:
   fullnameOverride: cert-manager
   installCRDs: true
@@ -55,5 +58,3 @@ valuesInline:
         - ALL
       readOnlyRootFilesystem: true
       runAsNonRoot: true
-valuesMerge: override                 # merge, override or replace
-includeCRDs: false

@@ -6,9 +6,10 @@ name: ingress-nginx
 version:  v4.1.2
 repo: https://kubernetes.github.io/ingress-nginx
 releaseName: ingress-nginx
+namespace: ~
 valuesFile: values.yaml
-# ValuesInline holds value mappings specified directly,
-# rather than in a separate file.
+includeCRDs: false
+valuesMerge: override                 # merge, override or replace
 valuesInline:
   controller:
     config:      
@@ -27,8 +28,3 @@ valuesInline:
         # enabled: true
         additionalLabels:
           release: kube-prometheus-stack
-# ValuesMerge specifies how to treat ValuesInline with respect to Values.
-# Legal values: 'merge', 'override', 'replace'.
-# Defaults to 'override'.
-valuesMerge: override                 # merge, override or replace
-includeCRDs: false

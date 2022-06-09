@@ -48,10 +48,11 @@ name: $addon
 version: ""
 repo: ""
 releaseName: $addon
-valuesFile: values.yaml
-valuesInline: {}
-valuesMerge: override                 # merge, override or replace
+namespace: ~
 includeCRDs: false
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline: {}
 EOF
 
 cat << EOF > cluster-addons/$addon/base/namespace.yaml
