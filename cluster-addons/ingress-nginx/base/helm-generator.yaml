@@ -7,8 +7,8 @@ version:  v4.1.2
 repo: https://kubernetes.github.io/ingress-nginx
 releaseName: *name
 namespace: *name
-valuesFile: values.yaml
 includeCRDs: false
+valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline:
   controller:
