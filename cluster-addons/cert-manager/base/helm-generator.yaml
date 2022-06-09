@@ -12,7 +12,7 @@ valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline:
   fullnameOverride: cert-manager
-  installCRDs: true
+  installCRDs: false
   securityContext:
     runAsNonRoot: true
     fsGroup: 1000
@@ -25,7 +25,6 @@ valuesInline:
     readOnlyRootFilesystem: true
     runAsNonRoot: true
   ingressShim:
-    defaultIssuerName: selfsigned-cluster-issuer
     defaultIssuerKind: ClusterIssuer
     defaultIssuerGroup: cert-manager.io
   prometheus:
