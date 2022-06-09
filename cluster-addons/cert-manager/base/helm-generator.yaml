@@ -42,7 +42,7 @@ valuesInline:
       readOnlyRootFilesystem: true
       runAsNonRoot: true
   cainjector:
-    enabled: false
+    enabled: true # false
     containerSecurityContext:
       allowPrivilegeEscalation: false
       capabilities:
