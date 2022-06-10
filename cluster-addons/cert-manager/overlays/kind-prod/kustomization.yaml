@@ -4,5 +4,3 @@ bases:
 - ../../base
 generators:
 - ../../base/helm-generator.yaml
-# resources:
-# - ../../base/selfsigned-cluster-issuer.yaml

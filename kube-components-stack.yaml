@@ -16,11 +16,11 @@ spec:
                 - path: cluster-addons/cert-manager
                   exclude: false
                 - path: cluster-addons/ingress-nginx
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/metallb
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/metrics-server
-                  exclude: true
+                  exclude: false
           - clusters: {}
   template:
     metadata:
