@@ -4,4 +4,4 @@ namespace: cert-manager
 resources:
 - namespace.yaml
 - https://github.com/cert-manager/cert-manager/releases/download/v1.6.1/cert-manager.crds.yaml
-# - selfsigned-cluster-issuer.yaml
+- selfsigned-cluster-issuer.yaml
