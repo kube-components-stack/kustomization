@@ -11,6 +11,9 @@ includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline:
+  # global:
+  #   leaderElection:
+  #     namespace: "kube-system" # https://github.com/kubernetes-sigs/kustomize/issues/880
   fullnameOverride: cert-manager
   installCRDs: false
   securityContext:

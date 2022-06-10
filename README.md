@@ -80,3 +80,21 @@ generators:
 - ../../base/helm-generator.yaml
 EOF
 ```
+
+```zsh
+kustomize --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone build cluster-addons/cert-manager/overlays/kind-prod | yq -ojson | jq -s | jq '. | sort_by(.kind, .metadata.name)' | jq --sort-keys | yq e -P > bad.yaml
+
+| grep cert-manager-cainjector:leaderelection -A1
+
+yq e ".valuesInline" cluster-addons/cert-manager/base/helm-generator.yaml > /tmp/values.yaml
+helm template \
+--kube-context kind-pclinux003 \
+--namespace cert-manager \
+--values /tmp/values.yaml \
+--version v1.6.1 \
+--disable-openapi-validation \
+--set prometheus.servicemonitor.enabled=false \
+cert-manager cert-manager/cert-manager | yq -ojson | jq -s | jq '. | sort_by(.kind, .metadata.name)' | jq --sort-keys | yq e -P > good.yaml
+```
+
+kustomize --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone build cluster-addons/cert-manager/overlays/kind-prod | yq -ojson | jq -s | jq '. | sort_by(.kind, .metadata.name)' | jq --sort-keys | yq e -P | grep cert-manager-cainjector:leaderelection -A1
