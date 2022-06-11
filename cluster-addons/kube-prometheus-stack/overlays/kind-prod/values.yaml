@@ -1,0 +1,49 @@
+alertmanager:
+  ingress:
+    enabled: true
+    ingressClassName: nginx-01
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    hosts:
+    - alertmanager.k8s.lan
+    pathType: Prefix
+    tls:
+    - secretName: alertmanager-tls-certificate
+      hosts:
+      - alertmanager.k8s.lan
+grafana:
+  defaultDashboardsEnabled: false
+  additionalDataSources:
+  - name: Loki
+    access: proxy
+    type: loki
+    url: http://loki-distributed-gateway.logging.svc.cluster.local
+    version: 1
+  ingress:
+    enabled: true
+    ingressClassName: nginx-01
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    hosts:
+    - grafana.k8s.lan
+    pathType: Prefix
+    tls:
+    - secretName: grafana-tls-certificate
+      hosts:
+      - grafana.k8s.lan
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: nginx-01
+    annotations:
+      kubernetes.io/tls-acme: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    hosts:
+    - prometheus.k8s.lan
+    pathType: Prefix
+    tls:
+    - secretName: prometheus-tls-certificate
+      hosts:
+      - prometheus.k8s.lan

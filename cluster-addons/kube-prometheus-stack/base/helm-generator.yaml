@@ -1,0 +1,53 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: kube-prometheus-stack-helm-chart
+name: &name kube-prometheus-stack
+version: 34.10.0
+repo: https://prometheus-community.github.io/helm-charts
+releaseName: *name
+namespace: *name
+includeCRDs: false
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline:
+  fullnameOverride: kube-prometheus-stack
+  grafana:
+    persistence:
+      enabled: true
+    plugins:
+    - grafana-piechart-panel
+    - grafana-worldmap-panel
+  prometheus: {}
+    # prometheusOperator:
+    #   resources:
+    #     limits:
+    #       cpu: 200m
+    #       memory: 200Mi
+    #     requests:
+    #       cpu: 100m
+    #       memory: 100Mi
+
+  kube-state-metrics:
+    resources:
+      limits:
+        cpu: 100m
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi
+
+  prometheus-node-exporter:
+    prometheus:
+      monitor:
+        enabled: true
+        # additionalLabels:
+        #   release: kube-prometheus-stack
+    resources:
+      limits:
+        cpu: 200m
+        memory: 50Mi
+      requests:
+        cpu: 100m
+        memory: 30Mi
+
