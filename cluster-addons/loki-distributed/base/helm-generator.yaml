@@ -35,7 +35,7 @@ valuesInline:
           resync_interval: 5s
       schema_config:
         configs:
-          - from: 2020-09-07
+          - from: "2020-09-07"
             store: boltdb-shipper
             object_store: aws
             schema: v11
