@@ -50,8 +50,6 @@ valuesInline:
     affinity: ~
   queryFrontend:
     affinity: ~
-  queryFrontend:
-    affinity: ~ 
   tableManager:
     affinity: ~
   gateway:
