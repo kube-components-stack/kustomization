@@ -1,0 +1,41 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: crds
+  namespace: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/kube-components-stack/kustomization.git
+              revision: HEAD
+              directories:
+                - path: "crds/*"
+          - clusters: {}
+  template:
+    metadata:
+      name: '{{path.basename}}-{{name}}'
+    spec:
+      project: default
+      info: []
+      source:
+        repoURL: https://github.com/kube-components-stack/kustomization.git
+        targetRevision: HEAD
+        path: "crds/{{path.basename}}/overlays/{{name}}"
+      destination:
+        server: '{{server}}'
+      syncPolicy:
+        automated:
+          allowEmpty: true
+          prune: true
+          selfHeal: true
+        retry:
+          backoff:
+            duration: 30s
+            factor: 2
+            maxDuration: 2m
+          limit: 5
+        syncOptions:
+          - Replace=true
