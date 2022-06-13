@@ -6,7 +6,7 @@ name: &name kube-prometheus-stack
 version: 34.10.0
 repo: https://prometheus-community.github.io/helm-charts
 releaseName: *name
-namespace: *name
+namespace: monitoring
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
