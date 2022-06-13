@@ -1,0 +1,9 @@
+customConfig:
+  sinks:
+    debug:
+      type: console
+      inputs:
+        - parse_log_ingress_nginx
+      target: stdout
+      encoding:
+        codec: json

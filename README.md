@@ -33,8 +33,9 @@
 
 ## declare vars and create directory structure and files
 ```zsh
-addon=kube-prometheus-stack
+addon=vector
 cluster=kind
+namespace=logging
 
 mkdir -p cluster-addons/$addon/{overlays/$cluster-{dev,prod},base}
 touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,values.yaml}}
@@ -48,7 +49,7 @@ name: &name $addon
 version: ""
 repo: ""
 releaseName: *name
-namespace: *name
+namespace: $namespace
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
@@ -59,13 +60,13 @@ cat << EOF > cluster-addons/$addon/base/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: $addon
+  name: $namespace
 EOF
 
 cat << EOF > cluster-addons/$addon/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: $addon
+namespace: $namespace
 resources:
 - namespace.yaml
 EOF
@@ -73,7 +74,7 @@ EOF
 cat << EOF > cluster-addons/$addon/overlays/$cluster-{dev,prod}/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: $addon
+namespace: $namespace
 bases:
 - ../../base
 generators:

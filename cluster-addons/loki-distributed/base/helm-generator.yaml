@@ -1,0 +1,71 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: loki-distributed-helm-chart
+name: &name loki-distributed
+version: v0.48.1
+repo: https://grafana.github.io/helm-charts
+releaseName: *name
+namespace: logging
+includeCRDs: false
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline:
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: kube-prometheus-stack
+  loki:
+    structuredConfig:
+      ingester:
+        # Disable chunk transfer which is not possible with statefulsets
+        # and unnecessary for boltdb-shipper
+        max_transfer_retries: 0
+        chunk_idle_period: 1h
+        chunk_target_size: 1536000
+        max_chunk_age: 1h
+      storage_config:
+        aws:
+          s3: http://minio.minio.svc.cluster.local.:9000/loki
+          s3forcepathstyle: true
+        boltdb_shipper:
+          active_index_directory: /var/loki/index
+          shared_store: s3
+          cache_location: /var/loki/cache
+          resync_interval: 5s
+      schema_config:
+        configs:
+          - from: 2020-09-07
+            store: boltdb-shipper
+            object_store: aws
+            schema: v11
+            index:
+              prefix: loki_index_
+              period: 24h
+  ingester:
+    affinity: ~
+  distributor:
+    affinity: ~
+  querier:
+    affinity: ~
+  queryFrontend:
+    affinity: ~
+  queryFrontend:
+    affinity: ~ 
+  tableManager:
+    affinity: ~
+  gateway:
+    affinity: ~
+    tolerations: []
+  ruler:
+    affinity: ~
+  indexGateway:
+    affinity: ~
+  memcachedChunks:
+    affinity: ~
+  memcachedFrontend:
+    affinity: ~
+  memcachedIndexQueries:
+    affinity: ~
+  memcachedIndexWrites:
+    affinity: ~

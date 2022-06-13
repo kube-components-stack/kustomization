@@ -1,0 +1,89 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: vector-helm-chart
+name: &name vector
+version: v0.9.0
+repo: https://helm.vector.dev
+releaseName: *name
+namespace: logging
+includeCRDs: false
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline:
+  service:
+    enabled: false
+  data_dir: /vector-data-dir
+
+  # role -- Role for this Vector (possible values: Agent, Aggregator, Stateless-Aggregator)
+  ## Ref: https://vector.dev/docs/setup/deployment/roles/
+  ## Each role is created with the following workloads:
+  ## Agent - DaemonSet
+  ## Aggregator - StatefulSet
+  ## Stateless-Aggregator - Deployment
+  role: Agent
+  
+  # https://vector.dev/docs/setup/installation/platforms/kubernetes/#agent-resource-limits
+  resources:
+    requests:
+      memory: 16Mi
+      cpu: 1m
+    limits:
+      memory: 64Mi
+      cpu: 100m
+  
+  securityContext:
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+
+  podMonitor:
+    enabled: true
+  
+  customConfig:
+    api:
+      enabled: false
+    sources:
+      kubernetes_logs:
+        type: kubernetes_logs
+        auto_partial_merge: false
+        extra_label_selector: vector.sources.kubernetes-logs/label=ingress-nginx
+    transforms:
+      stdout:
+        type: filter
+        inputs:
+          - kubernetes_logs
+        condition:
+          type: vrl
+          source: includes(["stdout"], .stream)
+      parse_log_ingress_nginx:
+        type: remap
+        inputs:
+          - stdout
+        source: |
+          structured =
+            parse_regex!(.message, r'^(?P<nginx_remote_addr>\S+) - (?P<nginx_remote_user>\S+) \[(?P<nginx_time_local>[^\]]+)\] "(?P<nginx_request>[^"]+)" (?P<nginx_status>\d+) (?P<nginx_body_bytes_sent>\d+) "(?P<nginx_http_referer>[^"]+)" "(?P<nginx_http_user_agent>[^"]+)" (?P<nginx_request_length>\d+) (?P<nginx_request_time>\d+\.\d+) \[(?P<nginx_proxy_upstream_name>[^\]]*)\] \[(?P<nginx_proxy_alternative_upstream_name>[^\]]*)\] (?P<nginx_upstream_addr>[0-9\.a-z/]+:[0-9\.a-z/]+(?:, [0-9\.a-z/]+:[0-9\.a-z/]+)*) (?P<nginx_upstream_response_length>\d+(?:, \d+)*) (?P<nginx_upstream_response_time>\d+\.\d+(?:, \d+\.\d+)*) (?P<nginx_upstream_status>(?:\d+|-)(?:, (?:\d+|-))*) (?P<nginx_req_id>\S+)$')
+          . = merge(., structured)
+    sinks:
+      minio:
+        type: aws_s3
+        # auth:
+        #   access_key_id: admin
+        #   secret_access_key: password
+        inputs:
+          - parse_log_ingress_nginx
+        endpoint: http://minio.{{ .Values.apps.objectStorage.namespace }}.svc.cluster.local.:9000
+        bucket: logs
+        key_prefix: date=%F/
+        compression: gzip
+        encoding:
+          codec: ndjson
+
+      debug:
+        type: console
+        inputs:
+          - parse_log_ingress_nginx
+        target: stdout
+        encoding:
+          codec: json
