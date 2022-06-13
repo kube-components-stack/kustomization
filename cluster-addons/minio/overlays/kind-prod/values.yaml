@@ -1,0 +1,43 @@
+ingress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 32m
+    kubernetes.io/tls-acme: "true"
+  ingressClassName: nginx-01
+  hosts:
+  - minio-api.k8s.lan
+  tls:
+  - secretName: minio-api-tls-certificate
+    hosts:
+    - minio-api.k8s.lan
+consoleIngress:
+  enabled: true
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 32m
+    kubernetes.io/tls-acme: "true"
+  ingressClassName: nginx-01
+  hosts:
+  - minio-console.k8s.lan
+  tls:
+  - secretName: minio-console-tls-certificate
+    hosts:
+    - minio-console.k8s.lan
+buckets:
+    # Name of the bucket
+  - name: loki
+    # Policy to be set on the
+    # bucket [none|download|upload|public]
+    policy: public
+    # Purge if bucket exists already
+    purge: false
+    # set versioning for
+    versioning: ~ # true, false or ~ (standalone) 
+    # Name of the bucket
+  - name: logs
+    # Policy to be set on the
+    # bucket [none|download|upload|public]
+    policy: public
+    # Purge if bucket exists already
+    purge: false
+    # set versioning for
+    versioning: ~ # true, false or ~ (standalone)

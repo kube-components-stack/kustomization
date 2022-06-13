@@ -1,0 +1,83 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: minio-helm-chart
+name: &name minio
+version: v4.0.2
+repo: https://charts.min.io
+releaseName: *name
+namespace: *name
+includeCRDs: false
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline:
+  image:
+    pullPolicy: Always
+  
+  mode: standalone # standalone or distributed
+  # replicas: 4
+
+  DeploymentUpdate:
+    type: Recreate #RollingUpdate
+    maxUnavailable: ~ #0
+    maxSurge: ~ #100%
+
+  persistence:
+    accessMode: ReadWriteOnce
+    enabled: true
+    size: 512Mi #10Gi
+
+  resources:
+    limits:
+      cpu: 100m #250m #500m #1
+      memory: 256Mi #384Mi #512Mi #1Gi #4Gi
+    requests:
+      cpu: 20m #100m #250m #500m
+      memory: 100Mi #128Mi #256Mi #2Gi
+
+  configPathmc: "/tmp/minio/mc/"
+  # certsPath: "/tmp/minio/certs/"
+
+  makePolicyJob:
+    securityContext:
+      enabled: true
+    resources:
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+  
+  makeUserJob:
+    securityContext:
+      enabled: true
+    resources:
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+  
+  makeBucketJob:
+    securityContext:
+      enabled: true
+    resources:
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
+
+  customCommandJob:
+    securityContext:
+      enabled: true
+    resources:
+      limits:
+        cpu: 100m
+        memory: 256Mi
+      requests:
+        cpu: 50m
+        memory: 128Mi
