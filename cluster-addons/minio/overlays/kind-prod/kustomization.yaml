@@ -6,5 +6,3 @@ generators:
 resources:
 - ../../base
 - secrets.yaml
-# bases:
-# - ../../base
