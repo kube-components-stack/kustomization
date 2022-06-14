@@ -33,12 +33,12 @@
 
 ## declare vars and create directory structure and files
 ```zsh
-addon=vector
+addon=argo-cd
 cluster=kind
-namespace=logging
+namespace=argocd
 
 mkdir -p cluster-addons/$addon/{overlays/$cluster-{dev,prod},base}
-touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,values.yaml}}
+touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,secrets.yaml,values.yaml}}
 
 cat << EOF > cluster-addons/$addon/base/helm-generator.yaml
 apiVersion: builtin
@@ -75,10 +75,11 @@ cat << EOF > cluster-addons/$addon/overlays/$cluster-{dev,prod}/kustomization.ya
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $namespace
-bases:
-- ../../base
 generators:
 - ../../base/helm-generator.yaml
+resources:
+- ../../base
+- secrets.yaml
 EOF
 ```
 
