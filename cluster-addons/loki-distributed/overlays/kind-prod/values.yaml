@@ -1,0 +1,28 @@
+ingester:
+  extraArgs:
+  - -config.expand-env=true
+  extraEnv:
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: vector
+        key: awsAcessKeyId
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: vector
+        key: awsSecretAcessKey
+querier:
+  extraArgs:
+  - -config.expand-env=true
+  extraEnv:
+  - name: AWS_ACCESS_KEY_ID
+    valueFrom:
+      secretKeyRef:
+        name: vector
+        key: awsAcessKeyId
+  - name: AWS_SECRET_ACCESS_KEY
+    valueFrom:
+      secretKeyRef:
+        name: vector
+        key: awsSecretAcessKey

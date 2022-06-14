@@ -13,6 +13,10 @@ alertmanager:
       hosts:
       - alertmanager.k8s.lan
 grafana:
+  admin:
+    existingSecret: grafana-secret
+  persistence:
+    size: 256Mi
   ingress:
     enabled: true
     ingressClassName: nginx-01
@@ -40,3 +44,14 @@ prometheus:
     - secretName: prometheus-tls-certificate
       hosts:
       - prometheus.k8s.lan
+  prometheusSpec:
+    retention: 1d
+    retentionSize: 1GB
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+          - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi

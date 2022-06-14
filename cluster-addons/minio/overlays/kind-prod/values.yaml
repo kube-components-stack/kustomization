@@ -1,3 +1,4 @@
+existingSecret: minio
 ingress:
   enabled: true
   annotations:
