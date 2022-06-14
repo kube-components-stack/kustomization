@@ -1,0 +1,15 @@
+notifications:
+  argocdUrl: https://argocd.k8s.lan
+  enabled: false
+server:
+  ingress:
+    enabled: true
+    ingressClassName: nginx-01
+    annotations:
+      kubernetes.io/tls-acme: "true"
+    hosts:
+    - argocd.k8s.lan
+    tls:
+    - secretName: argocd-tls-certificate
+      hosts:
+      - argocd.k8s.lan
