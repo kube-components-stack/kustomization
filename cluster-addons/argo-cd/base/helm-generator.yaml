@@ -146,7 +146,6 @@ valuesInline:
 
     # -- Container Security Context
     containerSecurityContext:
-      readOnlyRootFilesystem: true
       capabilities:
         drop:
           - ALL
