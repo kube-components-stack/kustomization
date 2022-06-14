@@ -5,12 +5,12 @@ ingester:
   - name: AWS_ACCESS_KEY_ID
     valueFrom:
       secretKeyRef:
-        name: vector
+        name: bucket-s3
         key: awsAcessKeyId
   - name: AWS_SECRET_ACCESS_KEY
     valueFrom:
       secretKeyRef:
-        name: vector
+        name: bucket-s3
         key: awsSecretAcessKey
 querier:
   extraArgs:
@@ -19,10 +19,10 @@ querier:
   - name: AWS_ACCESS_KEY_ID
     valueFrom:
       secretKeyRef:
-        name: vector
+        name: bucket-s3
         key: awsAcessKeyId
   - name: AWS_SECRET_ACCESS_KEY
     valueFrom:
       secretKeyRef:
-        name: vector
+        name: bucket-s3
         key: awsSecretAcessKey
