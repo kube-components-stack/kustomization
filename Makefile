@@ -20,7 +20,7 @@ grafana-update-dashboard:
 	cd $(ROOT_DIR)
 	source scripts/tools
 # 	update default kube-prometheus-stack dashboards & patch them
-#	render_dashboards_from_helm_template
+	render_dashboards_from_helm_template
 # 	ArgoCD
 	dl_dashboard --id=14584 --revision=1 --tags=gitops --argocd-notifications
 #	Kubernetes - kube-dns
