@@ -24,7 +24,7 @@ spec:
           - clusters: {}
   template:
     metadata:
-      name: '{{path.basename}}-{{name}}'
+      name: 'cluster-addons-{{path.basename}}-{{name}}'
     spec:
       project: default
       info: []

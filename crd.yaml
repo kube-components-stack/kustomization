@@ -16,7 +16,7 @@ spec:
           - clusters: {}
   template:
     metadata:
-      name: '{{path.basename}}-crd-{{name}}'
+      name: 'crd-{{path.basename}}-{{name}}'
     spec:
       project: default
       info: []
