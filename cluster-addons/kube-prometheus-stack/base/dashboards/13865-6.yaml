@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-analytics-nginx-loki-v2-data-source-promtail-v2-tool
+  name: grafana-dashboard-13865-6.json
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
     id: 13865-6
 data:
-  grafana-dashboard-analytics-nginx-loki-v2-data-source-promtail-v2-tool: |
+  grafana-dashboard-13865-6.json: |
     {
       "__inputs": [
         {

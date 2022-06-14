@@ -137,13 +137,13 @@ function dl_dashboard () {
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-${title}
+  name: grafana-dashboard-$(basename $path/$id-$revision.json)
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
     id: $(basename $path/$id-$revision.json .json)
 data:
-  grafana-dashboard-${title}: |
+  grafana-dashboard-$(basename $path/$id-$revision.json): |
 $(cat "$path/$id-$revision.json" | jq --argjson tags "${tags}" '.tags = $tags' | sed -r "s/^/    /g")
 EOF
   

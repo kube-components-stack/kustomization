@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-loki-promtail
+  name: grafana-dashboard-10880-1.json
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
     id: 10880-1
 data:
-  grafana-dashboard-loki-promtail: |
+  grafana-dashboard-10880-1.json: |
     {
       "__inputs": [
         {

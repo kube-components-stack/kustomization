@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-node-overview
+  name: grafana-dashboard-13824-2.json
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
     id: 13824-2
 data:
-  grafana-dashboard-node-overview: |
+  grafana-dashboard-13824-2.json: |
     {
       "__inputs": [
         {
