@@ -6,7 +6,7 @@ name: &name loki-distributed
 version: v0.48.1
 repo: https://grafana.github.io/helm-charts
 releaseName: *name
-namespace: logging
+namespace: loki
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace

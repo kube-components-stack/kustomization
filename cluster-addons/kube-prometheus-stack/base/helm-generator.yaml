@@ -13,6 +13,13 @@ valuesMerge: override                 # merge, override or replace
 valuesInline:
   fullnameOverride: kube-prometheus-stack
   grafana:
+    defaultDashboardsEnabled: false
+    additionalDataSources:
+    - name: Loki
+      access: proxy
+      type: loki
+      url: http://loki-distributed-gateway.loki.svc.cluster.local
+      version: 1
     persistence:
       enabled: true
     plugins:

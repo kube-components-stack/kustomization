@@ -1,5 +1,16 @@
 customConfig:
   sinks:
+    minio:
+      type: aws_s3
+      inputs:
+        - parse_log_ingress_nginx
+      endpoint: http://minio.minio.svc.cluster.local.:9000
+      bucket: logs
+      key_prefix: date=%F/
+      compression: gzip
+      encoding:
+        codec: ndjson
+
     debug:
       type: console
       inputs:

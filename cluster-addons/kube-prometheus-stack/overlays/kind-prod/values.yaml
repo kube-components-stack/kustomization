@@ -13,13 +13,6 @@ alertmanager:
       hosts:
       - alertmanager.k8s.lan
 grafana:
-  defaultDashboardsEnabled: false
-  additionalDataSources:
-  - name: Loki
-    access: proxy
-    type: loki
-    url: http://loki-distributed-gateway.logging.svc.cluster.local
-    version: 1
   ingress:
     enabled: true
     ingressClassName: nginx-01

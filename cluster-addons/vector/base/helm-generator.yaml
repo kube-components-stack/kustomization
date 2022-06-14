@@ -6,7 +6,7 @@ name: &name vector
 version: v0.9.0
 repo: https://helm.vector.dev
 releaseName: *name
-namespace: logging
+namespace: vector
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
@@ -65,25 +65,11 @@ valuesInline:
           structured =
             parse_regex!(.message, r'^(?P<nginx_remote_addr>\S+) - (?P<nginx_remote_user>\S+) \[(?P<nginx_time_local>[^\]]+)\] "(?P<nginx_request>[^"]+)" (?P<nginx_status>\d+) (?P<nginx_body_bytes_sent>\d+) "(?P<nginx_http_referer>[^"]+)" "(?P<nginx_http_user_agent>[^"]+)" (?P<nginx_request_length>\d+) (?P<nginx_request_time>\d+\.\d+) \[(?P<nginx_proxy_upstream_name>[^\]]*)\] \[(?P<nginx_proxy_alternative_upstream_name>[^\]]*)\] (?P<nginx_upstream_addr>[0-9\.a-z/]+:[0-9\.a-z/]+(?:, [0-9\.a-z/]+:[0-9\.a-z/]+)*) (?P<nginx_upstream_response_length>\d+(?:, \d+)*) (?P<nginx_upstream_response_time>\d+\.\d+(?:, \d+\.\d+)*) (?P<nginx_upstream_status>(?:\d+|-)(?:, (?:\d+|-))*) (?P<nginx_req_id>\S+)$')
           . = merge(., structured)
-    sinks:
-      minio:
-        type: aws_s3
-        # auth:
-        #   access_key_id: admin
-        #   secret_access_key: password
-        inputs:
-          - parse_log_ingress_nginx
-        endpoint: http://minio.{{ .Values.apps.objectStorage.namespace }}.svc.cluster.local.:9000
-        bucket: logs
-        key_prefix: date=%F/
-        compression: gzip
-        encoding:
-          codec: ndjson
-
-      debug:
-        type: console
-        inputs:
-          - parse_log_ingress_nginx
-        target: stdout
-        encoding:
-          codec: json
+    # sinks:
+    #   debug:
+    #     type: console
+    #     inputs:
+    #       - parse_log_ingress_nginx
+    #     target: stdout
+    #     encoding:
+    #       codec: json

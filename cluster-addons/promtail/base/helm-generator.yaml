@@ -6,13 +6,13 @@ name: &name promtail
 version: v4.2.0
 repo: https://grafana.github.io/helm-charts
 releaseName: *name
-namespace: logging
+namespace: promtail
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline:
   config:
-    lokiAddress: http://loki-distributed-gateway.logging.svc.cluster.local/loki/api/v1/push
+    lokiAddress: http://loki-distributed-gateway.loki.svc.cluster.local/loki/api/v1/push
   serviceMonitor:
     enabled: true
     labels:
