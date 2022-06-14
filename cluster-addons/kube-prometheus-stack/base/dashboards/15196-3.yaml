@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-15196-3
+  name: grafana-dashboard-troubleshooting-kubernetes-simple-and-fast-view
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  15196-3: |
+    id: 15196-3
+data:
+  grafana-dashboard-troubleshooting-kubernetes-simple-and-fast-view: |
     {
       "__inputs": [
         {

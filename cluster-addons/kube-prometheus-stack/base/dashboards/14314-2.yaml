@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-14314-2
+  name: grafana-dashboard-kubernetes-nginx-ingress-prometheus-nextgen
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  14314-2: |
+    id: 14314-2
+data:
+  grafana-dashboard-kubernetes-nginx-ingress-prometheus-nextgen: |
     {
       "__inputs": [
         {

@@ -21,6 +21,8 @@ spec:
                   exclude: false
                 - path: cluster-addons/metrics-server
                   exclude: false
+                - path: cluster-addons/kube-prometheus-stack
+                  exclude: false
           - clusters: {}
   template:
     metadata:

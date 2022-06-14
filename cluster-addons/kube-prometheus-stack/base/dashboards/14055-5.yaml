@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-14055-5
+  name: grafana-dashboard-loki-stack-monitoring-promtail-loki
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  14055-5: |
+    id: 14055-5
+data:
+  grafana-dashboard-loki-stack-monitoring-promtail-loki: |
     {
       "__inputs": [
         {

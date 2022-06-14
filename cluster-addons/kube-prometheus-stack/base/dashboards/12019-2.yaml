@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-12019-2
+  name: grafana-dashboard-loki-dashboard-quick-search
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  12019-2: |
+    id: 12019-2
+data:
+  grafana-dashboard-loki-dashboard-quick-search: |
     {
       "__inputs": [
         {

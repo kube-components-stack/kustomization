@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-14678-1
+  name: grafana-dashboard-container-resources
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  14678-1: |
+    id: 14678-1
+data:
+  grafana-dashboard-container-resources: |
     {
       "__inputs": [
         {

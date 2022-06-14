@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-13332-12
+  name: grafana-dashboard-kube-state-metrics-v2
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  13332-12: |
+    id: 13332-12
+data:
+  grafana-dashboard-kube-state-metrics-v2: |
     {
       "__inputs": [
         {

@@ -120,9 +120,9 @@ function dl_dashboard () {
     title=$(echo "${title,,}" | sed -r 's/\s+//g')
     title=$(echo "${title,,}" | sed -r 's/\s+//g')
     title=$(echo "${title,,}" | sed -r 's/^-//g' | sed -r 's/-$//g')
-    title=${title:0:40}
+    # title=${title:0:40}
     echo $title
-    cat "$path/$id-$revision.json" | jq --arg uid $title '.uid = $uid' > $tempfile
+    cat "$path/$id-$revision.json" | jq --arg uid ${title:0:40} '.uid = $uid' > $tempfile
   fi
   mv $tempfile "$path/$id-$revision.json"
 
@@ -137,12 +137,13 @@ function dl_dashboard () {
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-$(basename $path/$id-$revision.json .json)
+  name: grafana-dashboard-${title}
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  $(basename $path/$id-$revision.json .json): |
+    id: $(basename $path/$id-$revision.json .json)
+data:
+  grafana-dashboard-${title}: |
 $(cat "$path/$id-$revision.json" | jq --argjson tags "${tags}" '.tags = $tags' | sed -r "s/^/    /g")
 EOF
   

@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-14584-1
+  name: grafana-dashboard-argocd
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  14584-1: |
+    id: 14584-1
+data:
+  grafana-dashboard-argocd: |
     {
       "__inputs": [],
       "__requires": [

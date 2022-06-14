@@ -1,12 +1,13 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-11001-1
+  name: grafana-dashboard-cert-manager
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-data: 
-  11001-1: |
+    id: 11001-1
+data:
+  grafana-dashboard-cert-manager: |
     {
       "__inputs": [],
       "__requires": [
