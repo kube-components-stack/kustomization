@@ -1,4 +1,4 @@
-existingSecret: minio
+existingSecret: bucket-s3
 ingress:
   enabled: true
   annotations:
