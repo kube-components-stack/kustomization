@@ -1,0 +1,190 @@
+#!/bin/bash
+
+function update_charts () {
+  set -euo pipefail
+  local tempfile=$(mktemp /tmp/Chart.XXXXXXXXXX)
+  local src_file=Chart.yaml
+  local charts=$(yq -o=json $src_file | jq '[.dependencies[] | { chart: .name, repoURL: .repository, targetRevision: .version }]')
+  
+  local rows=$(echo "${charts}" | jq -r '.[] | @base64')
+  local nb=$(echo "$rows"|wc -l)
+
+  for row in $rows; do
+    _jq() {
+     echo ${row} | base64 --decode | jq -r ${1}
+    }
+    local chart=$(echo $(_jq '.chart'))
+    local repoURL=$(echo $(_jq '.repoURL'))
+    local targetRevision=$(echo $(_jq '.targetRevision'))
+
+    helm repo add $chart --force-update $repoURL &> /dev/null
+    local version=$(helm search repo $chart/$chart -o json | jq -r --arg name $chart/$chart '.[] | select(.name == $name) | .version')
+    yq -i '.dependencies[] |= select(.name == "'$chart'").version="'$version'"' $src_file
+    if [[ $nb -eq 1 ]]; then
+      local app_version=$(helm search repo $chart/$chart -o json | jq -r --arg name $chart/$chart '.[] | select(.name == $name) | .app_version')
+      yq -i '.appVersion ="'$app_version'"' $src_file
+    fi
+  done
+
+  helm dependency update
+}
+
+function dl_dashboard () {
+  set -e
+  actual_path=$PWD
+  print_usage()
+  {
+    printf "usage: dl_dashboard --id=13639 --revision=1 --uid=am2PnSxES --path=./dashboards --tags=loki1 --tags=loki2 --argocd-notifications"
+  }
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      --id=*)
+        local id="${1#*=}"
+        ;;
+      --revision=*)
+        local revision="${1#*=}"
+        ;;
+      --uid=*)
+        local uid="${1#*=}"
+        ;;
+      --path=*)
+        local path="${1#*=}"
+        ;;
+      --tags*)
+        local tags+=("${1#*=}")
+        ;;
+      --argocd-notifications*)
+        local argocd_notifications=1
+        ;;
+      --help)
+        print_usage
+        exit 0
+        ;;
+      *)
+        print_usage
+        exit 1
+    esac
+    shift
+  done
+  if [ -z "$id" ]; then
+    print_usage
+    exit 1
+  fi
+  if [ -z "$revision" ]; then
+    print_usage
+    exit 1
+  fi
+  if [ -z "$tags" ]; then
+    print_usage
+    exit 1
+  fi
+  if [ -z "$path" ]; then
+    path=cluster-addons/kube-prometheus-stack/base/dashboards
+  fi
+
+  args=
+  for i in "${tags[@]}"
+  do 
+    args="$args $(echo -n 'array[]='$i)"
+  done
+
+  tags=$(jo $args|jq -c '.array')
+
+  curl -skf \
+  --connect-timeout 60 \
+  --max-time 60 \
+  -H "Accept: application/json" \
+  -H "Content-Type: application/json;charset=UTF-8" \
+    "https://grafana.com/api/dashboards/$id/revisions/$revision/download" | \
+    sed '/-- .* --/! s/"datasource": "${DS_PROMETHEUS}",/"datasource": "Prometheus",/g' | \
+    sed '/-- .* --/! s/"datasource": "$Datasource",/"datasource": "Prometheus",/g' | \
+    sed '/-- .* --/! s/"datasource": "$datasource",/"datasource": "Prometheus",/g' | \
+    sed '/-- .* --/! s/"datasource": "${DS_SYSTEM-PROMETHEUS}",/"datasource": "Prometheus",/g' | \
+    sed '/-- .* --/! s/"datasource": "${DS_LOKI}",/"datasource": "Loki",/g' | \
+    sed '/-- .* --/! s/"datasource": "${DS_LOKI-FGC-NGINX01}",/"datasource": "Loki",/g' > "$path/$id-$revision.json"
+  if [ -n "$argocd_notifications" ]; then
+    tempfile=$(mktemp /tmp/dashboard.XXXXXXXXXX)
+    trap "rm -Rf $tempfile" 0 2 3 15
+    cat "$path/$id-$revision.json" | jq '.annotations.list = [{"datasource": "-- Grafana --","enable": true,"hide": true,"iconColor": "rgb(255, 255, 255)","limit": 100,"name": "ArgoCD Notifications","showIn": 0,"tags": ["argocd"],"type": "tags"}]' > $tempfile
+    mv $tempfile "$path/$id-$revision.json"
+  fi
+
+  tempfile=$(mktemp /tmp/dashboard.XXXXXXXXXX)
+  trap "rm -Rf $tempfile" 0 2 3 15
+  if [ -n "$uid" ]; then
+    cat "$path/$id-$revision.json" | jq --arg uid $uid '.uid = $uid' > $tempfile
+  else
+    title=$(cat "$path/$id-$revision.json" | jq -r '.title')
+    title=$(sed -E 's/[^[:alnum:][:space:]]+/-/g' <<<"$title")
+    title=$(sed -E 's/([[:alnum:]])[[:space:]]([[:alnum:]])/\1-\2/g' <<<"$title")
+    title=$(echo "${title,,}" | sed -r 's/\s+//g')
+    title=$(echo "${title,,}" | sed -r 's/\s+//g')
+    title=$(echo "${title,,}" | sed -r 's/^-//g' | sed -r 's/-$//g')
+    title=${title:0:40}
+    echo $title
+    cat "$path/$id-$revision.json" | jq --arg uid $title '.uid = $uid' > $tempfile
+  fi
+  mv $tempfile "$path/$id-$revision.json"
+
+  tempfile=$(mktemp /tmp/dashboard.XXXXXXXXXX)
+  trap "rm -Rf $tempfile" 0 2 3 15
+  # tags=$(jo array[]=loki array[]=tools|jq '.array')
+  # tags=$(jo array[]="loki"|jq -c '.array')
+
+  cat "$path/$id-$revision.json" | jq --argjson tags "${tags}" '.tags = $tags' > $tempfile
+  
+  cat << EOF > $tempfile
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-$(basename $path/$id-$revision.json .json)
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+data: 
+  $(basename $path/$id-$revision.json .json): |
+$(cat "$path/$id-$revision.json" | jq --argjson tags "${tags}" '.tags = $tags' | sed -r "s/^/    /g")
+EOF
+  
+  mv $tempfile "$path/$id-$revision.yaml"
+  rm $path/$id-$revision.json
+  cd $path
+  cd ..
+  kustomize edit add resource dashboards/$id-$revision.yaml
+  cd $actual_path
+}
+
+function render_dashboards_from_helm_template () {
+  chart=kube-prometheus-stack
+  workdir=charts/$chart
+  chartFile=$workdir/Chart.yaml
+  dashboardsPath=$workdir/dashboards
+
+  name=$(yq '.dependencies[] | select(.name == "'$chart'").name' $chartFile)
+  version=$(yq '.dependencies[] | select(.name == "'$chart'").version' $chartFile)
+  repository=$(yq '.dependencies[] | select(.name == "'$chart'").repository' $chartFile)
+
+  helm repo add --force-update $name $repository >/dev/null 2>&1
+  
+  dashboards=$(mktemp /tmp/dashboards.XXXXXXXXXX)
+  helm template $name $name/$name --set grafana.defaultDashboardsTimezone=browser | yq -o=json | jq '[.]' | jq -r '.[] | select(.kind | match("ConfigMap") ) | select(.metadata.labels.grafana_dashboard == "1" ) | { name: .metadata.name, json: (.data|to_entries[]|.value) }' | jq -s > $dashboards
+
+  for dashboard in $(cat $dashboards | jq -r '.[]?.name'); do
+    cat $dashboards | jq -r --arg dashboard $dashboard '.[]? | select( .name == $dashboard ) | .json' | sed '/-- .* --/! s/"datasource": "${DS_PROMETHEUS}",/"datasource": "Prometheus",/g' | \
+    sed '/-- .* --/! s/"datasource": "$Datasource",/"datasource": "Prometheus",/g' | \
+    sed '/-- .* --/! s/"datasource": "$datasource",/"datasource": "Prometheus",/g' | \
+    sed '/-- .* --/! s/"datasource": "${DS_SYSTEM-PROMETHEUS}",/"datasource": "Prometheus",/g' | \
+    sed '/-- .* --/! s/"datasource": "${DS_LOKI}",/"datasource": "Loki",/g' | \
+    sed '/-- .* --/! s/"datasource": "${DS_LOKI-FGC-NGINX01}",/"datasource": "Loki",/g' > $dashboardsPath/${dashboard}.json
+
+    tempfile=$(mktemp /tmp/dashboard.XXXXXXXXXX)
+    trap "rm -Rf $tempfile" 0 2 3 15
+    cat $dashboardsPath/${dashboard}.json | jq '.annotations.list = [{"datasource": "-- Grafana --","enable": true,"hide": true,"iconColor": "rgb(255, 255, 255)","limit": 100,"name": "ArgoCD Notifications","showIn": 0,"tags": ["argocd"],"type": "tags"}]' > $tempfile
+    mv $tempfile $dashboardsPath/${dashboard}.json
+
+  done
+
+}
+
+# Allows to call a function based on arguments passed to the script
+$*

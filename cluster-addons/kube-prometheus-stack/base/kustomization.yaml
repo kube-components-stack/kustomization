@@ -3,3 +3,18 @@ kind: Kustomization
 namespace: monitoring
 resources:
 - namespace.yaml
+- dashboards/14584-1.yaml
+- dashboards/12321-2.yaml
+- dashboards/13639-2.yaml
+- dashboards/13824-2.yaml
+- dashboards/14678-1.yaml
+- dashboards/13332-12.yaml
+- dashboards/9614-1.yaml
+- dashboards/14314-2.yaml
+- dashboards/11001-1.yaml
+- dashboards/10880-1.yaml
+- dashboards/15443-2.yaml
+- dashboards/12019-2.yaml
+- dashboards/14055-5.yaml
+- dashboards/13865-6.yaml
+- dashboards/15196-3.yaml
