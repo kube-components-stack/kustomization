@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: monitoring
 resources:
 - namespace.yaml
+- job.yaml
 - dashboards/14584-1.yaml
 - dashboards/12321-2.yaml
 - dashboards/13639-2.yaml

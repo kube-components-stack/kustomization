@@ -1,0 +1,148 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: generate-grafana-api-key-hooks
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade,post-install,post-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: generate-grafana-api-key-hooks
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade,post-install,post-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - deployments
+  - deployments/scale
+  - statefulsets
+  - daemonsets
+  verbs:
+  - get
+  - list
+  - watch
+  - patch
+- apiGroups:
+  - argoproj.io
+  resources:
+  - applications
+  verbs:
+  - get
+  - list
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - namespaces
+  verbs:
+  - get
+  - list
+  - patch
+- apiGroups:
+  - ""
+  resources:
+  - secrets
+  verbs:
+  - get
+  - list
+  - patch
+  - create
+  - delete
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: generate-grafana-api-key-hooks
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade,post-install,post-upgrade
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: generate-grafana-api-key-hooks
+subjects:
+- kind: ServiceAccount
+  name: generate-grafana-api-key-hooks
+  namespace: argocd
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: generate-grafana-api-key-argocd-notifications
+  annotations:
+    helm.sh/hook: post-install,post-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook-weight: "1"
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - |
+          /bin/bash <<'EOF'
+            set -euo pipefail
+
+            namespace=monitoring
+
+            object=kube-prometheus-stack-grafana
+            cmd="kubectl -n $namespace get deploy -o=jsonpath='{.items[?(@.metadata.name==\"'$object'\")].metadata.name}'"
+
+            echo "waiting deployment: $object ..."
+            check=$(eval $cmd)
+            until [[ -n "$check" ]] ; do sleep $(shuf -i 5-10 -n 1) && check=$(eval $cmd) ; done
+
+            kubectl -n $namespace rollout status deploy/$object
+
+            key=grafana-api-key-argocd-notifications
+            id=$(curl -u ${GRAFANA_ADMIN_USER}:${GRAFANA_ADMIN_PASSWORD} -X GET -H "Content-Type: application/json" http://kube-prometheus-stack-grafana.monitoring.svc/api/auth/keys | jq --arg key $key '.[] | select(.name == $key) | .id')
+            if [[ -z "$id" ]]; then
+              value=$(curl -u ${GRAFANA_ADMIN_USER}:${GRAFANA_ADMIN_PASSWORD} -X POST -H "Content-Type: application/json" -d '{"name":"'$key'", "role": "Editor"}' http://kube-prometheus-stack-grafana.monitoring.svc/api/auth/keys | jq -r '.key')
+              namespace=argocd
+              object=argocd-notifications-secret
+              cmd="kubectl -n $namespace get secret -o=jsonpath='{.items[?(@.metadata.name==\"'$object'\")].metadata.name}'"
+              check=$(eval $cmd)
+              if [[ -z "$check" ]]; then
+                kubectl -n $namespace create secret generic $object --from-literal=$key=$value
+              else
+                kubectl -n $namespace patch secret $object --type='json' -p='[{"op" : "replace" ,"path" : "/data/'$key'" ,"value" : "'$(echo -n $value|base64 -w0)'"}]'
+              fi
+            fi
+          EOF
+        env:
+          - name: GRAFANA_ADMIN_USER
+            valueFrom:
+              secretKeyRef:
+                key: admin-user
+                name: grafana-secret
+          - name: GRAFANA_ADMIN_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: admin-password
+                name: grafana-secret
+        image: "bitnami/kubectl:1.23"
+        imagePullPolicy: Always
+        name: kubectl
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          limits:
+            cpu: 100m
+            memory: 64Mi
+          requests:
+            cpu: 1m
+            memory: 1Mi
+      restartPolicy: Never
+      serviceAccountName: generate-grafana-api-key-hooks
