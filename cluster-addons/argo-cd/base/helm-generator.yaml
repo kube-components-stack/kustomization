@@ -93,7 +93,7 @@ valuesInline:
     metrics:
       enabled: true
       serviceMonitor:
-        enabled: false
+        enabled: true
         additionalLabels:
           release: kube-prometheus-stack
   dex:
