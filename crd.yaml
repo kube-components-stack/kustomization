@@ -13,6 +13,8 @@ spec:
               revision: HEAD
               directories:
                 - path: "crds/*"
+                - path: crds/argo-cd
+                  exclude: true
           - clusters: {}
   template:
     metadata:
