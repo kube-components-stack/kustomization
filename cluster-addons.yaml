@@ -14,7 +14,7 @@ spec:
               directories:
                 - path: "cluster-addons/*"
                 - path: cluster-addons/argo-cd
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/cert-manager
                   exclude: false
                 - path: cluster-addons/ingress-nginx
