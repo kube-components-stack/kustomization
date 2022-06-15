@@ -1,3 +1,6 @@
+notifications:
+  argocdUrl: https://argocd.k8s.lan
+  enabled: false
 server:
   ingress:
     enabled: true
@@ -10,3 +13,8 @@ server:
     - secretName: argocd-tls-certificate
       hosts:
       - argocd.k8s.lan
+## Argo Configs
+configs:
+  secret:
+    # -- Create the argocd-secret
+    createSecret: false
