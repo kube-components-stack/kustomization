@@ -1,3 +1,6 @@
+# https://artifacthub.io/packages/helm/argo/argo-cd
+# https://github.com/argoproj/argo-helm/tree/master/charts/argo-cd
+# https://github.com/argoproj/argo-helm/blob/master/charts/argo-cd/values.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
