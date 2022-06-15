@@ -69,6 +69,9 @@ subjects:
 - kind: ServiceAccount
   name: generate-grafana-api-key-hooks
   namespace: argocd
+- kind: ServiceAccount
+  name: generate-grafana-api-key-hooks
+  namespace: monitoring
 ---
 apiVersion: batch/v1
 kind: Job
