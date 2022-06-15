@@ -1,3 +1,6 @@
+# artifacthub                                       https://github.com/minio/minio/tree/master/helm/minio
+# releases                                          https://github.com/minio/minio/tree/master/helm-releases
+# values.yaml                                       https://github.com/minio/minio/blob/master/helm/minio/values.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:

@@ -1,3 +1,12 @@
+# artifacthub                                       https://artifacthub.io/packages/helm/vector/vector
+# github                                            https://github.com/vectordotdev/helm-charts/tree/master/charts/vector
+# values.yaml                                       https://github.com/vectordotdev/helm-charts/blob/master/charts/vector/values.yaml
+# configmap.yaml                                    https://github.com/vectordotdev/helm-charts/blob/master/charts/vector/templates/configmap.yaml
+# Logstash, Fluentd, Fluent Bit, or Vector?         https://www.cncf.io/blog/2022/02/10/logstash-fluentd-fluent-bit-or-vector-how-to-choose-the-right-open-source-log-collector/
+# Store observability events in GCP Cloud Storage   https://vector.dev/docs/reference/configuration/sinks/gcp_cloud_storage/
+# ingress-nginx Log format                          https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/log-format/#log-format
+# regex101                                          https://regex101.com/r/n8YqXK/1
+# regex                                             /^(?P<remote_addr>\S+) - (?P<remote_user>\S+) \[(?P<time_local>[^\]]+)\] "(?P<request>[^"]+)" (?P<status>\d+) (?P<body_bytes_sent>\d+) "(?P<http_referer>[^"]+)" \"(?P<http_user_agent>[^"]+)" (?P<request_length>\d+) (?P<request_time>\d+\.\d+) \[(?P<proxy_upstream_name>[^\]]*)\] \[(?P<proxy_alternative_upstream_name>[^\]]*)\] (?P<upstream_addr>[0-9\.a-z\/]+:[0-9\.a-z\/]+(?:, [0-9\.a-z\/]+:[0-9\.a-z\/]+)*) (?P<upstream_response_length>\d+(?:, \d+)*) (?P<upstream_response_time>\d+\.\d+(?:, \d+\.\d+)*) (?P<upstream_status>(?:\d+|-)(?:, (?:\d+|-))*) (?P<req_id>\S+)$/gm
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:

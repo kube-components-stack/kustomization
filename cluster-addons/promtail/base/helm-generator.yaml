@@ -1,3 +1,5 @@
+# artifacthub                                       https://artifacthub.io/packages/helm/grafana/promtail
+# values.yaml                                       https://github.com/grafana/helm-charts/blob/main/charts/promtail/values.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:

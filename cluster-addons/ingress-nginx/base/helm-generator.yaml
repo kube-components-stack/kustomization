@@ -1,3 +1,6 @@
+# artifacthub                                       https://artifacthub.io/packages/helm/ingress-nginx/ingress-nginx
+# github                                            https://github.com/kubernetes/ingress-nginx
+# values.yaml                                       https://github.com/kubernetes/ingress-nginx/blob/main/charts/ingress-nginx/values.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
@@ -13,7 +16,7 @@ valuesMerge: override                 # merge, override or replace
 valuesInline:
   controller:
     config:      
-      enable-brotli: "true" # # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#enable-brotli
+      enable-brotli: "true" # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#enable-brotli
     ingressClassResource:
       name: nginx-01
       controllerValue: k8s.io/ingress-nginx-01
@@ -25,6 +28,6 @@ valuesInline:
     metrics:
       enabled: true
       serviceMonitor:
-        # enabled: true
+        enabled: true
         additionalLabels:
           release: kube-prometheus-stack

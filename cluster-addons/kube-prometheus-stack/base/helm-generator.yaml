@@ -1,3 +1,21 @@
+# kube-prometheus-stack
+# artifacthub                                                   https://artifacthub.io/packages/helm/prometheus-community/kube-prometheus-stack
+# values.yaml                                                   https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-prometheus-stack/values.yaml
+# kube-prometheus-stack-and-argocd-how-workarounds-are-born     https://blog.ediri.io/kube-prometheus-stack-and-argocd-how-workarounds-are-born
+#
+# grafana
+# helm chart                                                    https://grafana.github.io/helm-charts
+# values.yaml                                                   https://github.com/grafana/helm-charts/blob/main/charts/grafana/values.yaml
+# how-to-securely-reference-secrets-in-grafanaini               https://github.com/grafana/helm-charts/tree/main/charts/grafana#how-to-securely-reference-secrets-in-grafanaini
+#
+# prometheus-node-exporter
+# helm chart                                                    https://prometheus-community.github.io/helm-charts
+# values.yaml                                                   https://github.com/prometheus-community/helm-charts/blob/main/charts/prometheus-node-exporter/values.yaml
+#
+# kube-state-metrics
+# helm chart                                                    https://prometheus-community.github.io/helm-charts
+# values.yaml                                                   https://github.com/prometheus-community/helm-charts/blob/main/charts/kube-state-metrics/values.yaml
+#
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:

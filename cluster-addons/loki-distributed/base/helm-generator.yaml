@@ -1,3 +1,6 @@
+# artifacthub                                       https://artifacthub.io/packages/helm/grafana/loki-distributed
+# values.yaml                                       https://github.com/grafana/helm-charts/blob/main/charts/loki-distributed/values.yaml
+# storage_config                                    https://grafana.com/docs/loki/latest/configuration/#storage_config
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:

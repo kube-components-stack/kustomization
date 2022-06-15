@@ -1,3 +1,5 @@
+# artifacthub                                       https://artifacthub.io/packages/helm/metrics-server/metrics-server
+# values.yaml                                       https://github.com/kubernetes-sigs/metrics-server/blob/master/charts/metrics-server/values.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:

@@ -1,5 +1,7 @@
 # https://kubectl.docs.kubernetes.io/references/kustomize/builtins/#_helmchartinflationgenerator_
 # https://github.com/kubernetes-sigs/kustomize/blob/master/api/types/helmchartargs.go
+# artifacthub                                       https://artifacthub.io/packages/helm/metallb/metallb
+# values.yaml                                       https://github.com/metallb/metallb/blob/main/charts/metallb/values.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator # helmCharts
 metadata:
