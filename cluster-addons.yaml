@@ -21,6 +21,10 @@ spec:
                   exclude: false
                 - path: cluster-addons/kube-prometheus-stack
                   exclude: false
+                - path: cluster-addons/kyverno
+                  exclude: false
+                - path: cluster-addons/kyverno-policies
+                  exclude: true
                 - path: cluster-addons/loki-distributed
                   exclude: false
                 - path: cluster-addons/metallb
@@ -30,6 +34,8 @@ spec:
                 - path: cluster-addons/minio
                   exclude: false
                 - path: cluster-addons/promtail
+                  exclude: false
+                - path: cluster-addons/sealed-secrets
                   exclude: false
                 - path: cluster-addons/vector
                   exclude: false
