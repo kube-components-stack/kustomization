@@ -13,6 +13,10 @@ ENVFILE := .env
 help:
 	@grep -E '(^[a-zA-Z_-]+:.*?##.*$$)' Makefile | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[32m%-30s\033[0m %s\n", $$1, $$2}'
 
+kyverno-update-crds: ## kyverno-update-crds
+kyverno-update-crds:
+	version=2.5.0
+	curl -L https://raw.githubusercontent.com/kyverno/kyverno/kyverno-chart-v$${version}/charts/kyverno/templates/crds.yaml | sed -r "/^\{\{/d" > crds/kyverno/base/crds.yaml
 
 grafana-update-dashboard: ## grafana-update-dashboard
 grafana-update-dashboard:
