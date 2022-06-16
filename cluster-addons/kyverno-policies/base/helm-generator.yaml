@@ -1,0 +1,58 @@
+# https://artifacthub.io/packages/helm/kyverno/kyverno-policies
+# https://kyverno.io/policies/
+# https://github.com/kyverno/policies
+# https://github.com/kyverno/kyverno/tree/kyverno-policies-chart-v2.5.0/charts/kyverno-policies
+# https://github.com/kyverno/kyverno/blob/kyverno-policies-chart-v2.5.0/charts/kyverno-policies/values.yaml
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: kyverno-policies-helm-chart
+name: &name kyverno-policies
+version: 2.5.0
+repo: https://kyverno.github.io/kyverno
+releaseName: *name
+namespace: kube-system
+includeCRDs: false
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline:
+  # Supported- baseline/restricted/privileged/custom
+  # For more info- https://kyverno.io/policies/pod-security
+  podSecurityStandard: baseline # baseline #restricted
+  # Supported- low/medium/high
+  # podSecuritySeverity: low #high
+
+  # Supported values- `audit`, `enforce`
+  # For more info- https://kyverno.io/docs/writing-policies/validate/
+  validationFailureAction: enforce
+  # Define validationFailureActionOverrides for specific policies.
+  # The overrides for 'all' will apply to all policies
+  # Eg:
+  validationFailureActionOverrides:
+    # all:
+    #   - action: audit
+    #     namespaces:
+    #       - ingress-nginx
+    all: []
+    disallow-capabilities: # required by metallb
+      - action: audit
+        namespaces:
+          - metallb
+    disallow-host-namespaces: # required by metallb, kube-prometheus-stack-prometheus-node-exporter
+      - action: audit
+        namespaces:
+          - metallb
+          - monitoring
+    disallow-host-ports: # required by metallb, kube-prometheus-stack-prometheus-node-exporter
+      - action: audit
+        namespaces:
+          - metallb
+          - monitoring
+    disallow-host-path: # required by promtail, vector, kube-prometheus-stack-prometheus-node-exporter
+      - action: audit
+        namespaces:
+          - monitoring
+          - vector
+          - promtail
+  # -- Policies background mode
+  background: true
