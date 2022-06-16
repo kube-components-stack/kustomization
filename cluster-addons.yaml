@@ -24,7 +24,7 @@ spec:
                 - path: cluster-addons/kyverno
                   exclude: false
                 - path: cluster-addons/kyverno-policies
-                  exclude: true
+                  exclude: true # false true
                 - path: cluster-addons/loki-distributed
                   exclude: false
                 - path: cluster-addons/metallb
