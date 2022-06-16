@@ -33,9 +33,9 @@
 
 ## declare vars and create directory structure and files
 ```zsh
-addon=kyverno
+addon=sealed-secrets
 cluster=kind
-namespace=kyverno
+namespace=kube-system
 
 mkdir -p cluster-addons/$addon/{overlays/$cluster-{dev,prod},base}
 touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,secrets.yaml,values.yaml}}

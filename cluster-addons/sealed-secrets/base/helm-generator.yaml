@@ -1,0 +1,17 @@
+# https://artifacthub.io/packages/helm/bitnami-labs/sealed-secrets
+# https://github.com/bitnami-labs/sealed-secrets/tree/main/helm/sealed-secrets
+# https://github.com/bitnami-labs/sealed-secrets/blob/main/helm/sealed-secrets/values.yaml
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: sealed-secrets-helm-chart
+name: &name sealed-secrets
+version: 2.2.0
+repo: https://bitnami-labs.github.io/sealed-secrets
+releaseName: *name
+namespace: kube-system
+includeCRDs: false
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline:
+  namespace: kube-system
