@@ -127,7 +127,7 @@ valuesInline:
     name: notifications
     
     # -- Argo CD dashboard url; used in place of {{.context.argocdUrl}} in templates
-    argocdUrl: ""
+    # argocdUrl: ""
 
     secret:
       # -- Whether helm chart creates controller secret
