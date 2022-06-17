@@ -11,12 +11,14 @@ This implementation is based on following publictions:
 - [Helm Is Not Enough, You Also Need Kustomize](https://itnext.io/helm-is-not-enough-you-also-need-kustomize-82bae896816e)
 
 Some killer features:
+- based on App Of Apps Pattern & ArgoCD Applicationset
 - ArgoCD manages itself
 - Custom Ressource Definitions management
+- Performing Async Actions using Hooks
 - Backup of ingress's logs into an object storage
 - Backup of app's logs into an object storage
-- Pre-installed Unified Grafana Dashboards (logging/monitoring) + GitOps event correlation
-- GitOps events ready: slack or teams
+- Pre-installed Unified Grafana Dashboards (logging/monitoring) + ArgoCD notifications correlation
+- ArgoCD notifications ready: slack or teams
 - Private key encryption of passwords
 - Pod Security Standards implemented as Kyverno policies
 - extra policies: Best Practices, mitigates CVE
