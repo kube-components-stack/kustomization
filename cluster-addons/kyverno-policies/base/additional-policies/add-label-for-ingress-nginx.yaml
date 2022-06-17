@@ -1,0 +1,38 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-label-for-ingress-nginx
+  annotations:
+    policies.kyverno.io/title: Add Labels on NGINX Ingress
+    policies.kyverno.io/category: NGINX Ingress
+    policies.kyverno.io/severity: medium
+    policies.kyverno.io/subject: Label
+    policies.kyverno.io/description: >-
+      Labels are used as an important source of metadata describing objects in various ways
+      or triggering other functionality. Labels are also a very basic concept and should be
+      used throughout Kubernetes. This policy performs a simple mutation which adds a label
+      `vector.sources.kubernetes-logs/label=ingress-nginx` to Pods whiches contains ingress
+      nginx in there image name.
+spec:
+  validationFailureAction: enforce
+  background: true
+  rules:
+  - name: add-label-for-ingress-nginx
+    match:
+      any:
+      - resources:
+          kinds:
+          - Pod
+    preconditions:
+      all:
+      - key: "{{ request.object.spec.containers[].image.contains(@,'ingress') }}"
+        operator: AnyIn
+        value: [true]
+      - key: "{{ request.object.spec.containers[].image.contains(@,'nginx') }}"
+        operator: AnyIn
+        value: [true]
+    mutate:
+      patchStrategicMerge:
+        metadata:
+          labels:
+            vector.sources.kubernetes-logs/label: ingress-nginx
