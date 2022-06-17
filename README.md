@@ -1,6 +1,19 @@
 # kustomization
 
+This repository represents how implement a Kubernetes DevOps Workflow which simplifies evolve bricks of a DevOps infrastructure.
+
+Who have never got the temptation to fork a helm chart repository in order to add some functionalities ? Me first ...
+
+This workflow try bring closer the state of the art using the better of DevOps tools: `Package Management (Helm) >> Config Management (Kustomize) >> GitOps (ArgoCD) >> Admission Controller (kyverno)`
+
+This implementation is based on following publiction:
+- [Workflow for Kubernetes DevOps](https://faun.pub/workflow-for-kubernetes-devops-15f0dbb560ff)
+- [Helm Is Not Enough, You Also Need Kustomize](https://itnext.io/helm-is-not-enough-you-also-need-kustomize-82bae896816e)
+
 ## structure
+
+
+
 ```
 .
 ├── cluster-addons.yaml
