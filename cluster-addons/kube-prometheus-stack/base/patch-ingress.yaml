@@ -1,0 +1,8 @@
+apiVersion: builtin
+kind: PatchTransformer
+metadata:
+  name: not-important-to-example
+patch: '[{"op": "add", "path": "/metadata/annotations/helm.sh~1hook-weight", "value": "5"}]'
+target:
+  kind: Ingress
+  name: .*
