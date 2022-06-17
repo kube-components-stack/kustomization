@@ -6,7 +6,7 @@ Who have never got the temptation to fork a helm chart repository in order to ad
 
 This workflow try bring closer the state of the art using the better of DevOps tools: `Package Management (Helm) >> Config Management (Kustomize) >> GitOps (ArgoCD) >> Admission Controller (kyverno)`
 
-This implementation is based on following publiction:
+This implementation is based on following publictions:
 - [Workflow for Kubernetes DevOps](https://faun.pub/workflow-for-kubernetes-devops-15f0dbb560ff)
 - [Helm Is Not Enough, You Also Need Kustomize](https://itnext.io/helm-is-not-enough-you-also-need-kustomize-82bae896816e)
 
@@ -16,6 +16,7 @@ Some killer features:
 - Backup of ingress's logs into an object storage
 - Backup of app's logs into an object storage
 - Pre-installed Unified Grafana Dashboards (logging/monitoring) + GitOps event correlation
+- GitOps events ready: slack or teams
 - Private key encryption of passwords
 - Pod Security Standards implemented as Kyverno policies
 - extra policies: Best Practices, mitigates CVE
