@@ -10,9 +10,17 @@ This implementation is based on following publiction:
 - [Workflow for Kubernetes DevOps](https://faun.pub/workflow-for-kubernetes-devops-15f0dbb560ff)
 - [Helm Is Not Enough, You Also Need Kustomize](https://itnext.io/helm-is-not-enough-you-also-need-kustomize-82bae896816e)
 
+Some killer features:
+- ArgoCD manages itself
+- Custom Ressource Definitions management
+- Backup of ingress's logs into an object storage
+- Backup of app's logs into an object storage
+- Pre-installed Unified Grafana Dashboards (logging/monitoring) + GitOps event correlation
+- Private key encryption of passwords
+- Pod Security Standards implemented as Kyverno policies
+- extra policies: Best Practices, mitigates CVE
+
 ## structure
-
-
 
 ```
 .
