@@ -12,12 +12,12 @@ This implementation is based on following publictions:
 
 Some killer features:
 - based on App Of Apps Pattern & ArgoCD Applicationset
-- ArgoCD manages itself
+- ArgoCD manages itself ... Chicken or the egg ?
 - Custom Ressource Definitions management
 - Performing Async Actions using Hooks
-- Backup of ingress's logs into an object storage
-- Backup of app's logs into an object storage
 - Pre-installed Unified Grafana Dashboards (logging/monitoring) + ArgoCD notifications correlation
+- Backup of ingress's logs into an object storage using a low level tool (fast, memory efficient, and designed to handle the most demanding workloads) 
+- Backup of app's logs into an object storage
 - ArgoCD notifications ready: slack or teams
 - Private key encryption of passwords
 - Pod Security Standards implemented as Kyverno policies
