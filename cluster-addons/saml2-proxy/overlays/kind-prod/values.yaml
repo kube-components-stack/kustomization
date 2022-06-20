@@ -9,7 +9,7 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls:
-    - secretName: grafana-tls-certificate
+    - secretName: grafana-sso-tls-certificate
       hosts:
         - grafana-sso.k8s.lan
 config:
