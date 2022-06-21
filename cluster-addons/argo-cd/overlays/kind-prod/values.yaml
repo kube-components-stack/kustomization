@@ -14,7 +14,7 @@ server:
       hosts:
       - argocd.k8s.lan
   config:
-    url: https://argocd-ofa-common-unrestricted.of2m.fr
+    url: https://argocd.k8s.lan
     application.instanceLabelKey: argocd.argoproj.io/instance
     dex.config: |
       logger:
