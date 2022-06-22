@@ -35,3 +35,4 @@ spec:
     - ingress-nginx
     - minio
     - monitoring # resource Job/monitoring/kube-prometheus-stack-admission-create # cf. https://github.com/prometheus-community/helm-charts/issues/2104
+    - authentik # Deployment/authentik/authentik-worker
