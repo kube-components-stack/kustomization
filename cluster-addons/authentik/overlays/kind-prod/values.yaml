@@ -12,6 +12,7 @@ ingress:
   ingressClassName: nginx-01
   annotations:
     kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   hosts:
       # https://authentik.k8s.lan/if/flow/initial-setup/
     - host: authentik.k8s.lan
