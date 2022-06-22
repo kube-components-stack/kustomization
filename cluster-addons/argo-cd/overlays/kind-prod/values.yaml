@@ -19,8 +19,7 @@ server:
     dex.config: |
       connectors:
       - config:
-          insecureSkipVerify: true
-          issuer: https://authentik.k8s.lan/application/o/argocd/
+          issuer: http://authentik.k8s.lan/application/o/argocd/
           clientID: 88c4ec06cf9f1c9df7142ce84c2d6cc67569ddd6
           clientSecret: 21138047a71af1e62d773cc26258208a31d0508d15c4b3df2ef486c8b8821cc6116982986023746aac6ff9e67da305e42866633d6f980bbde6c11877e48db762
         type: oidc
