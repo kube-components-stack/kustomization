@@ -1,6 +1,6 @@
 # Make defaults
 .DEFAULT_GOAL := help
-.SILENT: update-charts grafana-patch-dashboard
+.SILENT: update-charts grafana-patch-dashboard create-secrets
 SHELL := bash
 ROOT_DIR:=$(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 .ONESHELL:
@@ -55,3 +55,30 @@ grafana-update-dashboard:
 	dl_dashboard --id=13865 --revision=6 --tags=Loki --tags=Prometheus --argocd-notifications
 #	Troubleshooting Kubernetes (simple and fast view)
 	dl_dashboard --id=15196 --revision=3 --tags=Loki --tags=Prometheus --argocd-notifications
+
+create-secrets: ## create-secrets
+create-secrets:
+	cluster=kind-prod
+	privatekey=secrets/clusters/$${cluster}/sealed-secrets-private-key.yaml
+
+# initialize temp directory
+# define TMP as global thanks declare
+	declare TMP=$$(mktemp --directory /tmp/kind.XXXXXXXXXX)
+# remove directory thanks signals
+	trap "rm -Rf $$TMP" SIGINT SIGTERM ERR EXIT
+# export TMP in order to use it in subprocess
+	export TMP
+
+	for app in secrets/cluster-addons/*; do
+		tempfile=$$(mktemp $${TMP:-/tmp}/hosts.XXXXXXXXXX)
+		trap "rm -Rf $$tempfile" 0 2 3 15
+		app=$$(basename $$app)
+		build=$$(kustomize build secrets/cluster-addons/$${app}/overlays/$${cluster}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
+		for row in $$(echo "$$build" | jq -rc '.[]'); do
+			echo "$$row" | yq e -P | kubeseal --cert <(yq '.data."tls.crt"' $${privatekey} | base64 -d) --format yaml >> $$tempfile
+			echo "---" >> $$tempfile
+		done
+
+		sed -i '$$d' $$tempfile
+		cat "$$tempfile" > cluster-addons/$${app}/overlays/$${cluster}/secrets.yaml
+	done
