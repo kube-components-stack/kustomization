@@ -16,15 +16,27 @@ server:
   config:
     url: https://argocd.k8s.lan
     application.instanceLabelKey: argocd.argoproj.io/instance
-    dex.config: |
-      connectors:
-      - config:
-          issuer: http://authentik.k8s.lan/application/o/argocd/
-          clientID: 88c4ec06cf9f1c9df7142ce84c2d6cc67569ddd6
-          clientSecret: 21138047a71af1e62d773cc26258208a31d0508d15c4b3df2ef486c8b8821cc6116982986023746aac6ff9e67da305e42866633d6f980bbde6c11877e48db762
-        type: oidc
-        id: authentik
-        name: authentik
+    oidc.config: |
+      name: authentik
+      issuer: http://authentik.k8s.lan/application/o/argocd/
+      clientID: 88c4ec06cf9f1c9df7142ce84c2d6cc67569ddd6
+      clientSecret: 21138047a71af1e62d773cc26258208a31d0508d15c4b3df2ef486c8b8821cc6116982986023746aac6ff9e67da305e42866633d6f980bbde6c11877e48db762
+
+      # Optional set of OIDC scopes to request. If omitted, defaults to: ["openid", "profile", "email", "groups"]
+      requestedScopes: ["openid", "profile", "email", "groups"]
+
+      # Optional set of OIDC claims to request on the ID token.
+      requestedIDTokenClaims: {"groups": {"essential": true}}
+
+    # dex.config: |
+    #   connectors:
+    #   - config:
+    #       issuer: http://authentik.k8s.lan/application/o/argocd/
+    #       clientID: 88c4ec06cf9f1c9df7142ce84c2d6cc67569ddd6
+    #       clientSecret: 21138047a71af1e62d773cc26258208a31d0508d15c4b3df2ef486c8b8821cc6116982986023746aac6ff9e67da305e42866633d6f980bbde6c11877e48db762
+    #     type: oidc
+    #     id: authentik
+    #     name: authentik
 ## Argo Configs
 configs:
   secret:
