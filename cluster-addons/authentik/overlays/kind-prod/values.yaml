@@ -22,7 +22,7 @@ ingress:
       hosts:
       - authentik.k8s.lan
 postgresql:
-  enabled: false
+  enabled: true
   postgresqlPassword: "ThisIsNotASecurePassword"
 redis:
   enabled: false
