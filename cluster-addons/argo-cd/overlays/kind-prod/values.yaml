@@ -13,29 +13,9 @@ server:
     - secretName: argocd-tls-certificate
       hosts:
       - argocd.k8s.lan
-  config:
-    url: https://argocd.k8s.lan
-    application.instanceLabelKey: argocd.argoproj.io/instance
-    # SAML caData need to be base64 encoded
-    # curl -s https://idp.k8s.lan:8443/simplesaml/module.php/saml/idp/certs.php/idp.crt | base64 -w0
-    dex.config: |
-      logger:
-        level: debug
-        format: json
-      connectors:
-      - type: saml
-        id: saml
-        name: saml
-        config:
-          ssoURL: https://idp.k8s.lan:8443/simplesaml/saml2/idp/SSOService.php?spentityid=urn:mace:feide.no:someservice
-          redirectURI: https://argocd.k8s.lan/api/dex/callback
-          entityIssuer: https://argocd.k8s.lan/api/dex/callback
-          caData: |
-            LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURYVENDQWtXZ0F3SUJBZ0lKQUxtVlZ1RFd1NE5ZTUEwR0NTcUdTSWIzRFFFQkN3VUFNRVV4Q3pBSkJnTlYNCkJBWVRBa0ZWTVJNd0VRWURWUVFJREFwVGIyMWxMVk4wWVhSbE1TRXdId1lEVlFRS0RCaEpiblJsY201bGRDQlgNCmFXUm5hWFJ6SUZCMGVTQk1kR1F3SGhjTk1UWXhNak14TVRRek5EUTNXaGNOTkRnd05qSTFNVFF6TkRRM1dqQkYNCk1Rc3dDUVlEVlFRR0V3SkJWVEVUTUJFR0ExVUVDQXdLVTI5dFpTMVRkR0YwWlRFaE1COEdBMVVFQ2d3WVNXNTANClpYSnVaWFFnVjJsa1oybDBjeUJRZEhrZ1RIUmtNSUlCSWpBTkJna3Foa2lHOXcwQkFRRUZBQU9DQVE4QU1JSUINCkNnS0NBUUVBelVDRm96Z05iMWgxTTBqek5SU0NqaE9CblIrdVZiVnBhV2ZYWUlSK0FoV0RkRWU1cnlZK0NnYXYNCk9nOGJmTHlieXpGZGVobFlkRFJna2VkRUIvR2pHOGFKdzA2bDBxRjRqRE9BdzBrRXlnV0N1Mm1jSDdYT3hSdCsNCllBSDNUVkhhL0h1MVczV2p6a29icXFxTFE4Z2tLV1dNMjdmT2dBWjZHaWVhSkJONlZCU01NY1BleTNIV0xCbWMNCitUWUptdjFkYmFPMmpIaEtoOHBmS3cwVzEyVk04UDFQSU84Z3Y0UGh1L3V1SllpZUJXS2l4QkV5eTBsSGp5aXgNCllGQ1IxMnhkaDRDQTQ3cTk1OFpSR25uRFVHRlZFMVFoZ1JhY0pDT1o5YmQ1dDltcjhLTGFWQllUQ0pvNUVSRTgNCmp5bWFiNWRQcWU1cUtmSnNDWmlxV2dsYmpVbzl0d0lEQVFBQm8xQXdUakFkQmdOVkhRNEVGZ1FVeHB1d2NzL0MNCllRT3l1aStyMUcrM0t4Qk5oeGt3SHdZRFZSMGpCQmd3Rm9BVXhwdXdjcy9DWVFPeXVpK3IxRyszS3hCTmh4a3cNCkRBWURWUjBUQkFVd0F3RUIvekFOQmdrcWhraUc5dzBCQVFzRkFBT0NBUUVBQWlXVUtzLzJ4L3ZpTkNLaTNZNmINCmxFdUN0QUdoek9PWjlFanJ2SjgrQ09IM1JhZzN0VkJXcmNCWjMvdWhoUHE1Z3k5bHF3NE9rdkV3czk5LzVqRnMNClgxRko2TUtCZ3FmdXk3eWg1czFZZk0wQU5IWWN6TW1ZcFplQWNRZjJDR0FhVmZ3VFRmU2x6TkxzRjJsVy9seTcNCnlhcEZ6bFlTSkxHb1ZFK09IRXU4ZzVTbE5BQ1VFZmtYdys1RWdoaCtLemxJTjdSNlE3cjJpeFdORkJDL2pXZjcNCk5LVWZKeVg4cUlHNW1kMVlVZVQ2R0JXOUJtMi8xL1JpTzI0SlRhWWxmTGRLSzlUWWI4c0c1QitPTGFiMkRJbUcNCjk5Q0oyNVJrQWNTb2JXTkY1ekQwTzZsZ09vM2NFZEIva3NDcTNobXRsQy9EbExaL0Q4Q0orN1Z1Wm5TMXJSMm4NCmFRPT0NCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
-          usernameAttr: uid
-          emailAttr: email
-        rbacConfig:
-          policy.default: role:readonly
+  # config:
+  #   url: https://argocd.k8s.lan
+  #   application.instanceLabelKey: argocd.argoproj.io/instance
 ## Argo Configs
 configs:
   secret:
