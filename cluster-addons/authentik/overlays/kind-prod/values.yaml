@@ -13,6 +13,7 @@ ingress:
   annotations:
     kubernetes.io/tls-acme: "true"
   hosts:
+      # https://authentik.k8s.lan/if/flow/initial-setup/
     - host: authentik.k8s.lan
       paths:
         - path: "/"

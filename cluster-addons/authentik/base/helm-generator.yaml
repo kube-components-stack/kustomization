@@ -2,6 +2,7 @@
 # artifacthub:  https://artifacthub.io/packages/helm/goauthentik/authentik
 # GitHub:       https://github.com/goauthentik/authentik
 # docs:         https://goauthentik.io/docs/
+# https://goauthentik.io/docs/installation/configuration/
 # helm chart:   https://github.com/goauthentik/helm/tree/main/charts/authentik
 # values:       https://github.com/goauthentik/helm/blob/main/charts/authentik/values.yaml
 apiVersion: builtin
