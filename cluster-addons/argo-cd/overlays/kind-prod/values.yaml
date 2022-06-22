@@ -37,8 +37,8 @@ server:
         type: oidc
         id: authentik
         name: authentik
-  rbacConfig:
-    policy.default: role:readonly
+  # rbacConfig:
+  #   policy.default: role:readonly
 ## Argo Configs
 configs:
   secret:
