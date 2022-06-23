@@ -58,6 +58,9 @@ grafana-update-dashboard:
 
 create-secrets: ## create-secrets
 create-secrets:
+	set -ex
+	cd $(ROOT_DIR)
+
 	cluster=kind-prod
 	privatekey=secrets/clusters/$${cluster}/sealed-secrets-private-key.yaml
 
@@ -70,15 +73,18 @@ create-secrets:
 	export TMP
 
 	for app in secrets/cluster-addons/*; do
-		tempfile=$$(mktemp $${TMP:-/tmp}/hosts.XXXXXXXXXX)
-		trap "rm -Rf $$tempfile" 0 2 3 15
 		app=$$(basename $$app)
 		build=$$(kustomize build secrets/cluster-addons/$${app}/overlays/$${cluster}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
-		for row in $$(echo "$$build" | jq -rc '.[]'); do
-			echo "$$row" | yq e -P | kubeseal --cert <(yq '.data."tls.crt"' $${privatekey} | base64 -d) --format yaml >> $$tempfile
-			echo "---" >> $$tempfile
-		done
-
-		sed -i '$$d' $$tempfile
-		cat "$$tempfile" > cluster-addons/$${app}/overlays/$${cluster}/secrets.yaml
+		rows=$$(echo "$$build" | jq -rc '.[]')
+		if [[ -n "$$rows" ]]; then
+			tempfile=$$(mktemp $${TMP:-/tmp}/hosts.XXXXXXXXXX)
+			trap "rm -Rf $$tempfile" 0 2 3 15
+			for row in $$rows; do
+				echo "$$row" | yq e -P | kubeseal --cert <(yq '.data."tls.crt"' $${privatekey} | base64 -d) --format yaml >> $$tempfile
+				echo "---" >> $$tempfile
+			done
+			sed -i '$$d' $$tempfile
+			sed -i '/^$$/d' $$tempfile
+			cat "$$tempfile" > cluster-addons/$${app}/overlays/$${cluster}/secrets.yaml
+		fi
 	done
