@@ -16,6 +16,12 @@ server:
   config:
     url: https://argocd.k8s.lan
     accounts.webhook: apiKey, login
+    oidc.config: |
+      name: Keycloak
+      issuer: http://keycloak.k8s.lan/realms/master
+      clientID: argocd
+      clientSecret: $oidc.keycloak.clientSecret
+      requestedScopes: ["openid", "profile", "email", "groups"]
     # oidc.config: |
     #   name: authentik
     #   issuer: http://authentik.k8s.lan/application/o/authorize/
@@ -23,8 +29,8 @@ server:
     #   clientSecret: $oidc.authentik.clientSecret
     #   requestedScopes: ["openid", "profile", "email", "groups"]
   rbacConfig:
-    # policy.csv: |
-    #   g, ArgoCDAdmins, role:admin
+    policy.csv: |
+      g, ArgoCDAdmins, role:admin
     policy.default: role:readonly
 
     #   # Optional set of OIDC claims to request on the ID token.
