@@ -1,3 +1,5 @@
+auth:
+  existingSecret: keycloak
 ingress:
   enabled: true
   ingressClassName: nginx-01
