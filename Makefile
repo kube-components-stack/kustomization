@@ -74,7 +74,7 @@ create-secrets:
 
 	for app in secrets/cluster-addons/*; do
 		app=$$(basename $$app)
-		build=$$(kustomize build secrets/cluster-addons/$${app}/overlays/$${cluster}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
+		build=$$(kustomize --load-restrictor LoadRestrictionsNone build secrets/cluster-addons/$${app}/overlays/$${cluster}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
 		rows=$$(echo "$$build" | jq -rc '.[]')
 		if [[ -n "$$rows" ]]; then
 			tempfile=$$(mktemp $${TMP:-/tmp}/hosts.XXXXXXXXXX)
