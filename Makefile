@@ -58,7 +58,7 @@ grafana-update-dashboard:
 
 create-secrets: ## create-secrets
 create-secrets:
-	set -ex
+	set -e
 	cd $(ROOT_DIR)
 
 	cluster=kind-prod
