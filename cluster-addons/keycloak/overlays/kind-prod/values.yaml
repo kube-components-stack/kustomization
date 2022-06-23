@@ -1,0 +1,8 @@
+ingress:
+  enabled: true
+  ingressClassName: nginx-01
+  hostname: keycloak.k8s.lan
+  tls: true
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
