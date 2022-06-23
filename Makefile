@@ -86,5 +86,8 @@ create-secrets:
 			sed -i '$$d' $$tempfile
 			sed -i '/^$$/d' $$tempfile
 			cat "$$tempfile" > cluster-addons/$${app}/overlays/$${cluster}/secrets.yaml
+			cd cluster-addons/$${app}/overlays/$${cluster}
+			kustomize edit add resource secrets.yaml
+			cd $$OLDPWD
 		fi
 	done
