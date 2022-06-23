@@ -18,7 +18,7 @@ server:
     accounts.webhook: apiKey, login
     oidc.config: |
       name: Keycloak
-      issuer: http://keycloak.k8s.lan/realms/master
+      issuer: https://keycloak.k8s.lan/realms/master
       clientID: argocd
       clientSecret: $oidc.keycloak.clientSecret
       requestedScopes: ["openid", "profile", "email", "groups"]
