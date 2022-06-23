@@ -20,7 +20,7 @@ server:
       name: authentik
       issuer: http://authentik.k8s.lan/application/o/authorize/
       clientID: 8811b3aa63f19133ec84534482df81a5332dcfc1
-      clientSecret: 8c5821c80264b81c483b932e2614fd848c3f2a7161470b1b74e3373c922dc35ab882581a5ed16fc159fc15fd6c93b8068e8e45c090cd5430167c7be2363920f3
+      clientSecret: $oidc.authentik.clientSecret
       requestedScopes: ["openid", "profile", "email", "groups"]
   rbacConfig:
     policy.csv: |
