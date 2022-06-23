@@ -16,6 +16,9 @@ server:
   config:
     url: https://argocd.k8s.lan
     accounts.webhook: apiKey, login
+    # https://github.com/argoproj/argo-cd/issues/4344#issuecomment-890382825
+    # https://github.com/argoproj/argo-cd/issues/1171
+    # https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#self-signed-untrusted-tls-certificates
     oidc.config: |
       name: Keycloak
       issuer: https://keycloak.k8s.lan/realms/master
