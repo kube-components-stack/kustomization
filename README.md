@@ -89,9 +89,9 @@ Some killer features:
 
 ## declare vars and create directory structure and files
 ```zsh
-addon=sealed-secrets
+addon=keycloak
 cluster=kind
-namespace=kube-system
+namespace=keycloak
 
 mkdir -p cluster-addons/$addon/{overlays/$cluster-{dev,prod},base}
 touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,values.yaml}}
@@ -135,6 +135,5 @@ generators:
 - ../../base/helm-generator.yaml
 resources:
 - ../../base
-- secrets.yaml
 EOF
 ```
