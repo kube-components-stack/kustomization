@@ -1,5 +1,9 @@
 auth:
-  existingSecret: keycloak
+  existingSecret:
+    name: keycloak-auth
+    keyMapping:
+      admin-password: admin-password
+      management-password: management-password
 ingress:
   enabled: true
   ingressClassName: nginx-01
