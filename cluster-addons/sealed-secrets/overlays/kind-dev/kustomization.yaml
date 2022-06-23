@@ -4,4 +4,3 @@ generators:
 - ../../base/helm-generator.yaml
 resources:
 - ../../base
-- secrets.yaml

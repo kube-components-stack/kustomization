@@ -94,7 +94,7 @@ cluster=kind
 namespace=kube-system
 
 mkdir -p cluster-addons/$addon/{overlays/$cluster-{dev,prod},base}
-touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,secrets.yaml,values.yaml}}
+touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,values.yaml}}
 
 cat << EOF > cluster-addons/$addon/base/helm-generator.yaml
 apiVersion: builtin
