@@ -12,3 +12,16 @@ ingress:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
       - keycloak.k8s.lan
+keycloakConfigCli:
+  enabled: true
+  extraEnvVars:
+  - name: IMPORT_FILES_LOCATIONS
+    value: /secret/*
+  extraVolumeMounts:
+  - mountPath: /secret/keycloak-config.yaml
+    name: cfg
+    readOnly: true
+  extraVolumes:
+  - name: cfg
+    secret:
+      secretName: keycloak-config
