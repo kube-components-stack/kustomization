@@ -13,6 +13,36 @@ alertmanager:
       hosts:
       - alertmanager.k8s.lan
 grafana:
+  # https://grafana.com/docs/grafana/latest/administration/configuration/
+  grafana.ini:
+  ## grafana Authentication can be enabled with the following values on grafana.ini
+    users:
+      allow_sign_up: "false"
+      auto_assign_org: "true"
+      auto_assign_org_id: 1
+      auto_assign_org_role: Viewer # Admin Editor Viewer
+      viewers_can_edit: "false"
+      editors_can_admin: "false"
+      allow_org_create: "false"
+    # https://grafana.com/docs/grafana/next/setup-grafana/configure-security/configure-authentication/generic-oauth/
+    auth.generic_oauth:
+      enabled: true
+      scopes: "openid email profile"
+      name: Keycloak
+      tls_skip_verify_insecure: "true"
+      allow_sign_up: "true"
+      client_id: grafana
+      client_secret: aVe4VPmx2LJhyFTwleI2aJIgIIKlcEz7
+      auth_url:   https://keycloak.k8s.lan/auth/realms/expertflow/protocol/openid-connect/auth
+      token_url:  https://keycloak.k8s.lan/auth/realms/expertflow/protocol/openid-connect/token
+      api_url:    https://keycloak.k8s.lan/auth/realms/expertflow/protocol/openid-connect/userinfo
+      # empty_scopes: false
+      # icon: signin
+      # allowed_domains: keycloak.k8s.lan
+      # tls_client_cert:
+      # tls_client_key:
+      # tls_client_ca:
+      # use_pkce: true
   admin:
     existingSecret: grafana-secret
   persistence:
