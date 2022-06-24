@@ -33,9 +33,9 @@ grafana:
       allow_sign_up: "true"
       client_id: grafana
       client_secret: aVe4VPmx2LJhyFTwleI2aJIgIIKlcEz7
-      auth_url:   https://keycloak.k8s.lan/auth/realms/expertflow/protocol/openid-connect/auth
-      token_url:  https://keycloak.k8s.lan/auth/realms/expertflow/protocol/openid-connect/token
-      api_url:    https://keycloak.k8s.lan/auth/realms/expertflow/protocol/openid-connect/userinfo
+      auth_url:   https://keycloak.k8s.lan/auth/realms/master/protocol/openid-connect/auth
+      token_url:  https://keycloak.k8s.lan/auth/realms/master/protocol/openid-connect/token
+      api_url:    https://keycloak.k8s.lan/auth/realms/master/protocol/openid-connect/userinfo
       # empty_scopes: false
       # icon: signin
       # allowed_domains: keycloak.k8s.lan
