@@ -12,5 +12,3 @@ ingress:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
       - keycloak.k8s.lan
-keycloakConfigCli:
-  enabled: true
