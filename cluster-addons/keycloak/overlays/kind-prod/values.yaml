@@ -15,9 +15,15 @@ ingress:
 keycloakConfigCli:
   enabled: true
   command:
-  - java
-  - '-jar'
-  - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
+  - sh
+  - "-c"
+  - |
+    /bin/bash <<'EOF'
+    tail -f /dev/null
+    EOF
+  # - java
+  # - '-jar'
+  # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
   extraEnvVars:
   - name: IMPORT_FILES_LOCATIONS
     value: /secret/*
