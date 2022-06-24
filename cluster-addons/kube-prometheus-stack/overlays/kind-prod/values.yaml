@@ -15,28 +15,20 @@ alertmanager:
 grafana:
   # https://grafana.com/docs/grafana/latest/administration/configuration/
   grafana.ini:
-  ## grafana Authentication can be enabled with the following values on grafana.ini
-    users:
-      allow_sign_up: "false"
-      auto_assign_org: "true"
-      auto_assign_org_id: 1
-      auto_assign_org_role: Viewer # Admin Editor Viewer
-      viewers_can_edit: "false"
-      editors_can_admin: "false"
-      allow_org_create: "false"
     # https://grafana.com/docs/grafana/next/setup-grafana/configure-security/configure-authentication/generic-oauth/
     auth.generic_oauth:
       enabled: true
-      role_attribute_path: contains(groups[*], 'GrafanaAdmins') && 'Admin' || 'Viewer'
-      scopes: openid email profile groups
       name: Keycloak
-      tls_skip_verify_insecure: "true"
       allow_sign_up: "true"
+      scopes: profile,email,groups
       client_id: grafana
       client_secret: aVe4VPmx2LJhyFTwleI2aJIgIIKlcEz7
       auth_url:   https://keycloak.k8s.lan/auth/realms/master/protocol/openid-connect/auth
       token_url:  https://keycloak.k8s.lan/auth/realms/master/protocol/openid-connect/token
       api_url:    https://keycloak.k8s.lan/auth/realms/master/protocol/openid-connect/userinfo
+      role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
+      tls_skip_verify_insecure: "true"
+      # role_attribute_path: contains(groups[*], 'GrafanaAdmins') && 'Admin' || 'Viewer'
       # empty_scopes: false
       # icon: signin
       # allowed_domains: keycloak.k8s.lan
