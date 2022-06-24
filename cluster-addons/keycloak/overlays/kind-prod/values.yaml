@@ -14,6 +14,10 @@ ingress:
       - keycloak.k8s.lan
 keycloakConfigCli:
   enabled: true
+  command:
+  - java
+  - '-jar'
+  - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
   extraEnvVars:
   - name: IMPORT_FILES_LOCATIONS
     value: /secret/*
