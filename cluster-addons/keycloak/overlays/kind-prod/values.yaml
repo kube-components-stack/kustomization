@@ -7,11 +7,10 @@ auth:
 ingress:
   enabled: true
   ingressClassName: nginx-01
-  annotations:
-    # kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   hostname: keycloak.k8s.lan
   extraTls:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
       - keycloak.k8s.lan
+keycloakConfigCli:
+  enabled: true

@@ -28,6 +28,7 @@ server:
     # https://github.com/argoproj/argo-cd/issues/4344#issuecomment-890382825
     # https://github.com/argoproj/argo-cd/issues/1171
     # https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#self-signed-untrusted-tls-certificates
+    # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/
     oidc.config: |
       name: Keycloak
       issuer: https://keycloak.k8s.lan/realms/master
