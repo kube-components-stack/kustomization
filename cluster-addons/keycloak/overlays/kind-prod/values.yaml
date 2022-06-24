@@ -15,12 +15,6 @@ ingress:
 keycloakConfigCli:
   enabled: true
   command:
-  # - sh
-  # - "-c"
-  # - |
-  #   /bin/bash <<'EOF'
-  #   tail -f /dev/null
-  #   EOF
   - java
   - '-jar'
   - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
