@@ -13,6 +13,8 @@ ingress:
     hosts:
       - keycloak.k8s.lan
 proxyAddressForwarding: true
+service:
+  type: ClusterIP
 keycloakConfigCli:
   enabled: true
   command:
