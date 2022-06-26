@@ -1,3 +1,11 @@
+# extraEnvVars:
+# - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+#   value: "true"
+
+## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
+## ref: https://www.keycloak.org/server/reverseproxy
+##
+proxy: passthrough
 auth:
   existingSecret:
     name: keycloak-auth
@@ -13,16 +21,15 @@ ingress:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
       - keycloak.k8s.lan
-proxyAddressForwarding: true
 service:
   type: ClusterIP
 keycloakConfigCli:
   enabled: true
-  command:
-  - java
-  - '-jar'
-  # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-17.0.0.jar
-  - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
+  # command:
+  # - java
+  # - '-jar'
+  # # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-17.0.0.jar
+  # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
   extraEnvVars:
   - name: IMPORT_FILES_LOCATIONS
     value: /secret/*
