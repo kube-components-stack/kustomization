@@ -29,7 +29,7 @@ keycloakConfigCli:
   - java
   - '-jar'
   # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-17.0.0.jar
-  - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
+  - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.1.jar
   extraEnvVars:
   - name: IMPORT_FILES_LOCATIONS
     value: /secret/*
