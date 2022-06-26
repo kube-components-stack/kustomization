@@ -2,6 +2,9 @@ extraEnvVars:
 - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
   value: "true"
 
+- name: KEYCLOAK_EXTRA_ARGS
+  value: "-Dkeycloak.frontendUrl=https://keycloak.k8s.lan/auth"
+
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
 ##
@@ -25,14 +28,14 @@ ingress:
     nginx.ingress.kubernetes.io/enable-access-log: "true"
     nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "X-Forwarded-For, X-Forwarded-Proto, DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization"
     # nginx.ingress.kubernetes.io/affinity: cookie
     # nginx.ingress.kubernetes.io/session-cookie-name: AUTH_SESSION_ID_LEGACY
-    # nginx.org/server-snippets: |
-    #   location /auth {
-    #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    #     proxy_set_header X-Forwarded-Proto $scheme;
-    #   }
     nginx.org/server-snippets: |
+      location /auth {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+      }
       location / {
         proxy_set_header X-Forwarded-For $host;
         proxy_set_header X-Forwarded-Proto $scheme;
