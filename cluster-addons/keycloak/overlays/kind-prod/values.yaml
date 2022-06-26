@@ -1,3 +1,16 @@
+# extraEnvVars:
+# - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+#   value: "true"
+
+# - name: PROXY_ADDRESS_FORWARDING
+#   value: "true"
+
+# - name: KEYCLOAK_FRONTEND_URL
+#   value: "https://keycloak.k8s.lan/auth"
+
+# - name: KEYCLOAK_EXTRA_ARGS
+#   value: "-Dkeycloak.frontendUrl=https://keycloak.k8s.lan/auth"
+
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
 ##
@@ -10,12 +23,23 @@ auth:
       management-password: management-password
 ingress:
   enabled: true
+  # path: / #/*
   ingressClassName: nginx-01
   hostname: keycloak.k8s.lan
   extraTls:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
       - keycloak.k8s.lan
+  annotations:
+    nginx.ingress.kubernetes.io/enable-access-log: "true"
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.org/server-snippets: |
+      location /auth {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+      }
 service:
   type: ClusterIP
 keycloakConfigCli:
