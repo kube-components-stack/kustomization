@@ -15,6 +15,14 @@ spec:
                 - path: "crds/*"
                 - path: crds/argo-cd
                   exclude: false
+                - path: crds/cert-manager
+                  exclude: false
+                - path: crds/kube-prometheus-stack
+                  exclude: false
+                - path: crds/kyverno
+                  exclude: false
+                - path: crds/sealed-secrets
+                  exclude: false
           - clusters: {}
   template:
     metadata:
