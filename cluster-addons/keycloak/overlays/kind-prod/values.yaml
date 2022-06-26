@@ -1,6 +1,6 @@
-extraEnvVars:
-- name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
-  value: "true"
+# extraEnvVars:
+# - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+#   value: "true"
 
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
@@ -25,8 +25,8 @@ ingress:
     nginx.ingress.kubernetes.io/enable-access-log: "true"
     nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    nginx.ingress.kubernetes.io/affinity: cookie
-    nginx.ingress.kubernetes.io/session-cookie-name: AUTH_SESSION_ID_LEGACY
+    # nginx.ingress.kubernetes.io/affinity: cookie
+    # nginx.ingress.kubernetes.io/session-cookie-name: AUTH_SESSION_ID_LEGACY
 service:
   type: ClusterIP
 keycloakConfigCli:
