@@ -1,6 +1,6 @@
-# extraEnvVars:
-# - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
-#   value: "true"
+extraEnvVars:
+- name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+  value: "true"
 
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
