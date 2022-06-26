@@ -12,6 +12,7 @@ ingress:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
       - keycloak.k8s.lan
+proxyAddressForwarding: true
 keycloakConfigCli:
   enabled: true
   command:
