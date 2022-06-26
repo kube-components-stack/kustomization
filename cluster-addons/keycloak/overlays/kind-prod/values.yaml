@@ -14,7 +14,7 @@
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
 ##
-proxy: none # passthrough/edge/none/reencrytpt
+proxy: edge # passthrough/edge/none/reencrytpt
 auth:
   existingSecret:
     name: keycloak-auth
@@ -30,16 +30,16 @@ ingress:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
       - keycloak.k8s.lan
-  annotations:
-    nginx.ingress.kubernetes.io/enable-access-log: "true"
-    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-    nginx.org/server-snippets: |
-      location /auth {
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Host $host;
-      }
+  # annotations:
+  #   nginx.ingress.kubernetes.io/enable-access-log: "true"
+  #   nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
+  #   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+  #   nginx.org/server-snippets: |
+  #     location /auth {
+  #       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  #       proxy_set_header X-Forwarded-Proto $scheme;
+  #       proxy_set_header X-Forwarded-Host $host;
+  #     }
 service:
   type: ClusterIP
 keycloakConfigCli:
