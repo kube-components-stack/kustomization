@@ -22,7 +22,7 @@ valuesInline:
       controllerValue: k8s.io/ingress-nginx-01
     ingressClassByName: true
     ingressClass: nginx-01
-    allowSnippetAnnotations: false
+    allowSnippetAnnotations: true
     service:
       externalTrafficPolicy: "Local"
     metrics:
