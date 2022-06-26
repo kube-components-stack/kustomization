@@ -27,9 +27,14 @@ ingress:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     # nginx.ingress.kubernetes.io/affinity: cookie
     # nginx.ingress.kubernetes.io/session-cookie-name: AUTH_SESSION_ID_LEGACY
+    # nginx.org/server-snippets: |
+    #   location /auth {
+    #     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    #     proxy_set_header X-Forwarded-Proto $scheme;
+    #   }
     nginx.org/server-snippets: |
-      location /auth {
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      location / {
+        proxy_set_header X-Forwarded-For $host;
         proxy_set_header X-Forwarded-Proto $scheme;
       }
 service:
