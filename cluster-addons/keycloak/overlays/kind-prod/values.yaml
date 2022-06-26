@@ -6,6 +6,7 @@ auth:
       management-password: management-password
 ingress:
   enabled: true
+  path: /*
   ingressClassName: nginx-01
   hostname: keycloak.k8s.lan
   extraTls:
