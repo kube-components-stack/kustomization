@@ -30,14 +30,6 @@ grafana:
       api_url:    https://keycloak.k8s.lan/realms/master/protocol/openid-connect/userinfo
       role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
       tls_skip_verify_insecure: "true"
-      # role_attribute_path: contains(groups[*], 'GrafanaAdmins') && 'Admin' || 'Viewer'
-      # empty_scopes: false
-      # icon: signin
-      # allowed_domains: keycloak.k8s.lan
-      # tls_client_cert:
-      # tls_client_key:
-      # tls_client_ca:
-      # use_pkce: true
   admin:
     existingSecret: grafana-secret
   persistence:
