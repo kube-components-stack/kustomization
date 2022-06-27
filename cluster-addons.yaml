@@ -63,7 +63,7 @@ spec:
         # namespace: '{{path.basename}}'
       syncPolicy:
         automated:
-          allowEmpty: true
+          allowEmpty: false #true
           prune: true
           selfHeal: true
         retry:
