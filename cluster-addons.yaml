@@ -12,48 +12,48 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: "cluster-addons/*/overlays/*"
-                # - path: cluster-addons/argo-cd
-                #   exclude: false
-                # - path: cluster-addons/authentik
-                #   exclude: false
-                # - path: cluster-addons/cert-manager
-                #   exclude: false
-                # - path: cluster-addons/ingress-nginx
-                #   exclude: false
-                # - path: cluster-addons/keycloak
-                #   exclude: false
-                # - path: cluster-addons/kube-prometheus-stack
-                #   exclude: false
-                # - path: cluster-addons/kyverno
-                #   exclude: false
-                # - path: cluster-addons/kyverno-policies
-                #   exclude: false
-                # - path: cluster-addons/loki-distributed
-                #   exclude: false
-                # - path: cluster-addons/metallb
-                #   exclude: false
-                # - path: cluster-addons/metrics-server
-                #   exclude: false
-                # - path: cluster-addons/minio
-                #   exclude: false
-                # - path: cluster-addons/promtail
-                #   exclude: false
-                # - path: cluster-addons/sealed-secrets
-                #   exclude: false
-                # - path: cluster-addons/vector
-                #   exclude: false
+                - path: "cluster-addons/*"
+                - path: cluster-addons/argo-cd
+                  exclude: false
+                - path: cluster-addons/authentik
+                  exclude: false
+                - path: cluster-addons/cert-manager
+                  exclude: false
+                - path: cluster-addons/ingress-nginx
+                  exclude: false
+                - path: cluster-addons/keycloak
+                  exclude: false
+                - path: cluster-addons/kube-prometheus-stack
+                  exclude: false
+                - path: cluster-addons/kyverno
+                  exclude: false
+                - path: cluster-addons/kyverno-policies
+                  exclude: false
+                - path: cluster-addons/loki-distributed
+                  exclude: false
+                - path: cluster-addons/metallb
+                  exclude: false
+                - path: cluster-addons/metrics-server
+                  exclude: false
+                - path: cluster-addons/minio
+                  exclude: false
+                - path: cluster-addons/promtail
+                  exclude: false
+                - path: cluster-addons/sealed-secrets
+                  exclude: false
+                - path: cluster-addons/vector
+                  exclude: false
           - clusters: {}
   template:
     metadata:
-      name: 'cluster-addons-{{path[1]}}-{{name}}'
+      name: 'cluster-addons-{{path.basename}}-{{name}}'
     spec:
       project: default
       info: []
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "cluster-addons/{{path[1]}}/overlays/{{name}}"
+        path: "cluster-addons/{{path.basename}}/overlays/{{name}}"
         # plugin:
         #   name: argocd-lovely-plugin # https://github.com/crumbhole/argocd-lovely-plugin
         # kustomize:
