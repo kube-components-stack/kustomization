@@ -1,0 +1,21 @@
+---
+spec:
+  generators:
+    - matrix:
+        generators:
+          - git:
+              directories:
+                - path: cluster-addons/authentik
+                  exclude: true
+                - path: cluster-addons/keycloak
+                  exclude: true
+                - path: cluster-addons/kube-prometheus-stack
+                  exclude: true
+                - path: cluster-addons/loki-distributed
+                  exclude: true
+                - path: cluster-addons/minio
+                  exclude: true
+                - path: cluster-addons/promtail
+                  exclude: true
+                - path: cluster-addons/vector
+                  exclude: true

@@ -13,36 +13,6 @@ spec:
               revision: HEAD
               directories:
                 - path: "cluster-addons/*"
-                - path: cluster-addons/argo-cd
-                  exclude: false
-                - path: cluster-addons/authentik
-                  exclude: false
-                - path: cluster-addons/cert-manager
-                  exclude: false
-                - path: cluster-addons/ingress-nginx
-                  exclude: false
-                - path: cluster-addons/keycloak
-                  exclude: false
-                - path: cluster-addons/kube-prometheus-stack
-                  exclude: false
-                - path: cluster-addons/kyverno
-                  exclude: false
-                - path: cluster-addons/kyverno-policies
-                  exclude: false
-                - path: cluster-addons/loki-distributed
-                  exclude: false
-                - path: cluster-addons/metallb
-                  exclude: false
-                - path: cluster-addons/metrics-server
-                  exclude: false
-                - path: cluster-addons/minio
-                  exclude: false
-                - path: cluster-addons/promtail
-                  exclude: false
-                - path: cluster-addons/sealed-secrets
-                  exclude: false
-                - path: cluster-addons/vector
-                  exclude: false
           - clusters: {}
   template:
     metadata:
