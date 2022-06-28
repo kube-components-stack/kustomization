@@ -1,0 +1,686 @@
+fullnameOverride: argocd
+global:
+  image:
+    imagePullPolicy: Always
+  securityContext:
+    runAsUser: 999
+    runAsGroup: 999
+    fsGroup: 999
+applicationSet:
+  image:
+    imagePullPolicy: Always
+  resources:
+    limits:
+      cpu: '2'
+      memory: 1Gi
+    requests:
+      cpu: 100m # 250m
+      memory: 128Mi # 512Mi
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+controller:
+  # -- Environment variables to pass to Argo CD controller
+  # https://github.com/argoproj/argo-helm/issues/446
+  # The application-controller pod is really the one that should be able to list pods based on the RBAC config.
+  # This is also is true of the default install, where the server pod's service account can get pods but cannot list them.
+  env:
+    - name: HOME
+      value: /tmp/argocd
+  # -- Additional volumeMounts to the application controller main container
+  volumeMounts:
+    - name: tmp
+      mountPath: /tmp
+  # -- Additional volumes to the application controller pod
+  volumes:
+    - name: tmp
+      emptyDir: {}
+  # https://github.com/argoproj/argo-cd/issues/3864
+  ## Application controller commandline flags
+  args:
+    # -- define the application controller `--status-processors`
+    statusProcessors: "20"
+    # -- define the application controller `--operation-processors`
+    operationProcessors: "50"
+    # -- define the application controller `--app-resync`
+    appResyncPeriod: "300"
+    # -- define the application controller `--self-heal-timeout-seconds`
+    selfHealTimeout: "5"
+    # -- define the application controller `--repo-server-timeout-seconds`
+    repoServerTimeoutSeconds: "300"
+  image:
+    imagePullPolicy: Always
+  initImage:
+    imagePullPolicy: Always
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+  resources:
+    limits:
+      cpu: '2'
+      memory: 2Gi
+    requests:
+      cpu: 250m
+      memory: 256Mi # 1Gi
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: kube-prometheus-stack
+dex:
+  image:
+    imagePullPolicy: Always
+  initImage:
+    imagePullPolicy: Always
+  livenessProbe:
+    enabled: false
+  readinessProbe:
+    enabled: false
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 10m # 250m
+      memory: 32Mi # 128Mi
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+notifications:
+  # -- Enable Notifications controller
+  enabled: true
+
+  # -- Notifications controller name string
+  name: notifications
+  
+  # -- Argo CD dashboard url; used in place of {{.context.argocdUrl}} in templates
+  # argocdUrl: ""
+
+  secret:
+    # -- Whether helm chart creates controller secret
+    create: false
+    # -- The name of the secret to use.
+    ## If not set and create is true, the default name 'argocd-notifications-secret' is used
+    name: argocd-notifications-secret
+
+  # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
+  logLevel: info
+
+  # -- Application controller log format. Either `text` or `json`
+  logFormat: text
+
+  # Additional container environment variables
+  extraEnv:
+    - name: TZ
+      value: Europe/Paris
+
+  # -- Container Security Context
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+
+  # -- Configures notification services such as slack, email or custom webhook
+  # @default -- See [values.yaml]
+  ## For more information: https://argocd-notifications.readthedocs.io/en/stable/services/overview/
+  notifiers:
+    service.slack: |
+      token: $devops-slack
+    service.teams: |
+      recipientUrls:
+        devops-teams: $devops-teams
+    service.grafana: |
+      apiUrl: http://kube-prometheus-stack-grafana.monitoring.svc/api
+      apiKey: $grafana-api-key-argocd-notifications
+  # -- Contains centrally managed global application subscriptions
+  ## For more information: https://argocd-notifications.readthedocs.io/en/stable/subscriptions/
+  subscriptions:
+    - recipients:
+        - teams:devops-teams
+        - slack:devops-slack
+        - grafana:argocd
+      triggers:
+        - on-created
+        - on-deleted
+        - on-deployed
+        - on-health-degraded
+        - on-sync-failed
+        - on-sync-running
+        - on-sync-status-unknown
+        - on-sync-succeeded
+  # -- The notification template is used to generate the notification content
+  ## For more information: https://argocd-notifications.readthedocs.io/en/stable/templates/
+  # https://github.com/argoproj-labs/argocd-notifications/tree/master/catalog/templates
+  templates:
+    # https://pkg.go.dev/time#Now
+    # https://yourbasic.org/golang/format-parse-string-time-date-example/
+    # https://medium.com/easyread/understanding-about-rfc-3339-for-datetime-formatting-in-software-engineering-940aa5d5f68a
+    # For more information: https://argocd-notifications.readthedocs.io/en/stable/templates/
+    template.app-created: |
+      email:
+        subject: Application {{.app.metadata.name}} has been created.
+      message: Application {{.app.metadata.name}} has been created.
+      teams:
+        title: Application {{.app.metadata.name}} has been created.
+    template.app-deleted: |
+      email:
+        subject: Application {{.app.metadata.name}} has been deleted.
+      message: Application {{.app.metadata.name}} has been deleted.
+      teams:
+        title: Application {{.app.metadata.name}} has been deleted.
+    template.app-deployed: |
+      email:
+        subject: New version of an application {{.app.metadata.name}} is up and running.
+      message: |
+        {{if eq .serviceType "slack"}}:white_check_mark:{{end}} Application {{.app.metadata.name}} is now running new version of deployments manifests.
+      teams:
+        themeColor: "#000080"
+        facts: |
+          [
+            {
+              "name": "Sync Status",
+              "value": "{{.app.status.sync.status}}"
+            },
+            {
+              "name": "Repository",
+              "value": "{{.app.spec.source.repoURL}}"
+            },
+            {
+              "name": "Revision",
+              "value": "{{.app.status.sync.revision}}"
+            },
+            {
+              "name": "Message",
+              "value": "{{(call .repo.GetCommitMetadata .app.status.sync.revision).Message}}"
+            },
+            {
+              "name": "Author",
+              "value": "{{(call .repo.GetCommitMetadata .app.status.sync.revision).Author}}"
+            }
+            {{range $index, $c := .app.status.conditions}}
+              {{if not $index}},{{end}}
+              {{if $index}},{{end}}
+              {
+                "name": "{{$c.type}}",
+                "value": "{{$c.message}}"
+              }
+            {{end}}
+          ]
+        potentialAction: |-
+          [
+            {
+              "@type":"OpenUri",
+              "name":"Open Repository",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.app.spec.source.repoURL | call .repo.RepoURLToHTTPS}}"
+              }]
+            },
+            {
+              "@type":"OpenUri",
+              "name":"Operation Application",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+              }]
+            }
+          ]
+        title: New version of an application {{.app.metadata.name}} is up and running.
+    template.app-health-degraded: |
+      themeColor: "#FF0000"
+      email:
+        subject: Application {{.app.metadata.name}} has degraded.
+      message: |
+        {{if eq .serviceType "slack"}}:exclamation:{{end}} Application {{.app.metadata.name}} has degraded.
+        Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}.
+      teams:
+        facts: |
+          [
+            {
+              "name": "Sync Status",
+              "value": "{{.app.status.sync.status}}"
+            },
+            {
+              "name": "Repository",
+              "value": "{{.app.spec.source.repoURL}}"
+            },
+            {
+              "name": "Message",
+              "value": "{{(call .repo.GetCommitMetadata .app.status.sync.revision).Message}}"
+            },
+            {
+              "name": "Author",
+              "value": "{{(call .repo.GetCommitMetadata .app.status.sync.revision).Author}}"
+            }
+            {{range $index, $c := .app.status.conditions}}
+              {{if not $index}},{{end}}
+              {{if $index}},{{end}}
+              {
+                "name": "{{$c.type}}",
+                "value": "{{$c.message}}"
+              }
+            {{end}}
+          ]
+        potentialAction: |
+          [
+            {
+              "@type":"OpenUri",
+              "name":"Open Repository",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.app.spec.source.repoURL | call .repo.RepoURLToHTTPS}}"
+              }]
+            },
+            {
+              "@type":"OpenUri",
+              "name":"Open Application",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+              }]
+            }
+          ]
+        title: Application {{.app.metadata.name}} has degraded.
+    template.app-sync-failed: |
+      email:
+        subject: Failed to sync application {{.app.metadata.name}}.
+      message: |
+        {{if eq .serviceType "slack"}}:exclamation:{{end}}  The sync operation of application {{.app.metadata.name}} has failed at {{(call .time.Parse .app.status.operationState.finishedAt).Local.Format "02/01/2006 15:04:05 +0200"}} with the following error: {{.app.status.operationState.message}}
+        Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true .
+      teams:
+        themeColor: "#FF0000"
+        facts: |
+          [
+            {
+              "name": "Sync Status",
+              "value": "{{.app.status.sync.status}}"
+            },
+            {
+              "name": "Failed at",
+              "value": "{{(call .time.Parse .app.status.operationState.finishedAt).Local.Format "02/01/2006 15:04:05"}}"
+            },
+            {
+              "name": "Repository",
+              "value": "{{.app.spec.source.repoURL}}"
+            }
+            {{range $index, $c := .app.status.conditions}}
+              {{if not $index}},{{end}}
+              {{if $index}},{{end}}
+              {
+                "name": "{{$c.type}}",
+                "value": "{{$c.message}}",
+              }
+            {{end}}
+          ]
+        potentialAction: |-
+          [
+            {
+              "@type":"OpenUri",
+              "name":"Open Repository",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.app.spec.source.repoURL | call .repo.RepoURLToHTTPS}}"
+              }]
+            },
+            {
+              "@type":"OpenUri",
+              "name":"Open Operation",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+              }]
+            }
+          ]
+        title: Failed to sync application {{.app.metadata.name}}.
+    template.app-sync-running: |
+      email:
+        subject: Start syncing application {{.app.metadata.name}}.
+      message: |
+        The sync operation of application {{.app.metadata.name}} has started at {{(call .time.Parse .app.status.operationState.startedAt).Local.Format "02/01/2006 15:04:05"}}.
+        Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true .
+      teams:
+        facts: |
+          [
+            {
+              "name": "Sync Status",
+              "value": "{{.app.status.sync.status}}"
+            },
+            {
+              "name": "Started at",
+              "value": "{{(call .time.Parse .app.status.operationState.startedAt).Local.Format "02/01/2006 15:04:05"}}"
+            },
+            {
+              "name": "Repository",
+              "value": "{{.app.spec.source.repoURL}}"
+            }
+            {{range $index, $c := .app.status.conditions}}
+              {{if not $index}},{{end}}
+              {{if $index}},{{end}}
+              {
+                "name": "{{$c.type}}",
+                "value": "{{$c.message}}",
+              }
+            {{end}}
+          ]
+        potentialAction: |-
+          [
+            {
+              "@type":"OpenUri",
+              "name":"Open Repository",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.app.spec.source.repoURL | call .repo.RepoURLToHTTPS}}"
+              }]
+            },
+            {
+              "@type":"OpenUri",
+              "name":"Open Operation",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+              }]
+            }
+          ]
+        title: Start syncing application {{.app.metadata.name}}.
+    template.app-sync-status-unknown: |
+      email:
+        subject: Application {{.app.metadata.name}} sync status is 'Unknown'
+      message: |
+        {{if eq .serviceType "slack"}}:exclamation:{{end}} Application {{.app.metadata.name}} sync is 'Unknown'.
+        Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}.
+        {{if ne .serviceType "slack"}}
+        {{range $c := .app.status.conditions}}
+            * {{$c.message}}
+        {{end}}
+        {{end}}
+      teams:
+        facts: |
+          [
+            {
+              "name": "Sync Status",
+              "value": "{{.app.status.sync.status}}"
+            },
+            {
+              "name": "Repository",
+              "value": "{{.app.spec.source.repoURL}}"
+            }
+            {{range $index, $c := .app.status.conditions}}
+              {{if not $index}},{{end}}
+              {{if $index}},{{end}}
+              {
+                "name": "{{$c.type}}",
+                "value": "{{$c.message}}"
+              }
+            {{end}}
+          ]
+        potentialAction: |-
+          [
+            {
+              "@type":"OpenUri",
+              "name":"Open Repository",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.app.spec.source.repoURL | call .repo.RepoURLToHTTPS}}"
+              }]
+            },
+            {
+              "@type":"OpenUri",
+              "name":"Open Application",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}"
+              }]
+            }
+          ]
+        title: Application {{.app.metadata.name}} sync status is 'Unknown'
+    template.app-sync-succeeded: |
+      email:
+        subject: Application {{.app.metadata.name}} has been successfully synced.
+      message: |
+        {{if eq .serviceType "slack"}}:white_check_mark:{{end}} Application {{.app.metadata.name}} has been successfully synced at {{(call .time.Parse .app.status.operationState.finishedAt).Local.Format "02/01/2006 15:04:05"}}.
+        Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true .
+      teams:
+        themeColor: "#000080"
+        facts: |
+          [
+            {
+              "name": "Sync Status",
+              "value": "{{.app.status.sync.status}}"
+            },
+            {
+              "name": "Synced at",
+              "value": "{{(call .time.Parse .app.status.operationState.finishedAt).Local.Format "02/01/2006 15:04:05"}}"
+            },
+            {
+              "name": "Repository",
+              "value": "{{.app.spec.source.repoURL}}"
+            }
+            {{range $index, $c := .app.status.conditions}}
+              {{if not $index}},{{end}}
+              {{if $index}},{{end}}
+              {
+                "name": "{{$c.type}}",
+                "value": "{{$c.message}}"
+              }
+            {{end}}
+          ]
+        potentialAction: |-
+          [
+            {
+              "@type":"OpenUri",
+              "name":"Open Repository",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.app.spec.source.repoURL | call .repo.RepoURLToHTTPS}}"
+              }]
+            },
+            {
+              "@type":"OpenUri",
+              "name":"Operation Details",
+              "targets":[{
+                "os":"default",
+                "uri":"{{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true"
+              }]
+            }
+          ]
+        title: Application {{.app.metadata.name}} has been successfully synced
+  triggers:
+    # For more information: https://argocd-notifications.readthedocs.io/en/stable/triggers/
+    trigger.on-created: |
+      - description: Application is created.
+        oncePer: app.metadata.name
+        send:
+        - app-created
+        when: "true"
+    trigger.on-deleted: |
+      - description: Application is deleted.
+        oncePer: app.metadata.name
+        send:
+        - app-deleted
+        when: app.metadata.deletionTimestamp != nil
+    trigger.on-deployed: |
+      - description: Application is synced and healthy. Triggered once per commit.
+        oncePer: app.status.operationState.syncResult.revision
+        send:
+        - app-deployed
+        when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status == 'Healthy'
+    trigger.on-health-degraded: |
+      - description: Application has degraded
+        send:
+        - app-health-degraded
+        when: app.status.health.status == 'Degraded'
+    trigger.on-sync-failed: |
+      - description: Application syncing has failed
+        send:
+        - app-sync-failed
+        when: app.status.operationState.phase in ['Error', 'Failed']
+    trigger.on-sync-running: |
+      - description: Application is being synced
+        oncePer: app.status.sync.revision
+        send:
+        - app-sync-running
+        when: app.status.operationState.phase in ['Running']
+    trigger.on-sync-status-unknown: |
+      - description: Application status is 'Unknown'
+        send:
+        - app-sync-status-unknown
+        when: app.status.sync.status == 'Unknown'
+    trigger.on-sync-succeeded: |
+      - description: Application syncing has succeeded
+        oncePer: app.status.sync.revision
+        send:
+        - app-sync-succeeded
+        when: app.status.operationState.phase in ['Succeeded']
+redis:
+  image:
+    imagePullPolicy: Always
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 100m # 250m
+      memory: 64Mi # 128Mi
+  metrics:
+    enabled: true
+    resources:
+      limits:
+        cpu: 50m
+        memory: 64Mi
+      requests:
+        cpu: 10m
+        memory: 32Mi
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+repoServer:
+  image:
+    imagePullPolicy: Always
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
+  resources:
+    limits:
+      cpu: '1'
+      memory: 512Mi
+    requests:
+      cpu: 10m # 250m
+      memory: 64Mi # 256Mi
+  copyutil:
+    limits:
+      cpu: 50m
+      memory: 64Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+  # see: https://github.com/argoproj/argo-cd/blob/master/common/common.go
+  env:
+    # https://github.com/argoproj/argo-cd/issues/2553
+    - name: ARGOCD_EXEC_TIMEOUT
+      value: 3m
+server:
+  # -- Manage Argo CD configmap (Declarative Setup)
+  ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
+  configEnabled: true
+  # -- [General Argo CD configuration]
+  # @default -- See [values.yaml]
+  config:
+    timeout.reconciliation: 15s
+    kustomize.buildOptions: --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone
+
+  # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
+  logLevel: info
+
+  # -- The number of server pods to run
+  replicas: 1
+
+  autoscaling:
+    # -- Enable Horizontal Pod Autoscaler ([HPA]) for the Argo CD server
+    enabled: false
+    # -- Minimum number of replicas for the Argo CD server [HPA]
+    minReplicas: 1
+    # -- Maximum number of replicas for the Argo CD server [HPA]
+    maxReplicas: 5
+    # -- Average CPU utilization percentage for the Argo CD server [HPA]
+    targetCPUUtilizationPercentage: 50
+    # -- Average memory utilization percentage for the Argo CD server [HPA]
+    targetMemoryUtilizationPercentage: 50
+
+  # -- Additional command line arguments to pass to Argo CD server
+  extraArgs:
+    - --insecure
+  # -- Environment variables to pass to Argo CD server
+  env:
+    - name: HOME
+      value: /tmp/argocd
+  image:
+    imagePullPolicy: Always
+  livenessProbe:
+    enabled: true
+  readinessProbe:
+    enabled: true
+  resources:
+    limits:
+      cpu: 500m
+      memory: 256Mi
+    requests:
+      cpu: 50m
+      memory: 64Mi
+  containerSecurityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    allowPrivilegeEscalation: false
+  # -- Deploy Argo CD Projects within this helm release
+  # @default -- `[]` (See [values.yaml])
+  ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/
+  additionalProjects:
+  - name: default
+    namespace: argocd
+    sourceRepos:
+    - '*'
+    destinations:
+    - namespace: '*'
+      server: '*'
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+
