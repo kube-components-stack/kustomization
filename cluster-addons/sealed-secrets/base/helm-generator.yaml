@@ -11,5 +11,7 @@ repo: https://bitnami-labs.github.io/sealed-secrets
 releaseName: *name
 namespace: kube-system
 includeCRDs: false
-valueFiles:
-- ../../base/values.yaml
+valuesFile: values.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline:
+  namespace: kube-system
