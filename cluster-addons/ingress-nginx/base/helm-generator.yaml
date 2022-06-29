@@ -5,11 +5,11 @@ apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
   name: ingress-nginx-helm-chart
-name: &name ingress-nginx
+name: ingress-nginx
 version:  v4.1.2
 repo: https://kubernetes.github.io/ingress-nginx
-releaseName: *name
-namespace: *name
+releaseName: ingress-nginx
+namespace: ingress-nginx
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace

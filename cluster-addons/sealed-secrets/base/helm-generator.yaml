@@ -5,10 +5,10 @@ apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
   name: sealed-secrets-helm-chart
-name: &name sealed-secrets
+name: sealed-secrets
 version: 2.2.0
 repo: https://bitnami-labs.github.io/sealed-secrets
-releaseName: *name
+releaseName: sealed-secrets
 namespace: kube-system
 includeCRDs: false
 valuesFile: values.yaml
