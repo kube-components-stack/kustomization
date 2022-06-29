@@ -3,5 +3,6 @@
   "extends": [
     "config:base"
   ],
-  "repositories": ["kube-components-stack/kustomization"]
+  "dependencyDashboard": true,
+  "baseBranches": ["master"]
 }
