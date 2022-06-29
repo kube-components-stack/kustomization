@@ -91,3 +91,7 @@ create-secrets:
 			cd $$OLDPWD
 		fi
 	done
+
+renovate: ## renovate
+renovate:
+	docker run --rm -v $${PWD}/config.js:/usr/src/app/config.js -e RENOVATE_TOKEN=$${GITHUB_PERSONAL_ACCESS_TOKEN} -e RENOVATE_GIT_AUTHOR="$$(git config --get user.name) <$$(git config --get user.email)>" -it renovate/renovate
