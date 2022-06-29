@@ -7,7 +7,7 @@
   "baseBranches": ["master"],
   "regexManagers": [
     {
-      "fileMatch": ["^helm-generator.yaml$"],
+      "fileMatch": ["^helm-generator\\.yaml$"],
       "matchStringsStrategy": "recursive",
       "matchStrings": [
         "repo:\\s+(?<repository>\\S+)",
