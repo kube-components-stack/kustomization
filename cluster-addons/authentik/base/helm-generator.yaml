@@ -10,7 +10,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: authentik-helm-chart
 name: &name authentik
-version: 2022.6.1
+version: 2022.6.3
 repo: https://charts.goauthentik.io/
 releaseName: *name
 namespace: authentik
