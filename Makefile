@@ -94,4 +94,11 @@ create-secrets:
 
 renovate: ## renovate
 renovate:
-	docker run --rm -v $${PWD}/config.js:/usr/src/app/config.js -e RENOVATE_TOKEN=$${GITHUB_PERSONAL_ACCESS_TOKEN} -e RENOVATE_GIT_AUTHOR="$$(git config --get user.name) <$$(git config --get user.email)>" -e RENOVATE_DRY_RUN=full -it renovate/renovate
+	docker run \
+		--rm \
+		-v $${PWD}/config.js:/usr/src/app/config.js \
+		-e RENOVATE_TOKEN=$${GITHUB_PERSONAL_ACCESS_TOKEN} \
+		-e RENOVATE_GIT_AUTHOR="$$(git config --get user.name) <$$(git config --get user.email)>" \
+		-e RENOVATE_DRY_RUN=full \
+		-e LOG_LEVEL=debug \
+		-it renovate/renovate

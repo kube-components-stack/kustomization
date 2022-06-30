@@ -1,34 +1,9 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:base",
+    "github>kube-components-stack/renovate-presets:default"
   ],
   "dependencyDashboard": true,
-  "baseBranches": ["master"],
-  "regexManagers": [
-    {
-      "fileMatch": ["^helm-generator\\.yaml$"],
-      "matchStringsStrategy": "recursive",
-      "matchStrings": [
-        "repo:\\s+(?<repository>\\S+)",
-        "name:\\s+(?<depName>\\S+)",
-        "version:\\s+(?<currentValue>\\S+)"
-      ],
-      "datasourceTemplate": "helm"
-    }
-  ],
-  "packageRules": [
-    {
-      "datasources": ["helm"],
-      "managers": ["regex"],
-      "packageNames": [
-        "ingress-nginx",
-        "sealed-secrets"
-      ],
-      "registryUrls": [
-        "https://kubernetes.github.io/ingress-nginx/",
-        "https://bitnami-labs.github.io/sealed-secrets"
-      ]
-    }
-  ]
+  "baseBranches": ["master"]
 }
