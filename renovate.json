@@ -5,14 +5,5 @@
     "github>kube-components-stack/renovate-presets:default"
   ],
   "dependencyDashboard": true,
-  "baseBranches": ["master"],
-  "regexManagers": [
-    {
-      "fileMatch": ["^helm-generator\\.yaml$"],
-      "matchStrings": [
-        "name:\\s+(?<depName>\\S+)\\nversion:\\s+(?<currentValue>\\S+)\\nrepo:\\s+(?<registryUrl>\\S+)"
-      ],
-      "datasourceTemplate": "helm"
-    }
-  ]
+  "baseBranches": ["master"]
 }
