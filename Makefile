@@ -94,11 +94,14 @@ create-secrets:
 
 renovate: ## renovate
 renovate:
+	owner=$$(git config --get remote.origin.url|sed -r "s/^[^:]+:\/\/[^\/]+\/([^\/]+).*/\1/"|sed -r "s/^[^:]+:([^\/]+).*/\1/")
+	repo=$$(git config --get remote.origin.url|sed -r "s/^[^:]+:\/\/[^\/]+\/[^\/]+\/([^\.]+).*/\1/"|sed -r "s/^[^:]+:[^\/]+\/([^\.]+).*/\1/")
 	docker run \
 		--rm \
-		-v $${PWD}/config.js:/usr/src/app/config.js \
 		-e RENOVATE_TOKEN=$${GITHUB_PERSONAL_ACCESS_TOKEN} \
 		-e RENOVATE_GIT_AUTHOR="$$(git config --get user.name) <$$(git config --get user.email)>" \
 		-e RENOVATE_DRY_RUN=full \
+		-e RENOVATE_PLATFORM=github \
+		-e RENOVATE_REPOSITORIES=$${owner}/$${repo} \
 		-e LOG_LEVEL=debug \
 		-it renovate/renovate
