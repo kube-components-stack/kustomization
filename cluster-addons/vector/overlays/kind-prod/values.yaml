@@ -1,4 +1,6 @@
 env:
+  - name: AWS_DEFAULT_REGION
+    value: us-east-1
   - name: AWS_ACCESS_KEY_ID
     valueFrom:
       secretKeyRef:
