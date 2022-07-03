@@ -1,29 +1,10 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:base"
+    "config:base",
+    "github>kube-components-stack/renovate-presets:default"
   ],
   "dependencyDashboard": true,
   "prHourlyLimit": 0,
-  "prConcurrentLimit": 0,
-  "regexManagers": [
-    {
-      "fileMatch": ["^cluster-addons/[^\\/]+/base/helm-generator\\.yaml$"],
-      "matchStringsStrategy": "combination",
-      "matchStrings": [
-        "(^|\\n)name:\\s+(?:&\\S+\\s+)?(?<depName>\\S+)",
-        "(^|\\n)version:\\s+(?<currentValue>\\S+)",
-        "(^|\\n)repo:\\s+(?<registryUrl>\\S+)"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "fileMatch": ["^crds/[^\\/]+/base/kustomization\\.yaml$"],
-      "matchStrings": [
-        "raw\\.githubusercontent\\.com\\/(?<depName>[^\\/]+\\/[^\\/]+)\\/(?<currentValue>[^\\/]+)"
-      ],
-      "datasourceTemplate": "github-tags",
-      "versioningTemplate": "regex:(.*[^\\d])?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?"
-    }
-  ]
+  "prConcurrentLimit": 0
 }
