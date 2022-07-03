@@ -3,6 +3,7 @@
   "extends": [
     "config:base"
   ],
+  "timezone": "Europe/Paris",
   "dependencyDashboard": true,
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
