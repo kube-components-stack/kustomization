@@ -30,7 +30,7 @@ customConfig:
       target: stdout
       encoding:
         codec: json
-extraVolumes: []
+extraVolumes:
 - name: var-lib-vector
   emptyDir: {}
 extraVolumeMounts:
