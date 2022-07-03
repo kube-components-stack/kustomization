@@ -130,7 +130,7 @@ spec:
               secretKeyRef:
                 key: admin-password
                 name: grafana-secret
-        image: "bitnami/kubectl:1.23"
+        image: "bitnami/kubectl:1.24"
         imagePullPolicy: Always
         name: kubectl
         securityContext:
