@@ -5,7 +5,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: cert-manager-helm-chart
 name: &name cert-manager
-version: v1.6.1 #v1.8.0
+version: v1.8.2 #v1.8.0
 repo: https://charts.jetstack.io
 releaseName: *name
 namespace: *name
