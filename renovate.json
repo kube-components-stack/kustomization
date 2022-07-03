@@ -30,5 +30,20 @@
     "fileMatch": [
       "^cluster-addons/[^\\/]+/base/job\\.yaml$"
     ]
-  }
+  },
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+      "schedule": ["before 11pm on sunday"],
+      "automergeType": "branch"
+    },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "automerge": true,
+      "schedule": ["before 11pm on sunday"],
+      "automergeType": "branch"
+    }
+  ],
+  "platformAutomerge": true
 }
