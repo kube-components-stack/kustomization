@@ -61,13 +61,13 @@ valuesInline:
       # -- define the application controller `--status-processors`
       statusProcessors: "20"
       # -- define the application controller `--operation-processors`
-      operationProcessors: "50"
+      operationProcessors: "10" #"50"
       # -- define the application controller `--app-resync`
-      appResyncPeriod: "300"
+      appResyncPeriod: "180" #"300"
       # -- define the application controller `--self-heal-timeout-seconds`
       selfHealTimeout: "5"
       # -- define the application controller `--repo-server-timeout-seconds`
-      repoServerTimeoutSeconds: "300"
+      repoServerTimeoutSeconds: "60" #"300"
     image:
       imagePullPolicy: Always
     initImage:
