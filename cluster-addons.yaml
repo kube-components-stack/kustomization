@@ -64,15 +64,15 @@ spec:
       #   jqPathExpressions:
       #   - '.spec.template.spec.containers[]?.securityContext'
       #   - '.spec.template.spec.containers[]?.resources'
-      # - group: apps
-      #   kind: Deployment
-      #   jqPathExpressions:
-      #   - '.spec.template.spec.containers[]?.imagePullPolicy'
-      # - group: apps
-      #   kind: DaemonSet
-      #   jqPathExpressions:
-      #   - '.spec.template.spec.containers[]?.imagePullPolicy'
-      # - group: apps
-      #   kind: StatefulSet
-      #   jqPathExpressions:
-      #   - '.spec.template.spec.containers[]?.imagePullPolicy'
+      - group: apps
+        kind: Deployment
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
+      - group: apps
+        kind: DaemonSet
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
+      - group: apps
+        kind: StatefulSet
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
