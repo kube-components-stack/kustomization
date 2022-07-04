@@ -21,7 +21,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: kube-prometheus-stack-helm-chart
 name: &name kube-prometheus-stack
-version: 36.2.1
+version: 34.10.0
 repo: https://prometheus-community.github.io/helm-charts
 releaseName: *name
 namespace: monitoring
