@@ -1,3 +1,3 @@
 controller:
   service:
-    loadBalancerIP: 10.20.255.200
+    loadBalancerIP: 10.21.255.200
