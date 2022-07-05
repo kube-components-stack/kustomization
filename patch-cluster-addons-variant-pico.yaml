@@ -10,9 +10,9 @@ spec:
                   exclude: true
                 - path: cluster-addons/keycloak
                   exclude: true
-                - path: cluster-addons/kube-prometheus-stack
+                - path: cluster-addons/monitoring
                   exclude: true
-                - path: cluster-addons/loki-distributed
+                - path: cluster-addons/loki
                   exclude: true
                 - path: cluster-addons/minio
                   exclude: true
