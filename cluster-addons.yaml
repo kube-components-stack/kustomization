@@ -10,7 +10,7 @@ spec:
         generators:
           - git:
               repoURL: https://github.com/kube-components-stack/kustomization.git
-              revision: ns #HEAD
+              revision: HEAD
               directories:
                 - path: "cluster-addons/*"
           - clusters: {}
@@ -22,7 +22,7 @@ spec:
       info: []
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
-        targetRevision: ns #HEAD
+        targetRevision: HEAD
         path: "cluster-addons/{{path.basename}}/overlays/{{name}}"
         # plugin:
         #   name: argocd-lovely-plugin # https://github.com/crumbhole/argocd-lovely-plugin
