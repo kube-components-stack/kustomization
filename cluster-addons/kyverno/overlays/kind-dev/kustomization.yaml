@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: kyverno
 generators:
 - ../../base/helm-generator.yaml
+- ../../base/helm-generator-policies.yaml
 resources:
 - ../../base
