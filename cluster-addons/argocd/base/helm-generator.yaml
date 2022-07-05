@@ -57,13 +57,18 @@ valuesInline:
     volumes:
       - name: tmp
         emptyDir: {}
-    # https://github.com/argoproj/argo-cd/issues/3864
     ## Application controller commandline flags
+    # See:
+    # - https://github.com/argoproj/argo-cd/issues/3864
+    # - https://argo-cd.readthedocs.io/en/stable/operator-manual/high_availability/#argocd-application-controller
+    # 
+    # 
+    #
     args:
       # -- define the application controller `--status-processors`
-      statusProcessors: "20"
+      statusProcessors: "20" # default: 20 => 50 (~1000 apps)
       # -- define the application controller `--operation-processors`
-      operationProcessors: "10" #"50"
+      operationProcessors: "10" # default: 20 => 25 (~1000 apps)
       # -- define the application controller `--app-resync`
       appResyncPeriod: "180" #"300"
       # -- define the application controller `--self-heal-timeout-seconds`
