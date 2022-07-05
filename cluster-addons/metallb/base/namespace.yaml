@@ -3,7 +3,3 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: metallb
-  annotations:
-    argocd.argoproj.io/hook: PreSync
-    argocd.argoproj.io/sync-wave: "-10000"
-    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation

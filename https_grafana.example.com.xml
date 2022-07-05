@@ -1,0 +1,27 @@
+<EntityDescriptor entityID="https://grafana.example.com" xmlns="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+  <SPSSODescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIICwzCCAasCFFR9NmlDbu5NiHX3cO4N7ZxHqBJzMA0GCSqGSIb3DQEBCwUAMB4x
+HDAaBgNVBAMME2dyYWZhbmEuZXhhbXBsZS5jb20wHhcNMjIwNzA1MDkxMjQ4WhcN
+MzIwNzA0MDkxMjQ4WjAeMRwwGgYDVQQDDBNncmFmYW5hLmV4YW1wbGUuY29tMIIB
+IjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtYWYIITET+d30Lylr+ZYLqVo
+t63L8qly5LwWFcbyw+iR90SWwkHji/4bjI7HM3c9zO60WdbFmp6YWzs+WSdBPosZ
+n+iG8TXKBvXkVWjdsZgqCpWmwt3CvYaBcf7ZbN03/TJvyNxkweVGqOU1cVI52z7i
+Nn1GkAG07I6ETGtxxhEhxuGpn2wD56eZWQ69V46QbqV1E4oKbD9ui0a5mA8Yn+Vg
+wIZNQI4UmVF4MrO1vIKgX2tVY/zhdum7avVBN3geYRdhLsba1IfOTAXkbssVCo5a
+DSs7pQMP3jhLVuGemSxvXm6Y9UNGv/gpy8dNBWtRV80jZzz+xElz4BGpdTrpvQID
+AQABMA0GCSqGSIb3DQEBCwUAA4IBAQBATQWjRp3o6u+h/2gq6Q4RhEKnarYOtc2U
+UvyHIXpBf4qFzWj1X2M92EIAhWHto/WqvdzsEPk7oCTGxIQcP3OQeL/gksoJ2Rql
+j/QQPoPVKcQ6DOMsSN7899ro9eXZHGNBQ5zJm6jmnHVJZb5BvXHIpanNWkpmalf9
++K5rj05vRhgfddGp3RMjedaOXOyCbgOm0V46IHl0RH8zNKUTDellUdQJer5g9RXz
+a29ihrD8CnWN/bB5vzaiXok7M9GeItMEXUd3LVMPGRj8zkXa1wBlUGq/bVAjniPU
+GvtUUcHjMRTpci0xnmtYOQ+26XJNpingomxZ/RerBa8LYu8Ltltx</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://grafana.example.com/mellon/logout"/>
+    <AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://grafana.example.com/mellon/postResponse" index="0"/>
+  </SPSSODescriptor>
+</EntityDescriptor>
