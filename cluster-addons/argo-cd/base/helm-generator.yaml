@@ -48,7 +48,7 @@ valuesInline:
       - name: HOME
         value: /tmp/argocd
       - name: ARGOCD_SYNC_WAVE_DELAY # controls the delay in seconds between each sync-wave
-        value: 5 # 2
+        value: "5" # 2
     # -- Additional volumeMounts to the application controller main container
     volumeMounts:
       - name: tmp
