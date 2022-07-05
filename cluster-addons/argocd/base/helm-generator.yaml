@@ -59,11 +59,8 @@ valuesInline:
         emptyDir: {}
     ## Application controller commandline flags
     # See:
-    # - https://github.com/argoproj/argo-cd/issues/3864
     # - https://argo-cd.readthedocs.io/en/stable/operator-manual/high_availability/#argocd-application-controller
-    # 
-    # 
-    #
+    # - https://github.com/argoproj/argo-cd/issues/3864
     args:
       # -- define the application controller `--status-processors`
       statusProcessors: "20" # default: 20 => 50 (~1000 apps)
