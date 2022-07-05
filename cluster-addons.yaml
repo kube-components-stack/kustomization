@@ -30,7 +30,7 @@ spec:
 
       destination:
         server: '{{server}}'
-        # namespace: '{{path.basename}}'
+        namespace: '{{name}}'
       revisionHistoryLimit: 3
       syncPolicy:
         automated:                              # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
@@ -45,7 +45,7 @@ spec:
             maxDuration: 3m                     # the maximum amount of time allowed for the backoff strategy
         syncOptions:
           - Validate=false                      # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
-        # - CreateNamespace=true                # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+          - CreateNamespace=true                # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
           - ApplyOutOfSyncOnly=true
           - RespectIgnoreDifferences=true
         # - PrunePropagationPolicy=foreground   # Supported policies are background, foreground and orphan.
