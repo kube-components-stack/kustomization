@@ -6,8 +6,6 @@ spec:
           - git:
               directories:
                 - path: cluster-addons/*
-                - path: cluster-addons/authentik
-                  exclude: true
                 - path: cluster-addons/keycloak
                   exclude: true
                 - path: cluster-addons/monitoring
