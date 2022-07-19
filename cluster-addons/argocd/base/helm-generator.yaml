@@ -72,6 +72,9 @@ valuesInline:
       selfHealTimeout: "5"
       # -- define the application controller `--repo-server-timeout-seconds`
       repoServerTimeoutSeconds: "420" #"60" #"300"
+    extraArgs:
+    - --kubectl-parallelism-limit
+    - "70" 
     image:
       imagePullPolicy: Always
     initImage:
@@ -637,8 +640,9 @@ valuesInline:
       # - name: ARGOCD_GIT_MODULES_ENABLED
       #   value: "false"
     extraArgs:
-    - --parallelismlimit 70
-    
+    - --parallelismlimit 70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
+    - --tlsmaxversion 1.2
+
   server:
     # -- Manage Argo CD configmap (Declarative Setup)
     ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
