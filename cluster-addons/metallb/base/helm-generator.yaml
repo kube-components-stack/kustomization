@@ -16,5 +16,5 @@ includeCRDs: false                      # IncludeCRDs specifies if Helm should a
 valuesFile: null                        # ValuesFile is local file path to a values file to use _instead of_ the default values that accompanied the chart. The default values are in '{ChartHome}/{Name}/values.yaml'.
 valuesInline:                           # ValuesInline holds value mappings specified directly, rather than in a separate file.
   crds:
-    enabled: false                       
+    enabled: true
 valuesMerge: override                   # ValuesMerge specifies how to treat ValuesInline with respect to Values. Legal values: 'merge', 'override', 'replace'. Defaults to 'override'.
