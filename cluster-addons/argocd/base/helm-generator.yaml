@@ -74,7 +74,11 @@ valuesInline:
       repoServerTimeoutSeconds: "420" #"60" #"300"
     extraArgs:
     - --kubectl-parallelism-limit
-    - "70" 
+    - "70"
+
+    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
+    logLevel: debug
+    
     image:
       imagePullPolicy: Always
     initImage:
