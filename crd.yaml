@@ -21,6 +21,8 @@ spec:
                   exclude: false
                 - path: crds/kyverno
                   exclude: false
+                - path: crds/metallb
+                  exclude: false
                 - path: crds/sealed-secrets
                   exclude: false
           - clusters: {}

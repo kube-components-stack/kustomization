@@ -1,5 +1,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: metallb
-bases:
-- git::https://github.com/metallb/metallb/config/crd?ref=v0.13.3
+# bases:
+# - git::https://github.com/metallb/metallb/config/crd?ref=v0.13.3
+
+resources:
+- https://raw.githubusercontent.com/metallb/metallb/v0.13.3/config/crd/bases/metallb.io_addresspools.yaml
+- https://raw.githubusercontent.com/metallb/metallb/v0.13.3/config/crd/bases/metallb.io_bfdprofiles.yaml
+- https://raw.githubusercontent.com/metallb/metallb/v0.13.3/config/crd/bases/metallb.io_bgpadvertisements.yaml
+- https://raw.githubusercontent.com/metallb/metallb/v0.13.3/config/crd/bases/metallb.io_bgppeers.yaml
+- https://raw.githubusercontent.com/metallb/metallb/v0.13.3/config/crd/bases/metallb.io_communities.yaml
+- https://raw.githubusercontent.com/metallb/metallb/v0.13.3/config/crd/bases/metallb.io_ipaddresspools.yaml
+- https://raw.githubusercontent.com/metallb/metallb/v0.13.3/config/crd/bases/metallb.io_l2advertisements.yaml
+
+# patchesStrategicMerge:
+# - crd-conversion-patch.yaml
