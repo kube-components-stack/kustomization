@@ -23,6 +23,10 @@ valuesInline:
       runAsGroup: 999
       fsGroup: 999
   applicationSet:
+    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
+    extraArgs:
+    - --loglevel=debug
+
     image:
       imagePullPolicy: Always
     resources:
@@ -40,6 +44,9 @@ valuesInline:
       runAsNonRoot: true
       allowPrivilegeEscalation: false
   controller:
+    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
+    logLevel: debug
+
     # -- Environment variables to pass to Argo CD controller
     # https://github.com/argoproj/argo-helm/issues/446
     # The application-controller pod is really the one that should be able to list pods based on the RBAC config.
@@ -72,9 +79,6 @@ valuesInline:
       selfHealTimeout: "5"
       # -- define the application controller `--repo-server-timeout-seconds`
       repoServerTimeoutSeconds: "420" #"60" #"300"
-
-    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
-    logLevel: debug
 
     # -- Additional command line arguments to pass to application controller
     extraArgs:
@@ -611,6 +615,9 @@ valuesInline:
       runAsNonRoot: true
       allowPrivilegeEscalation: false
   repoServer:
+    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
+    logLevel: debug
+
     image:
       imagePullPolicy: Always
     livenessProbe:
@@ -650,6 +657,9 @@ valuesInline:
     # - --tlsmaxversion 1.2
 
   server:
+    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
+    logLevel: debug
+
     # -- Manage Argo CD configmap (Declarative Setup)
     ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
     configEnabled: true
@@ -658,9 +668,6 @@ valuesInline:
     config:
       timeout.reconciliation: 3m #15s
       kustomize.buildOptions: --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone
-
-    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
-    logLevel: debug
 
     # -- The number of server pods to run
     replicas: 1
