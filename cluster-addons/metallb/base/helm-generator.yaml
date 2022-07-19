@@ -8,11 +8,11 @@ metadata:
   name: metallb-helm-chart
 name: &name metallb                     # Name is the name of the chart, e.g. 'minecraft'.
 # Starting from v0.13.0 configInline is no longer supported. Please see https://metallb.universe.tf/#backward-compatibility
-version: v0.12.1 #0.13.3        # Version is the version of the chart, e.g. '3.1.3'
+version: 0.13.3                         # Version is the version of the chart, e.g. '3.1.3'
 repo: https://metallb.github.io/metallb # Repo is a URL locating the chart on the internet.
 releaseName: *name                      # ReleaseName replaces RELEASE-NAME in chart template output,
 namespace: *name                        # Namespace set the target namespace for a release.
 includeCRDs: false                      # IncludeCRDs specifies if Helm should also generate CustomResourceDefinitions. Defaults to 'false'.
-valuesFile: values.yaml                 # ValuesFile is local file path to a values file to use _instead of_ the default values that accompanied the chart. The default values are in '{ChartHome}/{Name}/values.yaml'.
+valuesFile: null                        # ValuesFile is local file path to a values file to use _instead of_ the default values that accompanied the chart. The default values are in '{ChartHome}/{Name}/values.yaml'.
 valuesInline: {}                        # ValuesInline holds value mappings specified directly, rather than in a separate file.
 valuesMerge: override                   # ValuesMerge specifies how to treat ValuesInline with respect to Values. Legal values: 'merge', 'override', 'replace'. Defaults to 'override'.

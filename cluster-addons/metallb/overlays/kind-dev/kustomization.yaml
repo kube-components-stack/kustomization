@@ -5,3 +5,5 @@ bases:
 - ../../base
 generators:
 - ../../base/helm-generator.yaml
+resources:
+- IPAddressPool.yaml
