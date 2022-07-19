@@ -7,4 +7,3 @@ metadata:
 spec:
   addresses:
   - 10.21.255.0/24
-# status: {}
