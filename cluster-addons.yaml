@@ -37,6 +37,8 @@ spec:
                   exclude: true
                 - path: cluster-addons/vector
                   exclude: true
+                - path: cluster-addons/metallb
+                  exclude: true
           - clusters: {}
   template:
     metadata:
