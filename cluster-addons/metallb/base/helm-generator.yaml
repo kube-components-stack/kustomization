@@ -14,5 +14,7 @@ releaseName: *name                      # ReleaseName replaces RELEASE-NAME in c
 namespace: *name                        # Namespace set the target namespace for a release.
 includeCRDs: false                      # IncludeCRDs specifies if Helm should also generate CustomResourceDefinitions. Defaults to 'false'.
 valuesFile: null                        # ValuesFile is local file path to a values file to use _instead of_ the default values that accompanied the chart. The default values are in '{ChartHome}/{Name}/values.yaml'.
-valuesInline: {}                        # ValuesInline holds value mappings specified directly, rather than in a separate file.
+valuesInline:                           # ValuesInline holds value mappings specified directly, rather than in a separate file.
+  crds:
+    enabled: false                       
 valuesMerge: override                   # ValuesMerge specifies how to treat ValuesInline with respect to Values. Legal values: 'merge', 'override', 'replace'. Defaults to 'override'.
