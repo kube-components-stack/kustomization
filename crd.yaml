@@ -4,6 +4,8 @@ kind: ApplicationSet
 metadata:
   name: crds
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-500"
 spec:
   generators:
     - matrix:
