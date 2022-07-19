@@ -15,30 +15,30 @@ spec:
                 - path: "cluster-addons/*"
                 ###############################
                 - path: cluster-addons/argocd
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/kube-system
-                  exclude: true
+                  exclude: false
                 ###############################
                 - path: cluster-addons/keycloak
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/cert-manager
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/kyverno
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/ingress-nginx
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/monitoring
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/loki
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/minio
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/promtail
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/vector
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/metallb
-                  exclude: true
+                  exclude: false
           - clusters: {}
   template:
     metadata:
