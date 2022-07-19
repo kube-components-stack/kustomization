@@ -63,9 +63,9 @@ valuesInline:
     # - https://github.com/argoproj/argo-cd/issues/3864
     args:
       # -- define the application controller `--status-processors`
-      statusProcessors: "25" # default: 20 => 50 (~1000 apps)
+      statusProcessors: "55" # default: 20 => 50 (~1000 apps)
       # -- define the application controller `--operation-processors`
-      operationProcessors: "50" # default: 20 => 25 (~1000 apps)
+      operationProcessors: "30" # default: 20 => 25 (~1000 apps)
       # -- define the application controller `--app-resync`
       appResyncPeriod: "600" #"180" #"300"
       # -- define the application controller `--self-heal-timeout-seconds`
@@ -636,6 +636,8 @@ valuesInline:
         value: 3m
       # - name: ARGOCD_GIT_MODULES_ENABLED
       #   value: "false"
+    extraArgs:
+    - --kubectl-parallelism-limit=70
   server:
     # -- Manage Argo CD configmap (Declarative Setup)
     ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
