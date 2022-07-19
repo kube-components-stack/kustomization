@@ -20,25 +20,25 @@ spec:
                   exclude: false
                 ###############################
                 - path: cluster-addons/keycloak
-                  exclude: false
+                  exclude: &exclude true
                 - path: cluster-addons/cert-manager
-                  exclude: false
+                  exclude: *exclude
                 - path: cluster-addons/kyverno
-                  exclude: false
+                  exclude: *exclude
                 - path: cluster-addons/ingress-nginx
-                  exclude: false
+                  exclude: *exclude
                 - path: cluster-addons/monitoring
-                  exclude: false
+                  exclude: *exclude
                 - path: cluster-addons/loki
-                  exclude: false
+                  exclude: *exclude
                 - path: cluster-addons/minio
-                  exclude: false
+                  exclude: *exclude
                 - path: cluster-addons/promtail
-                  exclude: false
+                  exclude: *exclude
                 - path: cluster-addons/vector
-                  exclude: false
+                  exclude: *exclude
                 - path: cluster-addons/metallb
-                  exclude: false
+                  exclude: *exclude
           - clusters: {}
   template:
     metadata:
