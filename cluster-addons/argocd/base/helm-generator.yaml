@@ -634,6 +634,8 @@ valuesInline:
       # https://github.com/argoproj/argo-cd/issues/2553
       - name: ARGOCD_EXEC_TIMEOUT
         value: 3m
+      # - name: ARGOCD_GIT_MODULES_ENABLED
+      #   value: "false"
   server:
     # -- Manage Argo CD configmap (Declarative Setup)
     ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
@@ -669,6 +671,8 @@ valuesInline:
     env:
       - name: HOME
         value: /tmp/argocd
+      - name: ARGOCD_GPG_ENABLED
+        value: "false"
     image:
       imagePullPolicy: Always
     livenessProbe:
