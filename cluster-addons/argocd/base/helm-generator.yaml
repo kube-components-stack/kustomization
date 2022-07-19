@@ -639,9 +639,9 @@ valuesInline:
         value: 3m
       # - name: ARGOCD_GIT_MODULES_ENABLED
       #   value: "false"
-    extraArgs:
-    - --parallelismlimit 70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
-    - --tlsmaxversion 1.2
+    # extraArgs:
+    # - --parallelismlimit 70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
+    # - --tlsmaxversion 1.2
 
   server:
     # -- Manage Argo CD configmap (Declarative Setup)
