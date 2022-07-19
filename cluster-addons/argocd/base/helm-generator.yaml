@@ -72,12 +72,14 @@ valuesInline:
       selfHealTimeout: "5"
       # -- define the application controller `--repo-server-timeout-seconds`
       repoServerTimeoutSeconds: "420" #"60" #"300"
-    extraArgs:
-    - --kubectl-parallelism-limit
-    - "70"
 
     # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
     logLevel: debug
+
+    # -- Additional command line arguments to pass to application controller
+    extraArgs:
+    - --kubectl-parallelism-limit
+    - "70"
     
     image:
       imagePullPolicy: Always
