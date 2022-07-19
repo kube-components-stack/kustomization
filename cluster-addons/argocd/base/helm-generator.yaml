@@ -637,7 +637,8 @@ valuesInline:
       # - name: ARGOCD_GIT_MODULES_ENABLED
       #   value: "false"
     extraArgs:
-    - --kubectl-parallelism-limit=70
+    - --parallelismlimit 70
+    
   server:
     # -- Manage Argo CD configmap (Declarative Setup)
     ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
