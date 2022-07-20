@@ -5,3 +5,5 @@ bases:
 - ../../base
 generators:
 - ../../base/helm-generator.yaml
+patchesStrategicMerge:
+- ../../base/job-ingress-nginx-admission-create-patch.yaml
