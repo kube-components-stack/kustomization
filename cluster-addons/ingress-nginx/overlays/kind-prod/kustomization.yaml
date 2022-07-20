@@ -7,3 +7,17 @@ generators:
 - ../../base/helm-generator.yaml
 # patchesStrategicMerge:
 # - ../../base/job-ingress-nginx-admission-create-patch.yaml
+
+# https://skryvets.com/blog/2019/05/15/kubernetes-kustomize-json-patches-6902/
+# https://fabianlee.org/2022/04/15/kubernetes-kustomize-transformations-with-patchesjson6902/
+# https://www.dailytask.co/task/add-annotations-using-patchesjson6902-in-kustomize-ahmed-zidan
+# patches:
+# - target:
+#     kind: Job
+#     name: ingress-nginx-admission-create
+#   patch: |-
+#     - op: replace
+#       path: "/metadata/annotations/helm.sh~1hook"
+#       value: hook-succeeded
+#     - op: remove
+#       path: "/metadata/annotations/helm.sh~1hook"

@@ -74,8 +74,11 @@ spec:
           - CreateNamespace=true                # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
           - ApplyOutOfSyncOnly=true
           - RespectIgnoreDifferences=true
-          # https://github.com/argoproj/argo-cd/issues/5724
-          - PrunePropagationPolicy=background   # Supported policies are background, foreground and orphan.
+          # https://github.com/argoproj/argo-cd/issues/5724 - Change default deletion propagation policy from foreground to background
+          # https://github.com/argoproj/argo-cd/issues/4811 - Sync gets stuck and must be terminated/restarted manually in order to work
+          # https://github.com/argoproj/argo-cd/issues/3928 - Bug: Helm hooks with deletion policies don't sync
+          # https://github.com/argoproj/argo-cd/issues/4979 - ArgoCD Application Sync stuck forever waiting for PreSync jobs to complete
+          - PrunePropagationPolicy=foreground   # Supported policies are background, foreground and orphan.
           - PruneLast=true                      # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
       ignoreDifferences:
       - group: kyverno.io
