@@ -6,3 +6,5 @@ generators:
 resources:
 - ../../base
 - secrets.yaml
+patchesStrategicMerge:
+- ../../base/job-kube-prometheus-stack-admission-create-patch.yaml
