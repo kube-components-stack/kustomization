@@ -14,31 +14,31 @@ spec:
               directories:
                 - path: "cluster-addons/*"
                 # ###############################
-                # - path: cluster-addons/argocd
-                #   exclude: false
-                # - path: cluster-addons/kube-system
-                #   exclude: false
+                - path: cluster-addons/argocd
+                  exclude: false
+                - path: cluster-addons/kube-system
+                  exclude: true
                 # ###############################
-                # - path: cluster-addons/keycloak
-                #   exclude: &exclude false
-                # - path: cluster-addons/cert-manager
-                #   exclude: *exclude
-                # - path: cluster-addons/kyverno
-                #   exclude: *exclude
-                # - path: cluster-addons/ingress-nginx
-                #   exclude: *exclude
-                # - path: cluster-addons/monitoring
-                #   exclude: *exclude
-                # - path: cluster-addons/loki
-                #   exclude: *exclude
-                # - path: cluster-addons/minio
-                #   exclude: *exclude
-                # - path: cluster-addons/promtail
-                #   exclude: *exclude
-                # - path: cluster-addons/vector
-                #   exclude: *exclude
-                # - path: cluster-addons/metallb
-                #   exclude: *exclude
+                - path: cluster-addons/keycloak
+                  exclude: &exclude true
+                - path: cluster-addons/cert-manager
+                  exclude: *exclude
+                - path: cluster-addons/kyverno
+                  exclude: *exclude
+                - path: cluster-addons/ingress-nginx
+                  exclude: *exclude
+                - path: cluster-addons/monitoring
+                  exclude: *exclude
+                - path: cluster-addons/loki
+                  exclude: *exclude
+                - path: cluster-addons/minio
+                  exclude: *exclude
+                - path: cluster-addons/promtail
+                  exclude: *exclude
+                - path: cluster-addons/vector
+                  exclude: *exclude
+                - path: cluster-addons/metallb
+                  exclude: *exclude
           - clusters: {}
   template:
     metadata:

@@ -650,10 +650,24 @@ valuesInline:
       # https://github.com/argoproj/argo-cd/issues/2553
       - name: ARGOCD_EXEC_TIMEOUT
         value: 3m
-      # - name: ARGOCD_GIT_MODULES_ENABLED
-      #   value: "false"
-    # extraArgs:
-    # - --parallelismlimit 70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
+
+      # https://argo-cd.readthedocs.io/en/stable/operator-manual/high_availability/#scaling-up
+      - name: ARGOCD_GIT_ATTEMPTS_COUNT
+        value: 5 # Default: 5 - Specifies number of git remote operations attempts count
+
+      - name: ARGOCD_GIT_RETRY_MAX_DURATION
+        value: 5s # Default: 5s - Specifices max duration of git remote operation retry
+
+      - name: ARGOCD_GIT_RETRY_DURATION
+        value: 0.25s # Default: 0.25s - Specifies duration of git remote operation retry
+
+      - name: ARGOCD_GIT_RETRY_FACTOR
+        value: 2 # Default: 2 - Specifies fator of git remote operation retry
+
+      - name: ARGOCD_GIT_MODULES_ENABLED
+        value: "false" # Overrides git submodule support, true by default
+    extraArgs:
+    - --parallelismlimit 5 #70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
     # - --tlsmaxversion 1.2
 
   server:
