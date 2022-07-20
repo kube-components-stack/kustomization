@@ -17,10 +17,10 @@ spec:
                 - path: cluster-addons/argocd
                   exclude: false
                 - path: cluster-addons/kube-system
-                  exclude: true
+                  exclude: false
                 # ###############################
                 - path: cluster-addons/keycloak
-                  exclude: &exclude true
+                  exclude: &exclude false
                 - path: cluster-addons/cert-manager
                   exclude: *exclude
                 - path: cluster-addons/kyverno
