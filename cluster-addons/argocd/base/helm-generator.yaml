@@ -68,22 +68,22 @@ valuesInline:
     # See:
     # - https://argo-cd.readthedocs.io/en/stable/operator-manual/high_availability/#argocd-application-controller
     # - https://github.com/argoproj/argo-cd/issues/3864
-    args:
-      # -- define the application controller `--status-processors`
-      statusProcessors: "55" # default: 20 => 50 (~1000 apps)
-      # -- define the application controller `--operation-processors`
-      operationProcessors: "30" # default: 20 => 25 (~1000 apps)
-      # -- define the application controller `--app-resync`
-      appResyncPeriod: "600" #"180" #"300"
-      # -- define the application controller `--self-heal-timeout-seconds`
-      selfHealTimeout: "5"
-      # -- define the application controller `--repo-server-timeout-seconds`
-      repoServerTimeoutSeconds: "420" #"60" #"300"
+    # args:
+    #   # -- define the application controller `--status-processors`
+    #   statusProcessors: "55" # default: 20 => 50 (~1000 apps)
+    #   # -- define the application controller `--operation-processors`
+    #   operationProcessors: "30" # default: 20 => 25 (~1000 apps)
+    #   # -- define the application controller `--app-resync`
+    #   appResyncPeriod: "600" #"180" #"300"
+    #   # -- define the application controller `--self-heal-timeout-seconds`
+    #   selfHealTimeout: "5"
+    #   # -- define the application controller `--repo-server-timeout-seconds`
+    #   repoServerTimeoutSeconds: "420" #"60" #"300"
 
     # -- Additional command line arguments to pass to application controller
-    extraArgs:
-    - --kubectl-parallelism-limit
-    - "70"
+    # extraArgs:
+    # - --kubectl-parallelism-limit
+    # - "70"
     
     image:
       imagePullPolicy: Always
@@ -651,21 +651,21 @@ valuesInline:
       - name: ARGOCD_EXEC_TIMEOUT
         value: 3m
 
-      # https://argo-cd.readthedocs.io/en/stable/operator-manual/high_availability/#scaling-up
-      - name: ARGOCD_GIT_ATTEMPTS_COUNT
-        value: "5" # Default: 5 - Specifies number of git remote operations attempts count
+      # # https://argo-cd.readthedocs.io/en/stable/operator-manual/high_availability/#scaling-up
+      # - name: ARGOCD_GIT_ATTEMPTS_COUNT
+      #   value: "5" # Default: 5 - Specifies number of git remote operations attempts count
 
-      - name: ARGOCD_GIT_RETRY_MAX_DURATION
-        value: 5s # Default: 5s - Specifices max duration of git remote operation retry
+      # - name: ARGOCD_GIT_RETRY_MAX_DURATION
+      #   value: 5s # Default: 5s - Specifices max duration of git remote operation retry
 
-      - name: ARGOCD_GIT_RETRY_DURATION
-        value: 0.25s # Default: 0.25s - Specifies duration of git remote operation retry
+      # - name: ARGOCD_GIT_RETRY_DURATION
+      #   value: 0.25s # Default: 0.25s - Specifies duration of git remote operation retry
 
-      - name: ARGOCD_GIT_RETRY_FACTOR
-        value: "2" # Default: 2 - Specifies fator of git remote operation retry
+      # - name: ARGOCD_GIT_RETRY_FACTOR
+      #   value: "2" # Default: 2 - Specifies fator of git remote operation retry
 
-      - name: ARGOCD_GIT_MODULES_ENABLED
-        value: "false" # Overrides git submodule support, true by default
+      # - name: ARGOCD_GIT_MODULES_ENABLED
+      #   value: "false" # Overrides git submodule support, true by default
     extraArgs:
     - --parallelismlimit 5 #70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
     # - --tlsmaxversion 1.2
@@ -705,8 +705,8 @@ valuesInline:
     env:
       - name: HOME
         value: /tmp/argocd
-      - name: ARGOCD_GPG_ENABLED
-        value: "false"
+      # - name: ARGOCD_GPG_ENABLED
+      #   value: "false"
     image:
       imagePullPolicy: Always
     livenessProbe:
