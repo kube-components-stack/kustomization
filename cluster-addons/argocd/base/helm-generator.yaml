@@ -666,8 +666,8 @@ valuesInline:
 
       # - name: ARGOCD_GIT_MODULES_ENABLED
       #   value: "false" # Overrides git submodule support, true by default
-    # extraArgs:
-    # - --parallelismlimit 5 #70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
+    extraArgs:
+    - --parallelismlimit 5 #70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
     # - --tlsmaxversion 1.2
 
   server:
