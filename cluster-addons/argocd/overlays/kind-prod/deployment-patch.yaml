@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-applicationset-controller
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-dex-server
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-notifications
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-redis
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-repo-server
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-server
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
