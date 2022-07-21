@@ -6,3 +6,6 @@ generators:
 resources:
 - ../../base
 - secrets.yaml
+
+patchesStrategicMerge:
+- deployment-patch.yaml

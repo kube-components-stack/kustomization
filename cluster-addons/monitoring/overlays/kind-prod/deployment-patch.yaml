@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-prometheus-stack-grafana
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-prometheus-stack-kube-state-metrics
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-prometheus-stack-operator
+  namespace: monitoring
+spec:
+  strategy:
+    rollingUpdate: null
+    type: Recreate
