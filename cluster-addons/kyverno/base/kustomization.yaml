@@ -5,7 +5,7 @@ namespace: kyverno
 resources:
 - namespace.yaml
 - additional-policies/add-label-for-ingress-nginx.yaml
-- additional-policies/always-pull-images.yaml
+#- additional-policies/always-pull-images.yaml
 #- additional-policies/disallow-custom-snippets.yaml
 #- additional-policies/require_ro_rootfs.yaml
 - additional-policies/restrict-annotations.yaml
