@@ -12,7 +12,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: vector-helm-chart
 name: &name vector
-version: 0.14.0
+version: 0.15.1
 repo: https://helm.vector.dev
 releaseName: *name
 namespace: vector
