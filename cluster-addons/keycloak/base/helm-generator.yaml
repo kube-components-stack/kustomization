@@ -9,7 +9,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: keycloak-helm-chart
 name: &name keycloak
-version: 9.8.1
+version: 10.1.2
 repo: https://charts.bitnami.com/bitnami
 releaseName: *name
 namespace: keycloak
