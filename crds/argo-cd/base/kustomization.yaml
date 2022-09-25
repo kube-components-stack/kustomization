@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-4.10.0/charts/argo-cd/crds/crd-application.yaml
-- https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-4.10.0/charts/argo-cd/crds/crd-applicationset.yaml
-- https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-4.10.0/charts/argo-cd/crds/crd-extension.yaml
-- https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-4.10.0/charts/argo-cd/crds/crd-project.yaml
+- https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-4.10.9/charts/argo-cd/crds/crd-application.yaml
+- https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-4.10.9/charts/argo-cd/crds/crd-applicationset.yaml
+- https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-4.10.9/charts/argo-cd/crds/crd-extension.yaml
+- https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-4.10.9/charts/argo-cd/crds/crd-project.yaml
