@@ -6,7 +6,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: minio-helm-chart
 name: &name minio
-version: 4.0.5
+version: 4.0.15
 repo: https://charts.min.io
 releaseName: *name
 namespace: *name
