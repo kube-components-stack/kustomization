@@ -61,7 +61,7 @@ create-secrets:
 	set -e
 	cd $(ROOT_DIR)
 
-	cluster=kind-prod
+	cluster=kind-dev
 	privatekey=secrets/clusters/$${cluster}/sealed-secrets-private-key.yaml
 
 # initialize temp directory
