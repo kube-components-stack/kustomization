@@ -48,11 +48,11 @@ valuesInline:
         namespaces:
           - metallb
           - monitoring
-    # disallow-host-path: # required by promtail, vector, kube-prometheus-stack-prometheus-node-exporter
-    #   - action: audit
-    #     namespaces:
-    #       - monitoring
-    #       - vector
-    #       - promtail
+    disallow-host-path: # required by promtail, vector, kube-prometheus-stack-prometheus-node-exporter
+      - action: audit
+        namespaces:
+          - monitoring
+          - vector
+          - promtail
   # -- Policies background mode
   background: true
