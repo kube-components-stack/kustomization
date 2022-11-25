@@ -58,6 +58,8 @@ keycloakConfigCli:
   extraEnvVars:
   - name: IMPORT_FILES_LOCATIONS
     value: /secret/*
+  - name: KEYCLOAK_URL
+    value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
   extraVolumeMounts:
   - mountPath: /secret
     name: cfg
