@@ -14,7 +14,9 @@ valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline:
   config:
-    lokiAddress: http://loki-distributed-gateway.loki.svc.cluster.local/loki/api/v1/push
+    clients:
+      - url: http://loki-distributed-gateway.loki.svc.cluster.local/loki/api/v1/push
+  #  lokiAddress: http://loki-distributed-gateway.loki.svc.cluster.local/loki/api/v1/push
   serviceMonitor:
     enabled: true
     labels:
