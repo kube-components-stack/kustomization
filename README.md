@@ -137,3 +137,50 @@ resources:
 - ../../base
 EOF
 ```
+
+## copy an existing environment
+
+```zsh
+cluster=plato
+env=devncoargo
+
+cd cluster-addons
+for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
+cd ../crds
+for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
+cd ../secrets/cluster-addons
+for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
+cd ../clusters
+for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
+```
+
+## create a sealed-secrets certificate
+
+```zsh
+openssl req -days 3650 -x509 -nodes -newkey rsa:4096 -keyout "tls.key" -out "tls.crt" -subj "/CN=sealed-secret/O=sealed-secret"
+
+cluster=plato
+env=devncoargo
+mkdir -p secrets/clusters/$cluster-$env
+cat > secrets/clusters/$cluster-$env/sealed-secrets-private-key.yaml << EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  generateName: sealed-secrets-key
+  labels:
+    sealedsecrets.bitnami.com/sealed-secrets-key: active
+  name: sealed-secrets-key
+  namespace: kube-system
+type: kubernetes.io/tls
+data:
+EOF
+crt=`cat tls.crt|base64 -w 0`
+key=`cat tls.key|base64 -w 0`
+echo "  tls.crt: $crt" >> secrets/clusters/$cluster-$env/sealed-secrets-private-key.yaml
+echo "  tls.key: $key" >> secrets/clusters/$cluster-$env/sealed-secrets-private-key.yaml
+rm -Rf tls.crt tls.key
+```
+
+## sign secret with certificate
+
+edit Makefile, in target "create-secrets:" adjust cluster & env vars and use command: `make create-secrets`
