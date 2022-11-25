@@ -49,6 +49,15 @@ valuesInline:
     affinity: ~
   distributor:
     affinity: ~
+    # https://github.com/grafana/helm-charts/issues/157#issuecomment-919369654
+    replicas: 2
+    extraEnv:
+    - name: MY_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    extraArgs:
+      - -memberlist.bind-addr=$(MY_POD_IP)
   querier:
     affinity: ~
   queryFrontend:
