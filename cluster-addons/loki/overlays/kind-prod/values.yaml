@@ -1,5 +1,8 @@
 ingester:
+  # https://github.com/grafana/helm-charts/issues/157#issuecomment-919369654
+  replicas: 2
   extraArgs:
+  - -memberlist.bind-addr=$(MY_POD_IP)
   - -config.expand-env=true
   extraEnv:
   - name: AWS_ACCESS_KEY_ID
@@ -12,8 +15,15 @@ ingester:
       secretKeyRef:
         name: bucket-s3
         key: awsSecretAcessKey
+  - name: MY_POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
 querier:
+  # https://github.com/grafana/helm-charts/issues/157#issuecomment-919369654
+  replicas: 2
   extraArgs:
+  - -memberlist.bind-addr=$(MY_POD_IP)
   - -config.expand-env=true
   extraEnv:
   - name: AWS_ACCESS_KEY_ID
@@ -26,3 +36,7 @@ querier:
       secretKeyRef:
         name: bucket-s3
         key: awsSecretAcessKey
+  - name: MY_POD_IP
+    valueFrom:
+      fieldRef:
+        fieldPath: status.podIP
