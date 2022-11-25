@@ -61,8 +61,10 @@ create-secrets:
 	set -e
 	cd $(ROOT_DIR)
 
-	cluster=kind-dev
-	privatekey=secrets/clusters/$${cluster}/sealed-secrets-private-key.yaml
+	cluster=plato
+	env=devncoargo
+	
+	privatekey=secrets/clusters/$${cluster}-$${env}/sealed-secrets-private-key.yaml
 
 # initialize temp directory
 # define TMP as global thanks declare
@@ -72,9 +74,9 @@ create-secrets:
 # export TMP in order to use it in subprocess
 	export TMP
 
-	for app in secrets/cluster-addons/*; do
-		app=$$(basename $$app)
-		build=$$(kustomize --load-restrictor LoadRestrictionsNone build secrets/cluster-addons/$${app}/overlays/$${cluster}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
+	for namespace in secrets/cluster-addons/*; do
+		namespace=$$(basename $$namespace)
+		build=$$(kustomize --load-restrictor LoadRestrictionsNone build secrets/cluster-addons/$${namespace}/overlays/$${cluster}-$${env}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
 		rows=$$(echo "$$build" | jq -rc '.[]')
 		if [[ -n "$$rows" ]]; then
 			tempfile=$$(mktemp $${TMP:-/tmp}/hosts.XXXXXXXXXX)
@@ -85,8 +87,8 @@ create-secrets:
 			done
 			sed -i '$$d' $$tempfile
 			sed -i '/^$$/d' $$tempfile
-			cat "$$tempfile" > cluster-addons/$${app}/overlays/$${cluster}/secrets.yaml
-			cd cluster-addons/$${app}/overlays/$${cluster}
+			cat "$$tempfile" > cluster-addons/$${namespace}/overlays/$${cluster}-$${env}/secrets.yaml
+			cd cluster-addons/$${namespace}/overlays/$${cluster}-$${env}
 			kustomize edit add resource secrets.yaml
 			cd $$OLDPWD
 		fi
