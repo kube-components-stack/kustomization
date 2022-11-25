@@ -177,6 +177,9 @@ valuesInline:
     # @default -- See [values.yaml]
     ## For more information: https://argocd-notifications.readthedocs.io/en/stable/services/overview/
     notifiers:
+      service.googlechat: |
+        webhooks:
+          spaceName: $space-webhook-url
       service.slack: |
         token: $devops-slack
       service.teams: |

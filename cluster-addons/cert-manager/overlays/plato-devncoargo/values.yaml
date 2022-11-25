@@ -1,0 +1,2 @@
+ingressShim:
+  defaultIssuerName: selfsigned-cluster-issuer
