@@ -1,6 +1,6 @@
 ingester:
   # https://github.com/grafana/helm-charts/issues/157#issuecomment-919369654
-  replicas: 2
+  replicas: 1
   extraArgs:
   - -memberlist.bind-addr=$(MY_POD_IP)
   - -config.expand-env=true
@@ -21,7 +21,7 @@ ingester:
         fieldPath: status.podIP
 querier:
   # https://github.com/grafana/helm-charts/issues/157#issuecomment-919369654
-  replicas: 2
+  replicas: 1
   extraArgs:
   - -memberlist.bind-addr=$(MY_POD_IP)
   - -config.expand-env=true
