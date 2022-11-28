@@ -55,6 +55,10 @@ grafana-update-dashboard:
 	dl_dashboard --id=13865 --revision=6 --tags=Loki --tags=Prometheus --argocd-notifications
 #	Troubleshooting Kubernetes (simple and fast view)
 	dl_dashboard --id=15196 --revision=3 --tags=Loki --tags=Prometheus --argocd-notifications
+#	Trivy Vulnerabilities
+	dl_dashboard --id=12330 --revision=1 --tags=trivy --argocd-notifications
+	dl_dashboard --id=12331 --revision=1 --tags=trivy --argocd-notifications
+
 
 create-secrets: ## create-secrets
 create-secrets:

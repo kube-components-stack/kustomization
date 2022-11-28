@@ -22,8 +22,8 @@ valuesInline:
       release: kube-prometheus-stack
   resources:
     requests:
-      cpu: 300m
-      memory: 300M
+      cpu: 500m
+      memory: 256Mi
     limits:
-      cpu: 1
-      memory: 1024M
+      cpu: '2'
+      memory: 1Gi
