@@ -23,6 +23,8 @@ valuesInline:
       limits:
         cpu: 1000m
         memory: 1Gi
+  service:
+    metricsPort: 8080
   serviceMonitor:
     enabled: true
     labels:
