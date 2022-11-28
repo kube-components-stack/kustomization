@@ -2,12 +2,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: trivy-operator
+  namespace: trivy-system
 spec:
-  replicas: 2
   template:
     spec:
       containers:
         - 
+          name: trivy-operator
           livenessProbe:
             failureThreshold: 20
             initialDelaySeconds: 10
