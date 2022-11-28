@@ -21,7 +21,7 @@ valuesInline:
         cpu: 500m
         memory: 256Mi
       limits:
-        cpu: '1'
+        cpu: 1
         memory: 1Gi
   serviceMonitor:
     enabled: true
