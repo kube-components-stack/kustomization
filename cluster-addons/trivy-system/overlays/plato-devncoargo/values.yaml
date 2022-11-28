@@ -1,0 +1,4 @@
+operator:
+  replicas: 2
+  # logDevMode the flag to enable development mode (more human-readable output, extra stack traces and logging information, etc)
+  logDevMode: true
