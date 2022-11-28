@@ -5,3 +5,5 @@ generators:
 - ../../base/helm-generator.yaml
 resources:
 - ../../base
+patchesStrategicMerge:
+- deployment-patch.yaml

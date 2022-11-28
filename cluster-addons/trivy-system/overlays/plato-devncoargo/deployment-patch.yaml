@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trivy-operator
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - 
+          livenessProbe:
+            failureThreshold: 20
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            successThreshold: 1
+          readinessProbe:
+            failureThreshold: 6
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            successThreshold: 1
+          # startupProbe:
+          #   httpGet:
+          #     path: /readyz/
+          #     port: probes
+          #   failureThreshold: 30
+          #   periodSeconds: 10
