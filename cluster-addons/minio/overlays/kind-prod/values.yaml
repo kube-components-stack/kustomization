@@ -4,7 +4,7 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
     kubernetes.io/tls-acme: "true"
-  ingressClassName: nginx-01
+  ingressClassName: ingress-nginx-admin
   hosts:
   - minio-api.k8s.lan
   tls:
@@ -16,7 +16,7 @@ consoleIngress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
     kubernetes.io/tls-acme: "true"
-  ingressClassName: nginx-01
+  ingressClassName: ingress-nginx-admin
   hosts:
   - minio-console.k8s.lan
   tls:

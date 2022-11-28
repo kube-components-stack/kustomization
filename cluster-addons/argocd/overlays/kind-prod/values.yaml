@@ -13,7 +13,7 @@ server:
          defaultMode: 420 
   ingress:
     enabled: true
-    ingressClassName: nginx-01
+    ingressClassName: ingress-nginx-admin
     annotations:
       kubernetes.io/tls-acme: "true"
     hosts:

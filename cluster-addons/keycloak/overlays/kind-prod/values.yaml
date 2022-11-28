@@ -24,7 +24,7 @@ auth:
 ingress:
   enabled: true
   # path: / #/*
-  ingressClassName: nginx-01
+  ingressClassName: ingress-nginx-admin
   hostname: keycloak.k8s.lan
   extraTls:
   - secretName: keycloak-ca #keycloak-tls-certificate

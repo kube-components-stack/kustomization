@@ -1,7 +1,7 @@
 alertmanager:
   ingress:
     enabled: true
-    ingressClassName: nginx-01
+    ingressClassName: ingress-nginx-admin
     annotations:
       kubernetes.io/tls-acme: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
@@ -36,7 +36,7 @@ grafana:
     size: 256Mi
   ingress:
     enabled: true
-    ingressClassName: nginx-01
+    ingressClassName: ingress-nginx-admin
     annotations:
       kubernetes.io/tls-acme: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
@@ -50,7 +50,7 @@ grafana:
 prometheus:
   ingress:
     enabled: true
-    ingressClassName: nginx-01
+    ingressClassName: ingress-nginx-admin
     annotations:
       kubernetes.io/tls-acme: "true"
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
