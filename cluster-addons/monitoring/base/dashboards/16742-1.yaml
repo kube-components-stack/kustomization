@@ -1,0 +1,537 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-dashboard-16742-1.json
+  namespace: monitoring
+  labels:
+    grafana_dashboard: "1"
+    id: 16742-1
+data:
+  grafana-dashboard-16742-1.json: |
+    {
+      "__inputs": [
+        {
+          "name": "DS_PROMETHEUS",
+          "label": "Prometheus",
+          "description": "",
+          "type": "datasource",
+          "pluginId": "prometheus",
+          "pluginName": "Prometheus"
+        }
+      ],
+      "__elements": {},
+      "__requires": [
+        {
+          "type": "grafana",
+          "id": "grafana",
+          "name": "Grafana",
+          "version": "9.0.5"
+        },
+        {
+          "type": "datasource",
+          "id": "prometheus",
+          "name": "Prometheus",
+          "version": "1.0.0"
+        },
+        {
+          "type": "panel",
+          "id": "stat",
+          "name": "Stat",
+          "version": ""
+        },
+        {
+          "type": "panel",
+          "id": "table",
+          "name": "Table",
+          "version": ""
+        }
+      ],
+      "annotations": {
+        "list": [
+          {
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgb(255, 255, 255)",
+            "limit": 100,
+            "name": "ArgoCD Notifications",
+            "showIn": 0,
+            "tags": [
+              "argocd"
+            ],
+            "type": "tags"
+          }
+        ]
+      },
+      "editable": true,
+      "fiscalYearStartMonth": 0,
+      "graphTooltip": 0,
+      "id": null,
+      "links": [],
+      "liveNow": false,
+      "panels": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Critical"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "red",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "High"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "orange",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Medium"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "dark-yellow",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Low"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "fixedColor": "green",
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Unknown"
+                },
+                "properties": [
+                  {
+                    "id": "color",
+                    "value": {
+                      "mode": "fixed"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 0
+          },
+          "id": 2,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.0.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{severity=\"Critical\", namespace=\"$namespace\"})",
+              "instant": true,
+              "legendFormat": "Critical",
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{severity=\"High\", namespace=\"$namespace\"})",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "High",
+              "range": false,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{severity=\"Medium\", namespace=\"$namespace\"})",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "Medium",
+              "range": false,
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{severity=\"Low\", namespace=\"$namespace\"})",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "Low",
+              "range": false,
+              "refId": "D"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{severity=\"Unknown\", namespace=\"$namespace\"})",
+              "hide": false,
+              "instant": true,
+              "legendFormat": "Unknown",
+              "range": false,
+              "refId": "E"
+            }
+          ],
+          "title": "Severity Chart",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "custom": {
+                "align": "left",
+                "displayMode": "color-text",
+                "filterable": true,
+                "inspect": false
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "super-light-yellow",
+                    "value": 1
+                  },
+                  {
+                    "color": "orange",
+                    "value": 100
+                  },
+                  {
+                    "color": "red",
+                    "value": 500
+                  }
+                ]
+              }
+            },
+            "overrides": [
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "Image"
+                },
+                "properties": [
+                  {
+                    "id": "custom.displayMode",
+                    "value": "json-view"
+                  },
+                  {
+                    "id": "custom.width",
+                    "value": 350
+                  }
+                ]
+              },
+              {
+                "matcher": {
+                  "id": "byName",
+                  "options": "image_tag"
+                },
+                "properties": [
+                  {
+                    "id": "custom.displayMode",
+                    "value": "json-view"
+                  }
+                ]
+              }
+            ]
+          },
+          "gridPos": {
+            "h": 14,
+            "w": 24,
+            "x": 0,
+            "y": 9
+          },
+          "id": 4,
+          "options": {
+            "footer": {
+              "enablePagination": true,
+              "fields": "",
+              "reducer": [
+                "sum"
+              ],
+              "show": false
+            },
+            "frameIndex": 1,
+            "showHeader": true,
+            "sortBy": []
+          },
+          "pluginVersion": "9.0.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{namespace=\"$namespace\",severity=\"Critical\"}) by (image_repository,image_tag)",
+              "format": "table",
+              "instant": true,
+              "range": false,
+              "refId": "A"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{namespace=\"$namespace\",severity=\"High\"}) by (image_repository,image_tag)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "range": false,
+              "refId": "B"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{namespace=\"$namespace\",severity=\"Medium\"}) by (image_repository,image_tag)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "range": false,
+              "refId": "C"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{namespace=\"$namespace\",severity=\"Low\"}) by (image_repository,image_tag)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "range": false,
+              "refId": "D"
+            },
+            {
+              "datasource": {
+                "type": "prometheus",
+                "uid": "${DS_PROMETHEUS}"
+              },
+              "editorMode": "code",
+              "exemplar": false,
+              "expr": "sum(trivy_image_vulnerabilities{namespace=\"$namespace\",severity=\"Unknown\"}) by (image_repository,image_tag)",
+              "format": "table",
+              "hide": false,
+              "instant": true,
+              "range": false,
+              "refId": "E"
+            }
+          ],
+          "title": "Vulnerability by Image",
+          "transformations": [
+            {
+              "id": "filterFieldsByName",
+              "options": {
+                "include": {
+                  "names": [
+                    "image_repository",
+                    "image_tag",
+                    "Value #A",
+                    "Value #B",
+                    "Value #C",
+                    "Value #D",
+                    "Value #E"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "seriesToColumns",
+              "options": {
+                "byField": "image_repository"
+              }
+            },
+            {
+              "id": "filterFieldsByName",
+              "options": {
+                "include": {
+                  "names": [
+                    "image_repository",
+                    "Value #A",
+                    "Value #B",
+                    "Value #C",
+                    "Value #D",
+                    "Value #E",
+                    "image_tag 1"
+                  ]
+                }
+              }
+            },
+            {
+              "id": "organize",
+              "options": {
+                "excludeByName": {
+                  "image_tag": false
+                },
+                "indexByName": {},
+                "renameByName": {
+                  "Value #A": "Critical",
+                  "Value #B": "High",
+                  "Value #C": "Medium",
+                  "Value #D": "Low",
+                  "Value #E": "Unknown",
+                  "image_repository": "Image",
+                  "image_tag": "Tag"
+                }
+              }
+            }
+          ],
+          "type": "table"
+        }
+      ],
+      "schemaVersion": 36,
+      "style": "dark",
+      "tags": [
+        "trivy"
+      ],
+      "templating": {
+        "list": [
+          {
+            "current": {},
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${DS_PROMETHEUS}"
+            },
+            "definition": "label_values(kube_namespace_status_phase{phase=\"Active\"}, namespace)",
+            "hide": 0,
+            "includeAll": false,
+            "label": "Namespace",
+            "multi": false,
+            "name": "namespace",
+            "options": [],
+            "query": {
+              "query": "label_values(kube_namespace_status_phase{phase=\"Active\"}, namespace)",
+              "refId": "StandardVariableQuery"
+            },
+            "refresh": 1,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 1,
+            "type": "query"
+          }
+        ]
+      },
+      "time": {
+        "from": "now-6h",
+        "to": "now"
+      },
+      "timepicker": {},
+      "timezone": "",
+      "title": "Trivy Image Vulnerability Overview",
+      "uid": "trivy-image-vulnerability-overview",
+      "version": 16,
+      "weekStart": "",
+      "gnetId": 16742,
+      "description": "A dashboard to visualise trivy image vulnerabilities using metrics from trivy-operator."
+    }

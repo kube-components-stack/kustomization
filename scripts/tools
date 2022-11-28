@@ -35,6 +35,7 @@ function dl_dashboard () {
   print_usage()
   {
     printf "usage: dl_dashboard --id=13639 --revision=1 --uid=am2PnSxES --path=./dashboards --tags=loki1 --tags=loki2 --argocd-notifications"
+    sleep 10
   }
   while [ $# -gt 0 ]; do
     case "$1" in
@@ -79,7 +80,7 @@ function dl_dashboard () {
     exit 1
   fi
   if [ -z "$path" ]; then
-    path=cluster-addons/kube-prometheus-stack/base/dashboards
+    path=cluster-addons/monitoring/base/dashboards
   fi
 
   args=
@@ -157,8 +158,8 @@ EOF
 
 function render_dashboards_from_helm_template () {
   actual_path=$PWD
-  path=cluster-addons/kube-prometheus-stack/base/dashboards
-  yaml=cluster-addons/kube-prometheus-stack/base/helm-generator.yaml
+  path=cluster-addons/monitoring/base/dashboards
+  yaml=cluster-addons/monitoring/base/helm-generator.yaml
 
   name=$(yq '.name' $yaml)
   version=$(yq '.version' $yaml)

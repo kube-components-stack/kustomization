@@ -45,3 +45,6 @@ resources:
 - dashboards/kube-prometheus-stack-proxy.yaml
 - dashboards/kube-prometheus-stack-scheduler.yaml
 - dashboards/kube-prometheus-stack-workload-total.yaml
+- dashboards/16742-1.yaml
+- dashboards/12330-1.yaml
+- dashboards/12331-1.yaml

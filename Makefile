@@ -58,6 +58,7 @@ grafana-update-dashboard:
 #	Trivy Vulnerabilities
 	dl_dashboard --id=12330 --revision=1 --tags=trivy --argocd-notifications
 	dl_dashboard --id=12331 --revision=1 --tags=trivy --argocd-notifications
+	dl_dashboard --id=16742 --revision=1 --tags=trivy --argocd-notifications
 
 
 create-secrets: ## create-secrets
