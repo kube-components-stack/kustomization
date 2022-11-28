@@ -1,4 +1,6 @@
+# https://aquasecurity.github.io/trivy-operator/v0.7.1/operator/
 # https://aquasecurity.github.io/trivy
+# https://github.com/aquasecurity/trivy-operator/blob/main/deploy/helm/values.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
@@ -14,3 +16,14 @@ valuesMerge: override                 # merge, override or replace
 valuesInline:
   trivy:
     ignoreUnfixed: true
+  serviceMonitor:
+    enabled: true
+    labels:
+      release: kube-prometheus-stack
+  resources:
+    requests:
+      cpu: 300m
+      memory: 300M
+    limits:
+      cpu: 1
+      memory: 1024M
