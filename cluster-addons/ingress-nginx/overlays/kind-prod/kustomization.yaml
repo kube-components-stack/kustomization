@@ -4,4 +4,6 @@ namespace: ingress-nginx
 bases:
 - ../../base
 generators:
-- ../../base/helm-generator.yaml
+- ../../base/helm-chart-ingress-nginx-admin.yaml
+# - ../../base/helm-chart-ingress-nginx-private.yaml
+# - ../../base/helm-chart-ingress-nginx-public.yaml
