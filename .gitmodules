@@ -1,8 +1,8 @@
 [submodule "secrets"]
 	path = secrets
-	url = git@github.com:kube-components-stack/secrets
+	url = https://github.com/kube-components-stack/secrets
 	branch = main
 [submodule "apps"]
 	path = apps
-	url = git@github.com:kube-components-stack/apps
+	url = https://github.com/kube-components-stack/apps
 	branch = main
