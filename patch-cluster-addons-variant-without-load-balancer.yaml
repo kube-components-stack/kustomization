@@ -8,3 +8,5 @@ spec:
                 - path: cluster-addons/*
                 - path: cluster-addons/metallb
                   exclude: true
+                - path: cluster-addons/trivy-system
+                  exclude: true
