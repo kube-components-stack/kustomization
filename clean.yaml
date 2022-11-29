@@ -1,0 +1,118 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-addons
+  namespace: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: https://github.com/kube-components-stack/kustomization.git
+              revision: HEAD
+              directories:
+                - path: cluster-addons/*
+                - path: cluster-addons/cert-manager
+                  exclude: true
+                - path: cluster-addons/external-dns
+                  exclude: true
+                - path: cluster-addons/ingress-nginx
+                  exclude: true
+                - path: cluster-addons/keycloak
+                  exclude: true
+                - path: cluster-addons/kyverno
+                  exclude: true
+                - path: cluster-addons/loki
+                  exclude: true
+                - path: cluster-addons/metallb
+                  exclude: true
+                - path: cluster-addons/minio
+                  exclude: true
+                - path: cluster-addons/monitoring
+                  exclude: true
+                - path: cluster-addons/promtail
+                  exclude: true
+                - path: cluster-addons/trivy-system
+                  exclude: true
+                - path: cluster-addons/vector
+                  exclude: true
+          - clusters: {}
+  template:
+    metadata:
+      name: 'cluster-addons-{{path.basename}}-{{name}}'
+    spec:
+      project: default
+      info: []
+      source:
+        repoURL: https://github.com/kube-components-stack/kustomization.git
+        targetRevision: HEAD
+        path: "cluster-addons/{{path.basename}}/overlays/{{name}}"
+        # plugin:
+        #   name: argocd-lovely-plugin # https://github.com/crumbhole/argocd-lovely-plugin
+        # kustomize:
+
+      destination:
+        server: '{{server}}'
+        namespace: '{{path.basename}}'
+      revisionHistoryLimit: 3
+      syncPolicy:
+        automated:                              # automated sync by default retries failed attempts 5 times with following delays between attempts ( 5s, 10s, 20s, 40s, 80s ); retry controlled using `retry` field.
+          prune: true                           # Specifies if resources should be pruned during auto-syncing ( false by default ).
+          selfHeal: true                        # Specifies if partial app sync should be executed when resources are changed only in target Kubernetes cluster and no git change detected ( false by default ).
+          allowEmpty: true                      # Allows deleting all application resources during automatic syncing ( false by default ).
+        retry:
+          limit: 5                              # number of failed sync attempt retries; unlimited number of attempts if less than 0
+          backoff:
+            duration: 5s                        # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+            factor: 2                           # a factor to multiply the base duration after each failed retry
+            maxDuration: 3m                     # the maximum amount of time allowed for the backoff strategy
+        syncOptions:
+          - Validate=false                      # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
+          - CreateNamespace=true                # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
+          - ApplyOutOfSyncOnly=true
+          - RespectIgnoreDifferences=true
+          # https://github.com/argoproj/argo-cd/issues/5724 - Change default deletion propagation policy from foreground to background
+          # https://github.com/argoproj/argo-cd/issues/4811 - Sync gets stuck and must be terminated/restarted manually in order to work
+          # https://github.com/argoproj/argo-cd/issues/3928 - Bug: Helm hooks with deletion policies don't sync
+          # https://github.com/argoproj/argo-cd/issues/4979 - ArgoCD Application Sync stuck forever waiting for PreSync jobs to complete
+          - PrunePropagationPolicy=foreground   # Supported policies are background, foreground and orphan.
+          - PruneLast=true                      # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+      ignoreDifferences:
+      - group: kyverno.io
+        kind: ClusterPolicy
+        jqPathExpressions:
+        - .spec.rules[] | select(.name|test("autogen-."))
+      - group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        jsonPointers:
+        - /status
+      # - group: apps
+      #   kind: Deployment
+      #   jqPathExpressions:
+      #   - '.spec.template.spec.containers[]?.securityContext'
+      #   - '.spec.template.spec.containers[]?.resources'
+      - group: apps
+        kind: Deployment
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
+      - group: apps
+        kind: DaemonSet
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
+      - group: apps
+        kind: StatefulSet
+        jqPathExpressions:
+        - '.spec.template.spec.containers[]?.imagePullPolicy'
+      - group: apiextensions.k8s.io
+        kind: CustomResourceDefinition
+        jqPathExpressions:
+        - '.spec.conversion.webhook.clientConfig.caBundle'
+      # - group: admissionregistration.k8s.io
+      #   kind: MutatingWebhookConfiguration
+      #   jqPathExpressions:
+      #   - '.webhooks[]?.clientConfig.caBundle'
+      # - group: admissionregistration.k8s.io
+      #   kind: ValidatingWebhookConfiguration
+      #   jqPathExpressions:
+      #   - '.webhooks[]?.clientConfig.caBundle'

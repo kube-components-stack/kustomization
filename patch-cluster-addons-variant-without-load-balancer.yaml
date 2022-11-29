@@ -10,3 +10,5 @@ spec:
                   exclude: true
                 - path: cluster-addons/trivy-system
                   exclude: true
+                - path: cluster-addons/keycloak
+                  exclude: true
