@@ -40,7 +40,7 @@ grafana:
     annotations:
       kubernetes.io/tls-acme: "true"
       # nginx.ingress.kubernetes.io/ssl-redirect: "false"
-      kubernetes.io/ingress.class: ingress-nginx-admin
+      # kubernetes.io/ingress.class: ingress-nginx-admin # can not be set when the class field is also set.
       nginx.ingress.kubernetes.io/backend-protocol: HTTPS
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-passthrough: "true"
