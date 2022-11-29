@@ -14,11 +14,11 @@ spec:
               directories:
                 - path: cluster-addons/*
                 - path: cluster-addons/cert-manager
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/external-dns
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/ingress-nginx
-                  exclude: true
+                  exclude: false
                 - path: cluster-addons/keycloak
                   exclude: true
                 - path: cluster-addons/kyverno
