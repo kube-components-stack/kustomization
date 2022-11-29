@@ -1,28 +1,30 @@
 existingSecret: bucket-s3
 ingress:
-  enabled: true
+  enabled: false
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
     kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   ingressClassName: ingress-nginx-admin
   hosts:
-  - minio-api.k8s.lan
+  - minio-api.admin.devncoargo.dev-sbr.com
   tls:
   - secretName: minio-api-tls-certificate
     hosts:
-    - minio-api.k8s.lan
+    - minio-api.admin.devncoargo.dev-sbr.com
 consoleIngress:
   enabled: true
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
     kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   ingressClassName: ingress-nginx-admin
   hosts:
-  - minio-console.k8s.lan
+  - minio-console.admin.devncoargo.dev-sbr.com
   tls:
   - secretName: minio-console-tls-certificate
     hosts:
-    - minio-console.k8s.lan
+    - minio-console.admin.devncoargo.dev-sbr.com
 buckets:
     # Name of the bucket
   - name: loki

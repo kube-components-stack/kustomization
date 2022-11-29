@@ -1,68 +1,44 @@
 notifications:
-  argocdUrl: https://argocd.k8s.lan
-  enabled: true
+  argocdUrl: https://argocd.admin.devncoargo.dev-sbr.com
+  enabled: false
 server:
-  volumeMounts:
-     - name: certificate
-       mountPath: /etc/ssl/certs/tls.crt #/etc/ssl/certs/ca.crt # your self-signed CA part inside the secret 
-       subPath: tls.crt #ca.crt 
-  volumes:
-     - name: certificate
-       secret:
-         secretName: keycloak-ca # argocd-tls-ca
-         defaultMode: 420 
+  # volumeMounts:
+  #    - name: certificate
+  #      mountPath: /etc/ssl/certs/tls.crt #/etc/ssl/certs/ca.crt # your self-signed CA part inside the secret 
+  #      subPath: tls.crt #ca.crt 
+  # volumes:
+  #    - name: certificate
+  #      secret:
+  #        secretName: keycloak-ca # argocd-tls-ca
+  #        defaultMode: 420 
   ingress:
     enabled: true
     ingressClassName: ingress-nginx-admin
     annotations:
       kubernetes.io/tls-acme: "true"
     hosts:
-    - argocd.k8s.lan
+    - argocd.admin.devncoargo.dev-sbr.com
     tls:
     - secretName: argocd-tls-certificate
       hosts:
-      - argocd.k8s.lan
+      - argocd.admin.devncoargo.dev-sbr.com
   config:
-    url: https://argocd.k8s.lan
-    accounts.webhook: apiKey, login
+    url: https://argocd.admin.devncoargo.dev-sbr.com
+    # accounts.webhook: apiKey, login # authentik oauth ?
     # https://github.com/argoproj/argo-cd/issues/4344#issuecomment-890382825
     # https://github.com/argoproj/argo-cd/issues/1171
     # https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#self-signed-untrusted-tls-certificates
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/
-    oidc.config: |
-      name: Keycloak
-      issuer: https://keycloak.k8s.lan/realms/master
-      clientID: argocd
-      clientSecret: $oidc.keycloak.clientSecret
-      requestedScopes: ["openid", "profile", "email", "groups"]
-    # oidc.config: |
-    #   name: authentik
-    #   issuer: http://authentik.k8s.lan/application/o/authorize/
-    #   clientID: 8811b3aa63f19133ec84534482df81a5332dcfc1
-    #   clientSecret: $oidc.authentik.clientSecret
-    #   requestedScopes: ["openid", "profile", "email", "groups"]
-  rbacConfig:
-    policy.csv: |
-      g, ArgoCDAdmins, role:admin
-    policy.default: role:readonly
-
-    #   # Optional set of OIDC claims to request on the ID token.
-    #   requestedIDTokenClaims: {"groups": {"essential": true}}
-
-    # dex.config: |
-    #   logger:
-    #     level: debug
-    #     format: json
-    #   connectors:
-    #   - 
-    #     type: oidc
-    #     id: authentik
-    #     name: authentik
-    #     config:
-    #       issuer: http://authentik.k8s.lan/application/o/argocd/
-    #       clientID: 8811b3aa63f19133ec84534482df81a5332dcfc1
-    #       clientSecret: $oidc.authentik.clientSecret
-## Argo Configs
+  #   oidc.config: |
+  #     name: Keycloak
+  #     issuer: https://keycloak.admin.devncoargo.dev-sbr.com/realms/master
+  #     clientID: argocd
+  #     clientSecret: $oidc.keycloak.clientSecret
+  #     requestedScopes: ["openid", "profile", "email", "groups"]
+  # rbacConfig:
+  #   policy.csv: |
+  #     g, ArgoCDAdmins, role:admin
+  #   policy.default: role:readonly
 configs:
   secret:
     # -- Create the argocd-secret
