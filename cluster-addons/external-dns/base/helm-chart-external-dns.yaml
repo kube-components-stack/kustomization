@@ -1,0 +1,13 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: helm-chart-external-dns
+name: &name external-dns
+version: v0.13.1
+repo: https://kubernetes-sigs.github.io/external-dns
+releaseName: *name
+namespace: external-dns
+includeCRDs: false
+valuesFile: values-external-dns.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline: {}
