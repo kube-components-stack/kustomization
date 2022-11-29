@@ -31,8 +31,8 @@ valuesInline:
     ingressClassByName: true
     ingressClass: ingress-nginx-admin
     allowSnippetAnnotations: true
-    # service:
-    #   externalTrafficPolicy: "Local"
+    service:
+      externalTrafficPolicy: "Local"
     metrics:
       enabled: true
       serviceMonitor:
