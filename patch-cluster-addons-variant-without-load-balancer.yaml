@@ -1,0 +1,10 @@
+---
+spec:
+  generators:
+    - matrix:
+        generators:
+          - git:
+              directories:
+                - path: cluster-addons/*
+                - path: cluster-addons/metallb
+                  exclude: true
