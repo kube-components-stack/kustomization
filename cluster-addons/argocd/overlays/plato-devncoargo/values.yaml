@@ -21,6 +21,11 @@ server:
       # nginx.ingress.kubernetes.io/backend-protocol: HTTPS
       # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+      # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/
+      nginx.ingress.kubernetes.io/whitelist-source-range: "78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
+      # https://loft.sh/blog/kubernetes-nginx-ingress-10-useful-configuration-options/
+      nginx.ingress.kubernetes.io/enable-access-log: "true"
+      nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
     hosts:
     - argocd.admin.devncoargo.dev-sbr.com
     tls:
