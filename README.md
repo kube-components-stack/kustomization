@@ -89,25 +89,24 @@ Some killer features:
 
 ## declare vars and create directory structure and files
 ```zsh
-addon=keycloak
-cluster=kind
-namespace=keycloak
+addon=external-dns
+declare clusters=("kind-dev" "kind-prod" "plato-devncoargo")
+namespace=external-dns
 
-mkdir -p cluster-addons/$addon/{overlays/$cluster-{dev,prod},base}
-touch cluster-addons/$addon/{base/{helm-generator.yaml,kustomization.yaml,namespace.yaml},overlays/$cluster-{dev,prod}/{kustomization.yaml,values.yaml}}
-
-cat << EOF > cluster-addons/$addon/base/helm-generator.yaml
+mkdir -p cluster-addons/$addon/base
+# touch cluster-addons/$addon/base/{helm-chart-$addon.yaml,kustomization.yaml,namespace.yaml}  
+cat << EOF > cluster-addons/$addon/base/helm-chart-$addon.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
-  name: $addon-helm-chart
+  name: helm-chart-$addon
 name: &name $addon
 version: ""
 repo: ""
 releaseName: *name
 namespace: $namespace
 includeCRDs: false
-valuesFile: values.yaml
+valuesFile: values-$addon.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline: {}
 EOF
@@ -127,15 +126,20 @@ resources:
 - namespace.yaml
 EOF
 
-cat << EOF > cluster-addons/$addon/overlays/$cluster-{dev,prod}/kustomization.yaml
+for c in $clusters; do 
+  mkdir -p cluster-addons/$addon/overlays/$c
+  touch cluster-addons/$addon/overlays/$c/{kustomization.yaml,values-$addon.yaml}
+  cat << EOF > cluster-addons/$addon/overlays/$c/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $namespace
 generators:
-- ../../base/helm-generator.yaml
+- ../../base/helm-chart-$addon.yaml
 resources:
 - ../../base
 EOF
+done
+
 ```
 
 ## copy an existing environment
