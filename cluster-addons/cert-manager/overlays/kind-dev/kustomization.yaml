@@ -3,4 +3,5 @@ kind: Kustomization
 bases:
 - ../../base
 generators:
+- ./cluster-issuer.yaml
 - ../../base/helm-generator.yaml
