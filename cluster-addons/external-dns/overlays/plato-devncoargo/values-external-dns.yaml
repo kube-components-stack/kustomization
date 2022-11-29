@@ -1,0 +1,51 @@
+## @param policy Modify how DNS records are synchronized between sources and providers (options: sync, upsert-only )
+##
+policy: sync
+## @param registry Registry method to use (options: txt, aws-sd, noop)
+## ref: https://github.com/kubernetes-sigs/external-dns/blob/master/docs/proposal/registry.md
+##
+# registry: txt
+## @param sources [array] K8s resources type to be observed for new DNS entries by ExternalDNS
+##
+sources:
+  # - crd
+  - service
+  # - ingress
+  # - contour-httpproxy
+## @param provider DNS provider where the DNS records will be created.
+## Available providers are:
+## - akamai, alibabacloud, aws, azure, azure-private-dns, cloudflare, coredns, designate, digitalocean, google, hetzner, infoblox, linode, rfc2136, transip, oci
+##
+# provider: aws
+## AWS configuration to be set via arguments/env. variables
+##
+aws:
+  ## @param aws.region When using the AWS provider, `AWS_DEFAULT_REGION` to set in the environment (optional)
+  ##
+  region: us-west-1
+  ## @param aws.zoneType When using the AWS provider, filter for zones of this type (optional, options: public, private)
+  ##
+  zoneType: public
+  ## @param aws.assumeRoleArn When using the AWS provider, assume role by specifying --aws-assume-role to the external-dns daemon
+  ##
+  assumeRoleArn: arn:aws:iam::477514913822:role/plato-eks-external-dns-devncoargo-use1 #usw1
+## @param domainFilters Limit possible target zones by domain suffixes (optional)
+##
+domainFilters:
+- devncoargo.dev-sbr.com    # data.terraform_remote_state.plato_infra.outputs.module.public_dns_zone.name
+## @param zoneIdFilters Limit possible target zones by zone id (optional)
+##
+zoneIdFilters:
+- Z10050781OTB3BINJSHKF     # data.terraform_remote_state.plato_infra.outputs.module.public_dns_zone.zone_id
+## ServiceAccount parameters
+## https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+##
+serviceAccount:
+  ## @param serviceAccount.name ServiceAccount to use. A name is generated using the external-dns.fullname template if it is not set
+  ##
+  name: external-dns
+  ## @param serviceAccount.annotations Additional Service Account annotations
+  ##
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::477514913822:role/plato-eks-external-dns-devncoargo-use1 #usw1
+
