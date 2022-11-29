@@ -28,7 +28,7 @@ aws:
   zoneType: public
   ## @param aws.assumeRoleArn When using the AWS provider, assume role by specifying --aws-assume-role to the external-dns daemon
   ##
-  assumeRoleArn: arn:aws:iam::477514913822:role/plato-eks-external-dns-devncoargo-use1 #usw1
+  # assumeRoleArn: arn:aws:iam::477514913822:role/plato-eks-external-dns-devncoargo-use1 #usw1
 ## @param domainFilters Limit possible target zones by domain suffixes (optional)
 ##
 domainFilters:
@@ -49,3 +49,9 @@ serviceAccount:
   annotations:
     eks.amazonaws.com/role-arn: arn:aws:iam::477514913822:role/plato-eks-external-dns-devncoargo-use1 #usw1
 
+# combineFQDNAnnotation: false
+# dryRun: false
+# ignoreHostnameAnnotation: false
+# interval: 1m
+# logFormat: json
+# logLevel: info
