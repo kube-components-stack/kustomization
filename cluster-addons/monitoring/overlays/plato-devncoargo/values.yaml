@@ -44,6 +44,11 @@ grafana:
       nginx.ingress.kubernetes.io/backend-protocol: HTTPS
       nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
       nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/
+    # nginx.ingress.kubernetes.io/whitelist-source-range: ""
+    # https://loft.sh/blog/kubernetes-nginx-ingress-10-useful-configuration-options/
+    nginx.ingress.kubernetes.io/enable-access-log: "true"
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
     hosts:
     - grafana.admin.devncoargo.dev-sbr.com
     pathType: Prefix
