@@ -23,10 +23,10 @@ server:
       # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     hosts:
     - argocd.admin.devncoargo.dev-sbr.com
-    # tls:
-    # - secretName: argocd-tls-certificate
-    #   hosts:
-    #   - argocd.admin.devncoargo.dev-sbr.com
+    tls:
+    - secretName: argocd-tls-certificate
+      hosts:
+      - argocd.admin.devncoargo.dev-sbr.com
   config:
     url: https://argocd.admin.devncoargo.dev-sbr.com
     # accounts.webhook: apiKey, login # authentik oauth ?
