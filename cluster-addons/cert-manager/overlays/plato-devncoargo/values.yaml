@@ -1,2 +1,2 @@
 ingressShim:
-  defaultIssuerName: selfsigned-cluster-issuer
+  defaultIssuerName: cluster-issuer
