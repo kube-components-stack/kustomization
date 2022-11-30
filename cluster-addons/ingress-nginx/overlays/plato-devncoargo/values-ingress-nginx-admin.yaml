@@ -10,13 +10,13 @@ controller:
       # service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                      # internal (default) or internet-facing
       service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'                            # Set to '*' to enable proxy protocol v2, relative doc : https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt
       # outdated type ? see:  https://github.com/projectcontour/contour/issues/4346
-      service.beta.kubernetes.io/aws-load-balancer-type: nlb                                      # nlb-ip or external, see: https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/pkg/service/model_builder.go
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip #nlb                                      # nlb-ip or external, see: https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/pkg/service/model_builder.go
       # service.beta.kubernetes.io/load-balancer-source-ranges: 78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12
     # loadBalancerSourceRanges: [78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12]
-  config:
-    use-forwarded-headers: "true"
-    use-proxy-protocol: "true"
-    enable-real-ip: "true"
+  # config:
+  #   use-forwarded-headers: "true"
+  #   use-proxy-protocol: "true"
+  #   enable-real-ip: "true"
   #   log-format-upstream: '{"time_local": "$time_local", "remote_addr": "$proxy_protocol_addr",
   #     "x_forward_for": "$proxy_add_x_forwarded_for", "request_id": "$req_id", "remote_user":
   #     "$remote_user", "bytes_sent": $bytes_sent, "request_time": "$request_time",
