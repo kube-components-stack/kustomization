@@ -9,8 +9,9 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-internal: false                                # deprecated since v2.2.0 release in favor of the new aws-load-balancer-scheme annotation
       # service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                      # internal (default) or internet-facing
       service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'                            # Set to '*' to enable proxy protocol v2, relative doc : https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt
+      service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true
       # outdated type ? see:  https://github.com/projectcontour/contour/issues/4346
-      service.beta.kubernetes.io/aws-load-balancer-type: nlb-ip #nlb                                      # nlb-ip or external, see: https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/pkg/service/model_builder.go
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb #nlb                                      # nlb-ip or external, see: https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/pkg/service/model_builder.go
       # service.beta.kubernetes.io/load-balancer-source-ranges: 78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12
     # loadBalancerSourceRanges: [78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12]
   # config:
