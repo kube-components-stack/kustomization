@@ -5,5 +5,5 @@ bases:
 - ../../base
 generators:
 - ../../base/helm-chart-ingress-nginx-admin.yaml
-# - ../../base/helm-chart-ingress-nginx-private.yaml
-# - ../../base/helm-chart-ingress-nginx-public.yaml
+- ../../base/helm-chart-ingress-nginx-private.yaml
+- ../../base/helm-chart-ingress-nginx-public.yaml
