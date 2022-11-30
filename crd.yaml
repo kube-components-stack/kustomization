@@ -1,4 +1,20 @@
 ---
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: crd
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destinations:
+  - name: '*'
+    namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
+---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -15,24 +31,24 @@ spec:
               revision: HEAD
               directories:
                 - path: "crds/*"
-                - path: crds/argo-cd
-                  exclude: false
-                - path: crds/cert-manager
-                  exclude: false
-                - path: crds/kube-prometheus-stack
-                  exclude: false
-                - path: crds/kyverno
-                  exclude: false
+                # - path: crds/argo-cd
+                #   exclude: false
+                # - path: crds/cert-manager
+                #   exclude: false
+                # - path: crds/kube-prometheus-stack
+                #   exclude: false
+                # - path: crds/kyverno
+                #   exclude: false
                 - path: crds/metallb
                   exclude: true
-                - path: crds/sealed-secrets
-                  exclude: false
+                # - path: crds/sealed-secrets
+                #   exclude: false
           - clusters: {}
   template:
     metadata:
-      name: 'crd-{{path.basename}}-{{name}}'
+      name: '{{path.basename}}-{{name}}'
     spec:
-      project: default
+      project: crd
       info: []
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
