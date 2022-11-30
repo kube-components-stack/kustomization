@@ -3,11 +3,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: cluster-addons
+  name: core-apps
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  clusterResourceBlacklist:
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
   destinations:
   - name: '*'
     namespace: '*'
@@ -18,7 +24,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster-addons
+  name: core-apps
   namespace: argocd
 spec:
   generators:
@@ -28,38 +34,15 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: cluster-addons/*
-                - path: cluster-addons/cert-manager
-                  exclude: true
-                - path: cluster-addons/external-dns
-                  exclude: true
-                - path: cluster-addons/ingress-nginx
-                  exclude: true
-                - path: cluster-addons/keycloak
-                  exclude: true
-                - path: cluster-addons/kyverno
-                  exclude: true
-                - path: cluster-addons/loki
-                  exclude: true
-                - path: cluster-addons/metallb
-                  exclude: true
-                - path: cluster-addons/minio
-                  exclude: true
-                - path: cluster-addons/monitoring
-                  exclude: true
-                - path: cluster-addons/promtail
-                  exclude: true
-                - path: cluster-addons/trivy-system
-                  exclude: true
-                - path: cluster-addons/vector
-                  exclude: true
+                - path: cluster-addons/argo-cd
+                - path: cluster-addons/sealed-secrets
           - clusters: {}
   template:
     metadata:
-      name: '{{path.basename}}'             # for mono  cluster
-      # name: '{{path.basename}}-{{name}}'  # for multi cluster
+      name: '{{path.basename}}-core-app'             # for mono  cluster
+      # name: '{{path.basename}}-{{name}}'           # for multi cluster
     spec:
-      project: cluster-addons
+      project: core-apps
       info: []
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git

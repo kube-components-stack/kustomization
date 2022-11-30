@@ -3,7 +3,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: crd
+  name: addons-crds
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -21,7 +21,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: crds
+  name: addons-crds
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "-500"
