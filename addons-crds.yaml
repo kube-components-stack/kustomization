@@ -33,7 +33,7 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: "crds/*"
+                - path: "addons/crds/*"
                 # - path: crds/argo-cd
                 #   exclude: false
                 # - path: crds/cert-manager
@@ -42,7 +42,7 @@ spec:
                 #   exclude: false
                 # - path: crds/kyverno
                 #   exclude: false
-                - path: crds/metallb
+                - path: addons/crds/metallb
                   exclude: true
                 # - path: crds/sealed-secrets
                 #   exclude: false
@@ -52,12 +52,12 @@ spec:
       name: '{{path.basename}}'             # for mono  cluster
       # name: '{{path.basename}}-{{name}}'  # for multi cluster
     spec:
-      project: crd
+      project: addons-crds
       info: []
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "crds/{{path.basename}}/overlays/{{name}}"
+        path: "addons/crds/{{path.basename}}/overlays/{{name}}"
       destination:
         server: '{{server}}'
       syncPolicy:
