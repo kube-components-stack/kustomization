@@ -34,8 +34,7 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: cluster-addons/argo-cd
-                - path: cluster-addons/sealed-secrets
+                - path: "core/apps/*"
           - clusters: {}
   template:
     metadata:
@@ -47,7 +46,7 @@ spec:
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "cluster-addons/{{path.basename}}/overlays/{{name}}"
+        path: "core/apps/{{path.basename}}/overlays/{{name}}"
         # plugin:
         #   name: argocd-lovely-plugin # https://github.com/crumbhole/argocd-lovely-plugin
         # kustomize:
