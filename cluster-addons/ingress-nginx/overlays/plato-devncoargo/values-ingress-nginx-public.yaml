@@ -1,7 +1,7 @@
 controller:
   service:
     annotations:
-      external-dns.alpha.kubernetes.io/hostname: '*.devncoargo.dev-sbr.com,*.admin.devncoargo.dev-sbr.com,*.private.devncoargo.dev-sbr.com'
+      external-dns.alpha.kubernetes.io/hostname: '*.devncoargo.dev-sbr.com'
       service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true
       service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                      # internal (default) or internet-facing
       service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'                            # Set to '*' to enable proxy protocol v2, relative doc : https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt
