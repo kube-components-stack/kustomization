@@ -5,8 +5,8 @@ kind: AppProject
 metadata:
   name: core-crds
   namespace: argocd
-  # finalizers:
-  #   - resources-finalizer.argocd.argoproj.io
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   clusterResourceWhitelist:
   - group: apiextensions.k8s.io
