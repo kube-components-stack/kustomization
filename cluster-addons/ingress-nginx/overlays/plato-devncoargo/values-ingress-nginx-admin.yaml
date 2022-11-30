@@ -13,3 +13,12 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-type: nlb                                      # nlb-ip or external, see: https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/pkg/service/model_builder.go
       # service.beta.kubernetes.io/load-balancer-source-ranges: 78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12
     # loadBalancerSourceRanges: [78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12]
+  config:
+    log-format-upstream: '{"time_local": "$time_local", "remote_addr": "$proxy_protocol_addr",
+      "x_forward_for": "$proxy_add_x_forwarded_for", "request_id": "$req_id", "remote_user":
+      "$remote_user", "bytes_sent": $bytes_sent, "request_time": "$request_time",
+      "status": "$status", "vhost": "$host", "request_proto": "$server_protocol",
+      "path": "$uri", "request_query": "$args", "request_length": $request_length,
+      "duration": $request_time, "method": "$request_method", "http_referrer": "$http_referer",
+      "upstream_response_time": "$upstream_response_time", "http_user_agent": "$http_user_agent"
+      }'
