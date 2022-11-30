@@ -3,7 +3,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: cluster-addons
+  name: addons-apps
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -24,7 +24,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: cluster-addons
+  name: addons-apps
   namespace: argocd
 spec:
   generators:
@@ -34,43 +34,43 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: "cluster-addons/*"
-                - path: cluster-addons/cert-manager
+                - path: "addons/apps/*"
+                - path: addons/apps/cert-manager
+                  exclude: false
+                - path: addons/apps/external-dns
+                  exclude: false
+                - path: addons/apps/ingress-nginx
+                  exclude: false
+                - path: addons/apps/keycloak
                   exclude: true
-                - path: cluster-addons/external-dns
+                - path: addons/apps/kyverno
                   exclude: true
-                - path: cluster-addons/ingress-nginx
+                - path: addons/apps/loki
                   exclude: true
-                - path: cluster-addons/keycloak
+                - path: addons/apps/metallb
                   exclude: true
-                - path: cluster-addons/kyverno
+                - path: addons/apps/minio
                   exclude: true
-                - path: cluster-addons/loki
+                - path: addons/apps/monitoring
                   exclude: true
-                - path: cluster-addons/metallb
+                - path: addons/apps/promtail
                   exclude: true
-                - path: cluster-addons/minio
+                - path: addons/apps/trivy-system
                   exclude: true
-                - path: cluster-addons/monitoring
-                  exclude: true
-                - path: cluster-addons/promtail
-                  exclude: true
-                - path: cluster-addons/trivy-system
-                  exclude: true
-                - path: cluster-addons/vector
+                - path: addons/apps/vector
                   exclude: true
           - clusters: {}
   template:
     metadata:
-      name: '{{path.basename}}'             # for mono  cluster
+      name: '{{path.basename}}-addons-app'             # for mono  cluster
       # name: '{{path.basename}}-{{name}}'  # for multi cluster
     spec:
-      project: cluster-addons
+      project: addons-apps
       info: []
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "cluster-addons/{{path.basename}}/overlays/{{name}}"
+        path: "addons/apps/{{path.basename}}/overlays/{{name}}"
         # plugin:
         #   name: argocd-lovely-plugin # https://github.com/crumbhole/argocd-lovely-plugin
         # kustomize:
