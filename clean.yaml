@@ -56,7 +56,8 @@ spec:
           - clusters: {}
   template:
     metadata:
-      name: '{{path.basename}}-{{name}}'
+      name: '{{path.basename}}'             # for mono  cluster
+      # name: '{{path.basename}}-{{name}}'  # for multi cluster
     spec:
       project: cluster-addons
       info: []
