@@ -12,27 +12,16 @@ releaseName: ingress-nginx-admin
 namespace: ingress-nginx
 includeCRDs: false
 valuesFile: values-ingress-nginx-admin.yaml
-valuesMerge: override                 # merge, override or replace
+valuesMerge: override                                                               # merge, override or replace
 valuesInline:
   controller:
     config:
-      enable-brotli: "true" # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#enable-brotli
-      # log-format-upstream: '{"time_local": "$time_local", "remote_addr": "$proxy_protocol_addr",
-      #   "x_forward_for": "$proxy_add_x_forwarded_for", "request_id": "$req_id", "remote_user":
-      #   "$remote_user", "bytes_sent": $bytes_sent, "request_time": "$request_time",
-      #   "status": "$status", "vhost": "$host", "request_proto": "$server_protocol",
-      #   "path": "$uri", "request_query": "$args", "request_length": $request_length,
-      #   "duration": $request_time, "method": "$request_method", "http_referrer": "$http_referer",
-      #   "upstream_response_time": "$upstream_response_time", "http_user_agent": "$http_user_agent"
-      #   }'
+      enable-brotli: "true"                                                         # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#enable-brotli
     ingressClassResource:
       name: ingress-nginx-admin
       controllerValue: k8s.io/ingress-nginx-admin
     ingressClassByName: true
     ingressClass: ingress-nginx-admin
-    allowSnippetAnnotations: true
-    # service:
-    #   externalTrafficPolicy: "Local"
     metrics:
       enabled: true
       serviceMonitor:
