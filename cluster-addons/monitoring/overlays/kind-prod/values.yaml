@@ -4,7 +4,6 @@ alertmanager:
     ingressClassName: ingress-nginx-admin
     annotations:
       kubernetes.io/tls-acme: "true"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
     hosts:
     - alertmanager.k8s.lan
     pathType: Prefix
@@ -39,7 +38,6 @@ grafana:
     ingressClassName: ingress-nginx-admin
     annotations:
       kubernetes.io/tls-acme: "true"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
     hosts:
     - grafana.k8s.lan
     pathType: Prefix
@@ -53,7 +51,6 @@ prometheus:
     ingressClassName: ingress-nginx-admin
     annotations:
       kubernetes.io/tls-acme: "true"
-      nginx.ingress.kubernetes.io/ssl-redirect: "false"
     hosts:
     - prometheus.k8s.lan
     pathType: Prefix

@@ -4,7 +4,6 @@ ingress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
     kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   ingressClassName: ingress-nginx-admin
   hosts:
   - minio-api.admin.devncoargo.dev-sbr.com
@@ -17,7 +16,6 @@ consoleIngress:
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
     kubernetes.io/tls-acme: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "false"
   ingressClassName: ingress-nginx-admin
   hosts:
   - minio-console.admin.devncoargo.dev-sbr.com

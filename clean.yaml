@@ -13,30 +13,30 @@ spec:
               revision: HEAD
               directories:
                 - path: cluster-addons/*
-                - path: cluster-addons/cert-manager
-                  exclude: false
-                - path: cluster-addons/external-dns
-                  exclude: false
-                - path: cluster-addons/ingress-nginx
-                  exclude: false
+                # - path: cluster-addons/cert-manager
+                #   exclude: true
+                # - path: cluster-addons/external-dns
+                #   exclude: true
+                # - path: cluster-addons/ingress-nginx
+                #   exclude: true
                 - path: cluster-addons/keycloak
                   exclude: true
                 - path: cluster-addons/kyverno
                   exclude: true
-                - path: cluster-addons/loki
-                  exclude: true
+                # - path: cluster-addons/loki
+                #   exclude: true
                 - path: cluster-addons/metallb
                   exclude: true
-                - path: cluster-addons/minio
-                  exclude: true
-                - path: cluster-addons/monitoring
-                  exclude: true
-                - path: cluster-addons/promtail
-                  exclude: true
+                # - path: cluster-addons/minio
+                #   exclude: true
+                # - path: cluster-addons/monitoring
+                #   exclude: true
+                # - path: cluster-addons/promtail
+                #   exclude: true
                 - path: cluster-addons/trivy-system
                   exclude: true
-                - path: cluster-addons/vector
-                  exclude: true
+                # - path: cluster-addons/vector
+                #   exclude: true
           - clusters: {}
   template:
     metadata:
