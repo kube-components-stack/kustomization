@@ -24,19 +24,19 @@ spec:
                 - path: cluster-addons/kyverno
                   exclude: true
                 - path: cluster-addons/loki
-                  exclude: false
+                  exclude: true
                 - path: cluster-addons/metallb
                   exclude: true
                 - path: cluster-addons/minio
-                  exclude: false
+                  exclude: true
                 - path: cluster-addons/monitoring
-                  exclude: false
+                  exclude: true
                 - path: cluster-addons/promtail
-                  exclude: false
+                  exclude: true
                 - path: cluster-addons/trivy-system
                   exclude: true
                 - path: cluster-addons/vector
-                  exclude: false
+                  exclude: true
           - clusters: {}
   template:
     metadata:
