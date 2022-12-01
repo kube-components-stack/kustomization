@@ -1,5 +1,6 @@
 controller:
   service:
+    externalTrafficPolicy: Local # Local or Cluster (default)
     annotations:
       external-dns.alpha.kubernetes.io/hostname: '*.admin.devncoargo.dev-sbr.com'
       # https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/service/annotations
