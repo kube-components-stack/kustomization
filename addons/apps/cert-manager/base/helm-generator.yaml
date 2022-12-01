@@ -5,7 +5,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: cert-manager-helm-chart
 name: &name cert-manager
-version: v1.6.1 #v1.8.0 # v1.10.1
+version: v1.10.1 #v1.6.1 #v1.8.0 # v1.10.1
 # E1201 03:47:05.123486       1 leaderelection.go:330] error retrieving resource lock kube-system/cert-manager-controller: configmaps "cert-manager-controller" is forbidden: User "system:serviceaccount:cert-manager:cert-manager" cannot get resource "configmaps" in API group "" in the namespace "kube-system"
 repo: https://charts.jetstack.io
 releaseName: *name
@@ -14,9 +14,9 @@ includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline:
-  # global:
-  #   leaderElection:
-  #     namespace: "kube-system" # https://github.com/kubernetes-sigs/kustomize/issues/880
+  global:
+    leaderElection:
+      namespace: "kube-system" # https://github.com/kubernetes-sigs/kustomize/issues/880
   fullnameOverride: cert-manager
   installCRDs: false
   securityContext:
