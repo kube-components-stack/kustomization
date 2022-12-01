@@ -5,7 +5,7 @@ ingress:
     nginx.ingress.kubernetes.io/proxy-body-size: 32m
     kubernetes.io/tls-acme: "true"
     acme.cert-manager.io/http01-ingress-class: ingress-nginx-admin
-    nginx.ingress.kubernetes.io/whitelist-source-range: "78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "78.244.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
   ingressClassName: ingress-nginx-admin
   hosts:
   - minio-api.admin.devncoargo.dev-sbr.com
@@ -18,7 +18,7 @@ consoleIngress:
   annotations:
     kubernetes.io/tls-acme: "true"
     acme.cert-manager.io/http01-ingress-class: ingress-nginx-admin
-    nginx.ingress.kubernetes.io/whitelist-source-range: "78.240.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "78.244.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
   ingressClassName: ingress-nginx-admin
   hosts:
   - minio-console.admin.devncoargo.dev-sbr.com
