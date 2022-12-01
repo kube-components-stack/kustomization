@@ -28,3 +28,10 @@ valuesInline:
         enabled: true
         additionalLabels:
           release: kube-prometheus-stack
+    service:
+      externalTrafficPolicy: Local
+      annotations:
+        # https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/service/annotations
+        service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true
+        service.beta.kubernetes.io/aws-load-balancer-type: nlb
+        service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: Ingress=ingress-nginx-admin

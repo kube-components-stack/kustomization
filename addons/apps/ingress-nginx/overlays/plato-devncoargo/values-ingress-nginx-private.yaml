@@ -1,7 +1,4 @@
 controller:
   service:
-    externalTrafficPolicy: Local
     annotations:
       external-dns.alpha.kubernetes.io/hostname: '*.private.devncoargo.dev-sbr.com'
-      service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true
-      service.beta.kubernetes.io/aws-load-balancer-type: nlb
