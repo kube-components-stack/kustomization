@@ -35,8 +35,10 @@ valuesInline:
       annotations:
         # https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/service/annotations
         service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true
-        # service.beta.kubernetes.io/aws-load-balancer-type: nlb
-        service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: Ingress=ingress-nginx-admin  # tags are added after ELB provisioning step
-        service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                              # internal (default) or internet-facing. Do not edit the annotations after creating your service. If you need to modify it, delete the service object and create it again with the desired value for this annotation.
-        service.beta.kubernetes.io/aws-load-balancer-type: external
-        service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+        service.beta.kubernetes.io/aws-load-balancer-type: nlb
+        service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: Ingress=ingress-nginx-admin      # tags are added after ELB provisioning step
+        # service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                                # internal (default) or internet-facing. Do not edit the annotations after creating your service. If you need to modify it, delete the service object and create it again with the desired value for this annotation.
+        # service.beta.kubernetes.io/aws-load-balancer-type: external
+        # service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+        service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'                                        # Set to '*' to enable proxy protocol v2, relative doc : https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt
+        service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true
