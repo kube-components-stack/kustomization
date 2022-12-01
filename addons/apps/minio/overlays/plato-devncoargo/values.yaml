@@ -15,7 +15,7 @@ ingress: &ingress
     - minio-api.admin.devncoargo.dev-sbr.com
 consoleIngress:
   <<: *ingress
-  enabled: true
+  enabled: false
   hosts:
   - minio-console.admin.devncoargo.dev-sbr.com
   tls:
