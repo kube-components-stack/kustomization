@@ -3,6 +3,4 @@ controller:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: '*.private.devncoargo.dev-sbr.com'
       service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true
-      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                      # internal (default) or internet-facing
-      service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'                            # Set to '*' to enable proxy protocol v2, relative doc : https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt
-      service.beta.kubernetes.io/aws-load-balancer-type: nlb                                      # nlb-ip or external, see: https://github.com/kubernetes-sigs/aws-load-balancer-controller/blob/main/pkg/service/model_builder.go
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb
