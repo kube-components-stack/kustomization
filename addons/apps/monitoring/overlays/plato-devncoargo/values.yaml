@@ -37,7 +37,7 @@ grafana:
     size: 256Mi
   ingress:
     <<: *ingress
-    enabled: true
+    enabled: false
     hosts:
     - grafana.admin.devncoargo.dev-sbr.com
     tls:
