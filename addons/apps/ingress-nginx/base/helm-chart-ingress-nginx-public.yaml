@@ -17,8 +17,10 @@ valuesInline:
       controllerValue: k8s.io/ingress-nginx-public
     ingressClassByName: true
     ingressClass: ingress-nginx-public
+    admissionWebhooks:
+      enabled: false
     metrics:
-      enabled: true
+      enabled: false
       serviceMonitor:
         enabled: true
         additionalLabels:
