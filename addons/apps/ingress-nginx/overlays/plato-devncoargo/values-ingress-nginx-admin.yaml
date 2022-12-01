@@ -2,4 +2,3 @@ controller:
   service:
     annotations:
       external-dns.alpha.kubernetes.io/hostname: '*.admin.devncoargo.dev-sbr.com'
-      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                      # internal (default) or internet-facing
