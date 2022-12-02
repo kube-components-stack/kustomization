@@ -1,3 +1,2 @@
 charts
-good.yaml
-bad.yaml
+!deploy/charts
