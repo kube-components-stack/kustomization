@@ -30,12 +30,67 @@ spec:
         - |
           /bin/bash <<'EOF'
             trap "kubectl delete clusterroles.rbac.authorization.k8s.io system:{{ include "kustomization.fullname" . }}" EXIT
+            declare TMP=$(mktemp --directory /tmp/kubectl.XXXXXXXXXX)
             set -euo pipefail
             set -x
+
             folder=core/crds
             for crd in $(curl -s https://api.github.com/repos/${OWNER}/${REPO}/contents/${folder}\?ref\=${REF} | jq -r '.[].name'); do
               kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV}/\?ref\=${REF} --server-side=true --force-conflicts
             done
+
+            folder=addons/crds
+            for crd in $(curl -s https://api.github.com/repos/${OWNER}/${REPO}/contents/${folder}\?ref\=${REF} | jq -r '.[].name'); do
+              kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV}/\?ref\=${REF} --server-side=true --force-conflicts
+            done
+
+            git clone https://github.com/${OWNER}/${REPO}.git --depth=1 --branch ${REF} --single-branch $TMP/${REPO}
+
+            folder=core/apps
+            app=kube-system
+            kustomize \
+              --stack-trace \
+              --enable-alpha-plugins \
+              --enable-helm \
+              --load-restrictor LoadRestrictionsNone build $TMP/${REPO}/${folder}/${app}/overlays/${CLUSTER}-${ENV} \
+            | kubectl apply -f -
+
+            app=argocd
+            kustomize \
+              --stack-trace \
+              --enable-alpha-plugins \
+              --enable-helm \
+              --load-restrictor LoadRestrictionsNone build $TMP/${REPO}/${folder}/${app}/overlays/${CLUSTER}-${ENV} \
+            | kubectl apply -f -
+
+            for k in deployment statefulset daemonset;
+            do
+              for o in $(kubectl -n argocd get $k -l app.kubernetes.io/part-of=argocd -o jsonpath='{.items[*].metadata.name}');
+              do
+                kubectl -n argocd rollout status $k/$o
+              done
+            done
+
+            cat << EOF > $TMP/kustomization.yaml
+            apiVersion: kustomize.config.k8s.io/v1beta1
+            kind: Kustomization
+            namespace: argocd
+            secretGenerator:
+            - name: kind
+              type: Opaque
+              options:
+                disableNameSuffixHash: true
+                labels:
+                  argocd.argoproj.io/secret-type: cluster
+              envs:
+                - /tmp/argocd-cluster-name.env
+              literals:
+                - server=https://kubernetes.default.svc
+                - config={"tlsClientConfig":{"insecure":false}}
+            EOF
+            echo "name=${CLUSTER}-${ENV}" > $TMP/argocd-cluster-name.env
+            cd $TMP
+            kustomize --load-restrictor LoadRestrictionsNone build | kubectl apply -f -
           EOF
         lifecycle:
           preStop:
