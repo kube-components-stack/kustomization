@@ -65,3 +65,11 @@ env:
     REF: master
     CLUSTER: ""
     ENV: ""
+
+volumesAndMounts:
+  volumes:
+    - name: tmp
+      emptyDir: {}
+  volumeMounts:
+    - name: tmp
+      mountPath: /tmp

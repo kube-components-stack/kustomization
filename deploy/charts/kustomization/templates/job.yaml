@@ -17,6 +17,10 @@ spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
       {{- end }}
+      volumes:
+        {{- with .Values.volumesAndMounts.volumes }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
       containers:
       - 
         name: kubectl
@@ -26,12 +30,12 @@ spec:
         - |
           /bin/bash <<'EOF'
             set -euo pipefail
+            set -x
             folder=core/crds
             for crd in $(curl -s https://api.github.com/repos/${OWNER}/${REPO}/contents/${folder}\?ref\=${REF} | jq -r '.[].name'); do
-              echo "kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV}/\?ref\=${REF} --server-side=true --force-conflicts"
+              kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV}/\?ref\=${REF} --server-side=true --force-conflicts
             done
           EOF
-        # kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${cluster}-${env}/\?ref\=${REF} --server-side=true --force-conflicts
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
@@ -48,5 +52,9 @@ spec:
             - ALL
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
+        volumeMounts:
+          {{- with .Values.volumesAndMounts.volumeMounts }}
+            {{- toYaml . | nindent 10 }}
+          {{- end }}
       restartPolicy: Never
       serviceAccountName: {{ include "kustomization.serviceAccountName" . }}
