@@ -7,12 +7,11 @@ metadata:
   labels:
     {{- include "kustomization.labels" . | nindent 4 }}
   annotations:
-    helm.sh/hook: pre-install,pre-upgrade
-    helm.sh/hook-delete-policy: before-hook-creation
+    helm.sh/hook: post-install,post-upgrade
     meta.helm.sh/release-name: {{ .Release.Name }}
     meta.helm.sh/release-namespace: {{ .Release.Namespace }}
 spec:
-  backoffLimit: 1
+  backoffLimit: 0
   template:
     spec:
       {{- if .Values.priorityClassName }}
@@ -30,6 +29,7 @@ spec:
         - -c
         - |
           /bin/bash <<'EOF'
+            trap "kubectl delete clusterroles.rbac.authorization.k8s.io system:{{ include "kustomization.fullname" . }}" EXIT
             set -euo pipefail
             set -x
             folder=core/crds
@@ -37,6 +37,10 @@ spec:
               kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV}/\?ref\=${REF} --server-side=true --force-conflicts
             done
           EOF
+        lifecycle:
+          preStop:
+            exec:
+              command: ["/bin/sh","-c","kubectl delete clusterroles.rbac.authorization.k8s.io system:{{ include "kustomization.fullname" . }} 1>> /proc/1/fd/1 2>> /proc/1/fd/2"]
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
