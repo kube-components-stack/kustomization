@@ -1,0 +1,41 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: install-argocd
+  labels:
+    {{- include "kustomization.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: pre-install,pre-upgrade
+    helm.sh/hook-delete-policy: before-hook-creation
+spec:
+  backoffLimit: 4
+  template:
+    spec:
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName | quote }}
+      {{- end }}
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - |
+          /bin/bash <<'EOF'
+            set -euo pipefail
+            kubectl -n {{ .Release.Namespace }} rollout status deploy/argocd-repo-server
+            kubectl -n {{ .Release.Namespace }} rollout status deploy/argocd-server
+          EOF
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        name: kubectl
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+      restartPolicy: Never
+      serviceAccountName: {{ include "kustomization.serviceAccountName" . }}
