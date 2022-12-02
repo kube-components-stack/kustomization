@@ -8,26 +8,37 @@ metadata:
   annotations:
     helm.sh/hook: pre-install,pre-upgrade
     helm.sh/hook-delete-policy: before-hook-creation
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
 spec:
-  backoffLimit: 4
+  backoffLimit: 1
   template:
     spec:
       {{- if .Values.priorityClassName }}
       priorityClassName: {{ .Values.priorityClassName | quote }}
       {{- end }}
       containers:
-      - command:
+      - 
+        name: kubectl
+        command:
         - /bin/sh
         - -c
         - |
           /bin/bash <<'EOF'
             set -euo pipefail
-            kubectl -n {{ .Release.Namespace }} rollout status deploy/argocd-repo-server
-            kubectl -n {{ .Release.Namespace }} rollout status deploy/argocd-server
+            folder=core/crds
+            for crd in $(curl -s https://api.github.com/repos/${OWNER}/${REPO}/contents/${folder}\?ref\=${REF} | jq -r '.[].name'); do
+              echo "kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV}/\?ref\=${REF} --server-side=true --force-conflicts"
+            done
           EOF
+        # kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${cluster}-${env}/\?ref\=${REF} --server-side=true --force-conflicts
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
-        name: kubectl
+        env:
+          {{- range $key, $value := .Values.env.fromValues }}
+          - name: {{ $key }}
+            value: {{ $value | quote }}
+          {{- end }}
         securityContext:
           runAsNonRoot: true
           readOnlyRootFilesystem: true

@@ -57,3 +57,11 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+env:
+  fromValues:
+    OWNER: kube-components-stack
+    REPO: kustomization
+    REF: master
+    CLUSTER: ""
+    ENV: ""
