@@ -3,6 +3,7 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: install-argocd
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "kustomization.labels" . | nindent 4 }}
   annotations:

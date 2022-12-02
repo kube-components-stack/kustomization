@@ -6,6 +6,8 @@ metadata:
   labels:
     {{- include "kustomization.labels" . | nindent 4 }}
   annotations:
+    meta.helm.sh/release-name: {{ .Release.Name }}
+    meta.helm.sh/release-namespace: {{ .Release.Namespace }}
     helm.sh/hook-weight: "-10"
     # helm.sh/hook: pre-install,pre-upgrade,post-install,post-upgrade
     # helm.sh/hook-delete-policy: before-hook-creation,hook-succeeded
