@@ -3,10 +3,10 @@
 # Declare variables to be passed into your templates.
 
 image:
-  repository: bitnami/kubectl
+  repository: docker.io/alpine/k8s # https://github.com/alpine-docker/k8s
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.21"
+  tag: "1.25.4"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -70,6 +70,13 @@ volumesAndMounts:
   volumes:
     - name: tmp
       emptyDir: {}
+    - name: volume-kustomization-secret-generator
+      configMap:
+        name: kustomization-secret-generator
   volumeMounts:
     - name: tmp
       mountPath: /tmp
+    - name: volume-kustomization-secret-generator
+      mountPath: /tmp/kustomization.yaml
+      subPath: kustomization.yaml
+      readOnly: true

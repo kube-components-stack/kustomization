@@ -71,31 +71,13 @@ spec:
               done
             done
 
-            cat << EOF > $TMP/kustomization.yaml
-            apiVersion: kustomize.config.k8s.io/v1beta1
-            kind: Kustomization
-            namespace: argocd
-            secretGenerator:
-            - name: kind
-              type: Opaque
-              options:
-                disableNameSuffixHash: true
-                labels:
-                  argocd.argoproj.io/secret-type: cluster
-              envs:
-                - /tmp/argocd-cluster-name.env
-              literals:
-                - server=https://kubernetes.default.svc
-                - config={"tlsClientConfig":{"insecure":false}}
-            EOF
-            echo "name=${CLUSTER}-${ENV}" > $TMP/argocd-cluster-name.env
-            cd $TMP
+            cd /tmp
             kustomize --load-restrictor LoadRestrictionsNone build | kubectl apply -f -
           EOF
         lifecycle:
           preStop:
             exec:
-              command: ["/bin/sh","-c","kubectl delete clusterroles.rbac.authorization.k8s.io system:{{ include "kustomization.fullname" . }} 1>> /proc/1/fd/1 2>> /proc/1/fd/2"]
+              command: ["/bin/sh","$TMP-c","kubectl delete clusterroles.rbac.authorization.k8s.io system:{{ include "kustomization.fullname" . }} 1>> /proc/1/fd/1 2>> /proc/1/fd/2"]
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         env:
@@ -104,7 +86,7 @@ spec:
             value: {{ $value | quote }}
           {{- end }}
         securityContext:
-          runAsNonRoot: true
+          runAsNonRoot: false #true
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           capabilities:
