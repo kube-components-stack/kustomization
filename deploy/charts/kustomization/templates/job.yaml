@@ -73,6 +73,11 @@ spec:
 
             cd /tmp
             kustomize --load-restrictor LoadRestrictionsNone build | kubectl apply -f -
+
+            kubectl apply -f https://raw.githubusercontent.com/kube-components-stack/kustomization/${REF}/core-crds.yaml
+            kubectl apply -f https://raw.githubusercontent.com/kube-components-stack/kustomization/${REF}/core-apps.yaml
+            kubectl apply -f https://raw.githubusercontent.com/kube-components-stack/kustomization/${REF}/addons-crds.yaml
+            kubectl apply -f https://raw.githubusercontent.com/kube-components-stack/kustomization/${REF}/addons-apps.yaml
           EOF
         lifecycle:
           preStop:
