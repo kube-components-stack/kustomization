@@ -34,17 +34,19 @@ spec:
               revision: HEAD
               directories:
                 - path: "addons/crds/*"
-                # - path: crds/argo-cd
+                # - path: addons/crds/argo-cd
                 #   exclude: false
-                # - path: crds/cert-manager
+                # - path: addons/crds/cert-manager
                 #   exclude: false
-                # - path: crds/kube-prometheus-stack
+                # - path: addons/crds/kube-prometheus-stack
                 #   exclude: false
-                # - path: crds/kyverno
+                # - path: addons/crds/kyverno
                 #   exclude: false
                 - path: addons/crds/metallb
                   exclude: true
-                # - path: crds/sealed-secrets
+                # - path: addons/crds/cert-manager
+                #   exclude: false
+                # - path: addons/crds/sealed-secrets
                 #   exclude: false
           - clusters: {}
   template:
