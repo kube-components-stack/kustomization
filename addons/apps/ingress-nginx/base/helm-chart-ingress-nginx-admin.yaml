@@ -33,12 +33,12 @@ valuesInline:
     service:
       externalTrafficPolicy: Local
       annotations:
-        # https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/service/annotations
-        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"                  # deprecated since v2.3.0 release in favor of the new aws-load-balancer-attributes annotation
-        service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true         # 01/12/2022: don't works !
         service.beta.kubernetes.io/aws-load-balancer-type: nlb
-        service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: Ingress=ingress-nginx-admin      # tags are added after ELB provisioning step
+        service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"                  # deprecated since v2.3.0 release in favor of the new aws-load-balancer-attributes annotation
         service.beta.kubernetes.io/aws-load-balancer-internal: "false"                                          # deprecated since v2.2.0 release in favor of the new aws-load-balancer-scheme annotation
-        service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                                  # internal (default) or internet-facing. Do not edit the annotations after creating your service. If you need to modify it, delete the service object and create it again with the desired value for this annotation.
         service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'                                        # Set to '*' to enable proxy protocol v2, relative doc : https://www.haproxy.org/download/1.8/doc/proxy-protocol.txt
-        service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true
+        # https://kubernetes-sigs.github.io/aws-load-balancer-controller/latest/guide/service/annotations
+        # service.beta.kubernetes.io/aws-load-balancer-attributes: load_balancing.cross_zone.enabled=true         # 01/12/2022: don't works !
+        # service.beta.kubernetes.io/aws-load-balancer-additional-resource-tags: Ingress=ingress-nginx-admin      # tags are added after ELB provisioning step
+        # service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"                                  # internal (default) or internet-facing. Do not edit the annotations after creating your service. If you need to modify it, delete the service object and create it again with the desired value for this annotation.
+        # service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true
