@@ -1,3 +1,24 @@
+## 0.1.0 (2022-12-05)
+
+### Feat
+
+- create patch-crds-finalizers job
+- deploy app thanks chart
+- remove cluster role after job
+- prepare argocd deployment thanks helm chart
+
+### Refactor
+
+- use cronjob instead job
+- add configmap
+- deploy app
+- change hook
+- add ns
+- rbac
+- add volumeMounts
+- create job
+- prepare helm chart
+
 ## 0.0.2 (2022-12-02)
 
 ### Refactor
