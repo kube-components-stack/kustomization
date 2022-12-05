@@ -1,0 +1,22 @@
+---
+apiVersion: builtin
+kind: LabelTransformer
+metadata:
+  name: notImportantHere
+labels:
+  foo: bar
+fieldSpecs:
+- kind: CustomResourceDefinition
+  path: metadata/labels
+  create: true
+---
+apiVersion: builtin
+kind: AnnotationsTransformer
+metadata:
+  name: notImportantHere
+annotations:
+  foo: bar
+fieldSpecs:
+- kind: CustomResourceDefinition
+  path: metadata/annotations
+  create: true
