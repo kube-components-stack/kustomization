@@ -91,6 +91,7 @@ spec:
                           for o in $(kubectl get $crd -ojsonpath='{.items[*].metadata.name}' -n $n);do
                             set +e
                             kubectl patch  $crd $o -n $n --type json --patch='[ { "op": "remove", "path": "/metadata/finalizers" } ]'
+                            kubectl delete $crd $o -n $n &
                             set -e
                           done
                         done
