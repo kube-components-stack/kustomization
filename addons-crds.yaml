@@ -73,5 +73,6 @@ spec:
             factor: 2
             maxDuration: 2m
           limit: 5
+        # https://argo-cd.readthedocs.io/en/stable/user-guide/sync-options/
         syncOptions:
           - Replace=true
