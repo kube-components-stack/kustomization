@@ -36,7 +36,7 @@ domainFilters:
 ## @param zoneIdFilters Limit possible target zones by zone id (optional)
 ##
 zoneIdFilters:
-- Z1RLGTQ741V6LQ     # data.terraform_remote_state.plato_infra.outputs.module.public_dns_zone.zone_id
+- Z02285722WAJQIRRG8B93     # data.terraform_remote_state.plato_infra.outputs.aws_route53_zone.environment_public_dns_zone.id
 ## ServiceAccount parameters
 ## https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
 ##
