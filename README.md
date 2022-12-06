@@ -23,6 +23,28 @@ Some killer features:
 - Pod Security Standards implemented as Kyverno policies
 - extra policies: Best Practices, mitigates CVE
 
+
+## Usage
+
+[Helm](https://helm.sh) must be installed to use the charts.  Please refer to
+Helm's [documentation](https://helm.sh/docs) to get started.
+
+Once Helm has been set up correctly, add the repo as follows:
+
+    helm repo add kustomization https://kube-components-stack.github.io/kustomization
+
+If you had already added this repo earlier, run `helm repo update` to retrieve
+the latest versions of the packages.  You can then run `helm search repo
+kustomization` to see the charts.
+
+To install the kustomization chart:
+
+    helm install my-kustomization kustomization/kustomization
+
+To uninstall the chart:
+
+    helm delete my-kustomization
+
 ## structure
 
 ```
