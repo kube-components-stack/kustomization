@@ -1,3 +1,14 @@
 apiVersion: v1
-entries: {}
-generated: "2022-12-05T08:26:42.631856226Z"
+entries:
+  kustomization:
+  - apiVersion: v2
+    appVersion: "1.21"
+    created: "2022-12-06T09:29:30.495074253Z"
+    description: A Helm chart for Kubernetes
+    digest: 317345567419d3597884b6b2771bb6137a249102b3c877cad10e5f6d32f4abb3
+    name: kustomization
+    type: application
+    urls:
+    - https://github.com/kube-components-stack/kustomization/releases/download/kustomization-0.1.0/kustomization-0.1.0.tgz
+    version: 0.1.0
+generated: "2022-12-06T09:29:30.495082253Z"
