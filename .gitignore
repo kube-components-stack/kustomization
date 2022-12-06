@@ -1,2 +1,2 @@
-charts
-!deploy/charts
+!charts/
+**/apps/**/charts/
