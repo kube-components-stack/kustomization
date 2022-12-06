@@ -18,6 +18,12 @@ server:
       kubernetes.io/tls-acme: "true"
       acme.cert-manager.io/http01-ingress-class: ingress-nginx-admin
       nginx.ingress.kubernetes.io/whitelist-source-range: "78.244.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
+      # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/annotations/
+      # https://loft.sh/blog/kubernetes-nginx-ingress-10-useful-configuration-options/
+      nginx.ingress.kubernetes.io/enable-access-log: "true"
+      nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
+      nginx.ingress.kubernetes.io/ssl-redirect: "false"
+      #nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     hosts:
     - argocd.admin.devncoargo.dev-sbr.com
     tls:
