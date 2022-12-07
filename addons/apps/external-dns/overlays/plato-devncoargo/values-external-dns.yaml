@@ -32,14 +32,14 @@ aws:
 ## @param domainFilters Limit possible target zones by domain suffixes (optional)
 ##
 domainFilters:
-- devncoargo.dev-sbr.com    # data.terraform_remote_state.plato_infra.outputs.module.public_dns_zone.name
+- plato-devncoargo.dev-sbr.com    # data.terraform_remote_state.plato_infra.outputs.module.public_dns_zone.name
 ## @param zoneIdFilters Limit possible target zones by zone id (optional)
 ##
 
 # data.terraform_remote_state.plato_infra.outputs.aws_route53_zone.environment_public_dns_zone.id
 # data.terraform_remote_state.plato_infra.outputs.module.public_dns_zone.id
 zoneIdFilters:
-- Z06564221TQVU7LYMWU2Q
+- Z0240034N25PTWEFTR8B
 
 ## ServiceAccount parameters
 ## https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/

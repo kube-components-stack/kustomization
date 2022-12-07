@@ -7,17 +7,17 @@ alertmanager:
       acme.cert-manager.io/http01-ingress-class: ingress-nginx-admin
       nginx.ingress.kubernetes.io/whitelist-source-range: "78.244.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
     hosts:
-    - alertmanager.admin.devncoargo.dev-sbr.com
+    - alertmanager.admin.plato-devncoargo.dev-sbr.com
     pathType: Prefix
     tls:
     - secretName: alertmanager-tls-certificate
       hosts:
-      - alertmanager.admin.devncoargo.dev-sbr.com
+      - alertmanager.admin.plato-devncoargo.dev-sbr.com
 grafana:
   # https://grafana.com/docs/grafana/latest/administration/configuration/
   grafana.ini:
     server:
-      root_url: https://grafana.admin.devncoargo.dev-sbr.com
+      root_url: https://grafana.admin.plato-devncoargo.dev-sbr.com
     # https://grafana.com/docs/grafana/next/setup-grafana/configure-security/configure-authentication/generic-oauth/
     auth.generic_oauth:
       enabled: false
@@ -26,9 +26,9 @@ grafana:
       scopes: profile,email,groups
       client_id: grafana
       client_secret: iagsmFWVLS5DcEoP9SgGCE3OFAG4g5VF
-      auth_url:   https://keycloak.admin.devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/auth
-      token_url:  https://keycloak.admin.devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/token
-      api_url:    https://keycloak.admin.devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/userinfo
+      auth_url:   https://keycloak.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/auth
+      token_url:  https://keycloak.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/token
+      api_url:    https://keycloak.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/userinfo
       role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
       tls_skip_verify_insecure: "true"
   admin:
@@ -39,22 +39,22 @@ grafana:
     <<: *ingress
     enabled: true
     hosts:
-    - grafana.admin.devncoargo.dev-sbr.com
+    - grafana.admin.plato-devncoargo.dev-sbr.com
     tls:
     - secretName: grafana-tls-certificate
       hosts:
-      - grafana.admin.devncoargo.dev-sbr.com
+      - grafana.admin.plato-devncoargo.dev-sbr.com
 prometheus:
   ingress:
     <<: *ingress
     enabled: false
     hosts:
-    - prometheus.admin.devncoargo.dev-sbr.com
+    - prometheus.admin.plato-devncoargo.dev-sbr.com
     pathType: Prefix
     tls:
     - secretName: prometheus-tls-certificate
       hosts:
-      - prometheus.admin.devncoargo.dev-sbr.com
+      - prometheus.admin.plato-devncoargo.dev-sbr.com
   prometheusSpec:
     retention: 1d
     retentionSize: 1GB

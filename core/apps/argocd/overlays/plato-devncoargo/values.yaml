@@ -1,5 +1,5 @@
 notifications:
-  argocdUrl: https://argocd.admin.devncoargo.dev-sbr.com
+  argocdUrl: https://argocd.admin.plato-devncoargo.dev-sbr.com
   enabled: false
 server:
   # volumeMounts:
@@ -25,13 +25,13 @@ server:
       nginx.ingress.kubernetes.io/ssl-redirect: "false"
       #nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
     hosts:
-    - argocd.admin.devncoargo.dev-sbr.com
+    - argocd.admin.plato-devncoargo.dev-sbr.com
     tls:
     - secretName: argocd-tls-certificate
       hosts:
-      - argocd.admin.devncoargo.dev-sbr.com
+      - argocd.admin.plato-devncoargo.dev-sbr.com
   config:
-    url: https://argocd.admin.devncoargo.dev-sbr.com
+    url: https://argocd.admin.plato-devncoargo.dev-sbr.com
     # accounts.webhook: apiKey, login # authentik oauth ?
     # https://github.com/argoproj/argo-cd/issues/4344#issuecomment-890382825
     # https://github.com/argoproj/argo-cd/issues/1171
@@ -39,7 +39,7 @@ server:
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/
   #   oidc.config: |
   #     name: Keycloak
-  #     issuer: https://keycloak.admin.devncoargo.dev-sbr.com/realms/master
+  #     issuer: https://keycloak.admin.plato-devncoargo.dev-sbr.com/realms/master
   #     clientID: argocd
   #     clientSecret: $oidc.keycloak.clientSecret
   #     requestedScopes: ["openid", "profile", "email", "groups"]

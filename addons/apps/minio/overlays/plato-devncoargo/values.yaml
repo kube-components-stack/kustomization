@@ -8,11 +8,11 @@ ingress:
     nginx.ingress.kubernetes.io/whitelist-source-range: "78.244.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
   ingressClassName: ingress-nginx-admin
   hosts:
-  - minio-api.admin.devncoargo.dev-sbr.com
+  - minio-api.admin.plato-devncoargo.dev-sbr.com
   tls:
   - secretName: minio-api-tls-certificate
     hosts:
-    - minio-api.admin.devncoargo.dev-sbr.com
+    - minio-api.admin.plato-devncoargo.dev-sbr.com
 consoleIngress:
   enabled: true
   annotations:
@@ -21,11 +21,11 @@ consoleIngress:
     nginx.ingress.kubernetes.io/whitelist-source-range: "78.244.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12"
   ingressClassName: ingress-nginx-admin
   hosts:
-  - minio-console.admin.devncoargo.dev-sbr.com
+  - minio-console.admin.plato-devncoargo.dev-sbr.com
   tls:
   - secretName: minio-console-tls-certificate
     hosts:
-    - minio-console.admin.devncoargo.dev-sbr.com
+    - minio-console.admin.plato-devncoargo.dev-sbr.com
 buckets:
     # Name of the bucket
   - name: loki

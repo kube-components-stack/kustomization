@@ -6,10 +6,10 @@
 #   value: "true"
 
 # - name: KEYCLOAK_FRONTEND_URL
-#   value: "https://keycloak.admin.devncoargo.dev-sbr.com/auth"
+#   value: "https://keycloak.admin.plato-devncoargo.dev-sbr.com/auth"
 
 # - name: KEYCLOAK_EXTRA_ARGS
-#   value: "-Dkeycloak.frontendUrl=https://keycloak.admin.devncoargo.dev-sbr.com/auth"
+#   value: "-Dkeycloak.frontendUrl=https://keycloak.admin.plato-devncoargo.dev-sbr.com/auth"
 
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
@@ -25,11 +25,11 @@ ingress:
   enabled: false
   # path: / #/*
   ingressClassName: ingress-nginx-admin
-  hostname: keycloak.admin.devncoargo.dev-sbr.com
+  hostname: keycloak.admin.plato-devncoargo.dev-sbr.com
   extraTls:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
-      - keycloak.admin.devncoargo.dev-sbr.com
+      - keycloak.admin.plato-devncoargo.dev-sbr.com
   # annotations:
   #   nginx.ingress.kubernetes.io/enable-access-log: "true"
   #   nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
