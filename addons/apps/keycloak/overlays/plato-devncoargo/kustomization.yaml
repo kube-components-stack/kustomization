@@ -6,3 +6,4 @@ generators:
 resources:
 - ../../base
 - secrets.yaml
+- pod.yaml
