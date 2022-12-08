@@ -1,0 +1,73 @@
+# extraEnvVars:
+# - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+#   value: "true"
+
+# - name: PROXY_ADDRESS_FORWARDING
+#   value: "true"
+
+# - name: KEYCLOAK_FRONTEND_URL
+#   value: "https://keycloak.admin.plato-devncoargo.dev-sbr.com/auth"
+
+# - name: KEYCLOAK_EXTRA_ARGS
+#   value: "-Dkeycloak.frontendUrl=https://keycloak.admin.plato-devncoargo.dev-sbr.com/auth"
+
+## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
+## ref: https://www.keycloak.org/server/reverseproxy
+##
+proxy: edge # passthrough/edge/none/reencrytpt
+auth:
+  existingSecret:
+    name: keycloak-auth
+    keyMapping:
+      admin-password: admin-password
+      management-password: management-password
+ingress:
+  enabled: true
+  # path: / #/*
+  ingressClassName: ingress-nginx-admin
+  hostname: keycloak.admin.plato-devncoargo.dev-sbr.com
+  extraTls:
+  - secretName: keycloak-ca #keycloak-tls-certificate
+    hosts:
+      - keycloak.admin.plato-devncoargo.dev-sbr.com
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/enable-access-log: "true"
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.org/server-snippets: |
+      location /auth {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+      }
+service:
+  type: ClusterIP
+keycloakConfigCli:
+  enabled: false
+  image:
+    registry: docker.io
+    repository: bitnami/keycloak-config-cli
+    # tag: 5.2.1-debian-11-r1 #5.2.0-debian-11-r5 # 5.2.1-debian-11-r1
+  command:
+  - java
+  - '-jar'
+  # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.1.jar
+  - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
+  # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.1.jar
+  # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.2.jar
+  # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-17.0.1.jar
+  # - keycloak-config-cli.jar
+  extraEnvVars:
+  - name: IMPORT_FILES_LOCATIONS
+    value: /secret/*
+  - name: KEYCLOAK_URL
+    value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
+  extraVolumeMounts:
+  - mountPath: /secret
+    name: cfg
+    readOnly: true
+  extraVolumes:
+  - name: cfg
+    secret:
+      secretName: keycloak-config
