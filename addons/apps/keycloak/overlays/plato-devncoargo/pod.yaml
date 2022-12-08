@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: keycloak-keycloak-config-cli
+  name: debug
   namespace: keycloak
 spec:
   containers:
@@ -10,7 +10,7 @@ spec:
     # command:
     # - java
     # - -jar
-    # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.1.jar
+    # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
     command:
       - sh
       - "-c"
@@ -18,7 +18,7 @@ spec:
         /bin/bash <<'EOF'
         tail -f /dev/null
         EOF
-    
+      # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
     env:
     # - name: KEYCLOAK_URL
     #   value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
@@ -35,7 +35,8 @@ spec:
       value: "true"
     - name: IMPORT_FILES_LOCATIONS
       value: /secret/*
-    image: docker.io/bitnami/keycloak-config-cli:5.2.0-debian-11-r5
+    # docker run quay.io/skopeo/stable:latest list-tags docker://docker.io/bitnami/keycloak-config-cli  | yq e -P
+    image: docker.io/bitnami/keycloak-config-cli:5.5.0-debian-11-r8
     imagePullPolicy: IfNotPresent
     name: keycloak-config-cli
     resources:
@@ -44,13 +45,13 @@ spec:
     securityContext:
       runAsNonRoot: true
       runAsUser: 1001
+    volumeMounts:
+      - mountPath: /secret
+        name: cfg
+        readOnly: true
   restartPolicy: Never
   securityContext:
     fsGroup: 1001
-  volumeMounts:
-    - mountPath: /secret
-      name: cfg
-      readOnly: true
   serviceAccountName: keycloak
   volumes:
     - name: cfg
