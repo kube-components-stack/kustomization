@@ -3,4 +3,4 @@ ingressShim:
 serviceAccount:
   # Optional additional annotations to add to the controller's ServiceAccount
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::477514913822:role/plato-eks-argocd-external-dns-devncoargo-usw1
+    eks.amazonaws.com/role-arn: arn:aws:iam::477514913822:role/plato-eks-argocd-cert-manager-devncoargo-usw1
