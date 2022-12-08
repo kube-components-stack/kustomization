@@ -10,4 +10,25 @@ namespace: external-dns
 includeCRDs: false
 valuesFile: values-external-dns.yaml
 valuesMerge: override                 # merge, override or replace
-valuesInline: {}
+valuesInline:
+  ## @param policy Modify how DNS records are synchronized between sources and providers (options: sync, upsert-only )
+  ##
+  policy: sync
+  ## @param registry Registry method to use (options: txt, aws-sd, noop)
+  ## ref: https://github.com/kubernetes-sigs/external-dns/blob/master/docs/proposal/registry.md
+  ##
+  # registry: txt
+  ## @param sources [array] K8s resources type to be observed for new DNS entries by ExternalDNS
+  ##
+  sources:
+    # - crd
+    - service
+    # - ingress
+    # - contour-httpproxy
+  ## ServiceAccount parameters
+  ## https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+  ##
+  serviceAccount:
+    ## @param serviceAccount.name ServiceAccount to use. A name is generated using the external-dns.fullname template if it is not set
+    ##
+    name: external-dns
