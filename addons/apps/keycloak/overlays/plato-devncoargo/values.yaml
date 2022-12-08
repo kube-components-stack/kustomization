@@ -62,6 +62,8 @@ keycloakConfigCli:
     value: /secret/*
   - name: KEYCLOAK_URL
     value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
+  - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
+    value: "false"
   extraVolumeMounts:
   - mountPath: /secret
     name: cfg
