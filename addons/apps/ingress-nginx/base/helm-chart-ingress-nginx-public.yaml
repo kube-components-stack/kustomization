@@ -18,9 +18,9 @@ valuesInline:
     ingressClassByName: true
     ingressClass: ingress-nginx-public
     admissionWebhooks:
-      enabled: false
+      enabled: true
     metrics:
-      enabled: false
+      enabled: true
       serviceMonitor:
         enabled: true
         additionalLabels:
