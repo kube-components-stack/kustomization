@@ -79,9 +79,9 @@ create-secrets:
 # export TMP in order to use it in subprocess
 	export TMP
 
-	for namespace in secrets/cluster-addons/*; do
+	for namespace in secrets/core/*; do
 		namespace=$$(basename $$namespace)
-		build=$$(kustomize --load-restrictor LoadRestrictionsNone build secrets/cluster-addons/$${namespace}/overlays/$${cluster}-$${env}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
+		build=$$(kustomize --load-restrictor LoadRestrictionsNone build secrets/core/$${namespace}/overlays/$${cluster}-$${env}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
 		rows=$$(echo "$$build" | jq -rc '.[]')
 		if [[ -n "$$rows" ]]; then
 			tempfile=$$(mktemp $${TMP:-/tmp}/hosts.XXXXXXXXXX)
@@ -92,8 +92,28 @@ create-secrets:
 			done
 			sed -i '$$d' $$tempfile
 			sed -i '/^$$/d' $$tempfile
-			cat "$$tempfile" > cluster-addons/$${namespace}/overlays/$${cluster}-$${env}/secrets.yaml
-			cd cluster-addons/$${namespace}/overlays/$${cluster}-$${env}
+			cat "$$tempfile" > core/apps/$${namespace}/overlays/$${cluster}-$${env}/secrets.yaml
+			cd core/apps/$${namespace}/overlays/$${cluster}-$${env}
+			kustomize edit add resource secrets.yaml
+			cd $$OLDPWD
+		fi
+	done
+
+	for namespace in secrets/addons/*; do
+		namespace=$$(basename $$namespace)
+		build=$$(kustomize --load-restrictor LoadRestrictionsNone build secrets/addons/$${namespace}/overlays/$${cluster}-$${env}/ | yq -ojson | jq -s | jq '.[] | select(.kind == "Secret")' | jq -s | jq -c )
+		rows=$$(echo "$$build" | jq -rc '.[]')
+		if [[ -n "$$rows" ]]; then
+			tempfile=$$(mktemp $${TMP:-/tmp}/hosts.XXXXXXXXXX)
+			trap "rm -Rf $$tempfile" 0 2 3 15
+			for row in $$rows; do
+				echo "$$row" | yq e -P | kubeseal --cert <(yq '.data."tls.crt"' $${privatekey} | base64 -d) --format yaml >> $$tempfile
+				echo "---" >> $$tempfile
+			done
+			sed -i '$$d' $$tempfile
+			sed -i '/^$$/d' $$tempfile
+			cat "$$tempfile" > addons/apps/$${namespace}/overlays/$${cluster}-$${env}/secrets.yaml
+			cd addons/apps/$${namespace}/overlays/$${cluster}-$${env}
 			kustomize edit add resource secrets.yaml
 			cd $$OLDPWD
 		fi
