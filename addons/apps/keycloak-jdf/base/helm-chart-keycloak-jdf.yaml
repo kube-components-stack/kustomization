@@ -1,0 +1,13 @@
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: helm-chart-keycloak-jdf
+name: &name keycloak-jdf
+version: ""
+repo: ""
+releaseName: *name
+namespace: keycloak-jdf
+includeCRDs: false
+valuesFile: values-keycloak-jdf.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline: {}
