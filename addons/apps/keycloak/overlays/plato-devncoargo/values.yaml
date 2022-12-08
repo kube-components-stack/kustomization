@@ -1,6 +1,6 @@
 auth:
-  adminUser: foo
-  adminPassword: bar 
+  adminUser: &adminUser foo
+  adminPassword: &adminPassword bar 
 ingress:
   enabled: true
   ingressClassName: ingress-nginx-admin
@@ -13,9 +13,29 @@ ingress:
       - *hostname
 # https://github.com/adorsys/keycloak-config-cli
 # https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
-# keycloakConfigCli:
-#   enabled: true
-
+keycloakConfigCli:
+  enabled: true
+  extraEnvVars:
+  - name: KEYCLOAK_URL
+    value: http://keycloak-headless:8080/
+  - name: KEYCLOAK_USER
+    value: *adminUser
+  - name: KEYCLOAK_PASSWORD
+    value: *adminPassword
+  - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
+    value: "true"
+  - name: KEYCLOAK_AVAILABILITYCHECK_TIMEOUT
+    value: 60s
+  - name: IMPORT_FILES
+    value: /secret/*
+  extraVolumeMounts:
+  - mountPath: /secret
+    name: cfg
+    readOnly: true
+  extraVolumes:
+  - name: cfg
+    secret:
+      secretName: keycloak-config
 postgresql:
   architecture: standalone
   auth:
