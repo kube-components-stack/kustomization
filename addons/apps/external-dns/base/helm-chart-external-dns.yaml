@@ -25,6 +25,12 @@ valuesInline:
     - service
     # - ingress
     # - contour-httpproxy
+  ## AWS configuration to be set via arguments/env. variables
+  ##
+  aws:
+    ## @param aws.zoneType When using the AWS provider, filter for zones of this type (optional, options: public, private)
+    ##
+    zoneType: public
   ## ServiceAccount parameters
   ## https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
   ##
