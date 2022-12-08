@@ -20,6 +20,8 @@ spec:
         EOF
     
     env:
+    # - name: KEYCLOAK_URL
+    #   value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
     - name: KEYCLOAK_URL
       value: http://keycloak-headless:8080/
     - name: KEYCLOAK_USER
@@ -31,6 +33,8 @@ spec:
           name: keycloak-auth
     - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
       value: "true"
+    - name: IMPORT_FILES_LOCATIONS
+      value: /secret/*
     image: docker.io/bitnami/keycloak-config-cli:5.2.0-debian-11-r5
     imagePullPolicy: IfNotPresent
     name: keycloak-config-cli
@@ -43,4 +47,12 @@ spec:
   restartPolicy: Never
   securityContext:
     fsGroup: 1001
+  volumeMounts:
+    - mountPath: /secret
+      name: cfg
+      readOnly: true
   serviceAccountName: keycloak
+  volumes:
+    - name: cfg
+      secret:
+        secretName: keycloak-config
