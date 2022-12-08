@@ -22,7 +22,7 @@ auth:
       admin-password: admin-password
       management-password: management-password
 ingress:
-  enabled: false
+  enabled: true
   # path: / #/*
   ingressClassName: ingress-nginx-admin
   hostname: keycloak.admin.plato-devncoargo.dev-sbr.com
@@ -30,16 +30,17 @@ ingress:
   - secretName: keycloak-ca #keycloak-tls-certificate
     hosts:
       - keycloak.admin.plato-devncoargo.dev-sbr.com
-  # annotations:
-  #   nginx.ingress.kubernetes.io/enable-access-log: "true"
-  #   nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
-  #   nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
-  #   nginx.org/server-snippets: |
-  #     location /auth {
-  #       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-  #       proxy_set_header X-Forwarded-Proto $scheme;
-  #       proxy_set_header X-Forwarded-Host $host;
-  #     }
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/enable-access-log: "true"
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.org/server-snippets: |
+      location /auth {
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Host $host;
+      }
 service:
   type: ClusterIP
 keycloakConfigCli:
