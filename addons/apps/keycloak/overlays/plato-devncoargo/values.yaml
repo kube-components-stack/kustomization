@@ -1,0 +1,13 @@
+auth:
+  adminUser: foo
+  adminPassword: bar 
+ingress:
+  enabled: true
+  ingressClassName: ingress-nginx-admin
+  hostname: &hostname keycloak.admin.plato-devncoargo.dev-sbr.com
+  annotations:
+    kubernetes.io/tls-acme: "true"
+  extraTls:
+  - secretName: *hostname
+    hosts:
+      - *hostname
