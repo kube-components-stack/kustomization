@@ -13,8 +13,17 @@ spec:
     # Name of a secret used to store the ACME account private key from step 3
     privateKeySecretRef:
       name: letsencrypt-private-key
-    # Enable the HTTP-01 challenge provider
     solvers:
-    - http01:
-        ingress:
-          class: ingress-nginx-public
+    # # Enable the HTTP-01 challenge provider
+    # - http01:
+    #     ingress:
+    #       class: ingress-nginx-public
+    # Enable the DNS-01 challenge provider
+    - selector:
+        dnsZones:
+          - plato-devncoargo.dev-sbr.com
+      dns01:
+        route53:
+          region: us-west-1
+          hostedZoneID: Z0240034N25PTWEFTR8B
+          role: arn:aws:iam::477514913822:role/plato-eks-argocd-external-dns-devncoargo-usw1
