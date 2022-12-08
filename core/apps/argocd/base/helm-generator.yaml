@@ -210,6 +210,8 @@ valuesInline:
     # https://github.com/argoproj-labs/argocd-notifications/tree/master/catalog/templates
     # https://github.com/argoproj/argo-cd/tree/master/notifications_catalog
     # https://argocd-notifications.readthedocs.io/en/stable/services/overview/
+    # https://github.com/argoproj/notifications-engine
+    # https://developers.google.com/chat/how-tos/webhooks?hl=fr
     templates:
       # https://pkg.go.dev/time#Now
       # https://yourbasic.org/golang/format-parse-string-time-date-example/
