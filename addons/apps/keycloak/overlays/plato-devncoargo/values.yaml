@@ -11,3 +11,16 @@ ingress:
   - secretName: *hostname
     hosts:
       - *hostname
+# https://github.com/adorsys/keycloak-config-cli
+# https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
+# keycloakConfigCli:
+#   enabled: true
+
+postgresql:
+  architecture: standalone
+  auth:
+    database: bitnami_keycloak
+    existingSecret: ''
+    password: bar
+    username: bn_keycloak
+  enabled: true

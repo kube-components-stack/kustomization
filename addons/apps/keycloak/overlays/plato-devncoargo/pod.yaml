@@ -24,13 +24,17 @@ spec:
     #   value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
     - name: KEYCLOAK_URL
       value: http://keycloak-headless:8080/
+    # - name: KEYCLOAK_USER
+    #   value: user
+    # - name: KEYCLOAK_PASSWORD
+    #   valueFrom:
+    #     secretKeyRef:
+    #       key: admin-password
+    #       name: keycloak-auth
     - name: KEYCLOAK_USER
-      value: user
+      value: foo
     - name: KEYCLOAK_PASSWORD
-      valueFrom:
-        secretKeyRef:
-          key: admin-password
-          name: keycloak-auth
+      value: bar
     - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
       value: "true"
     - name: IMPORT_FILES_LOCATIONS
