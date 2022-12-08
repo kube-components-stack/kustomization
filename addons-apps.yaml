@@ -36,7 +36,7 @@ spec:
               directories:
                 - path: "addons/apps/*"
                 - path: addons/apps/cert-manager
-                  exclude: true
+                  exclude: false
                 - path: addons/apps/external-dns
                   exclude: false
                 - path: addons/apps/ingress-nginx
@@ -46,19 +46,19 @@ spec:
                 - path: addons/apps/kyverno
                   exclude: true
                 - path: addons/apps/loki
-                  exclude: true
+                  exclude: false
                 - path: addons/apps/metallb
                   exclude: true
                 - path: addons/apps/minio
-                  exclude: true
+                  exclude: false
                 - path: addons/apps/monitoring
-                  exclude: true
+                  exclude: false
                 - path: addons/apps/promtail
-                  exclude: true
+                  exclude: false
                 - path: addons/apps/trivy-system
                   exclude: true
                 - path: addons/apps/vector
-                  exclude: true
+                  exclude: false
           - clusters: {}
   template:
     metadata:
