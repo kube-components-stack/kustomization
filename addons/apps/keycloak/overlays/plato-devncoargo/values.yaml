@@ -48,11 +48,12 @@ keycloakConfigCli:
   image:
     registry: docker.io
     repository: bitnami/keycloak-config-cli
-    tag: 5.2.1-debian-11-r1
+    tag: 5.2.0-debian-11-r5 # 5.2.1-debian-11-r1
   command:
   - java
   - '-jar'
-  - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.1.jar
+  - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
+  # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.1.jar
   # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.2.jar
   # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-17.0.1.jar
   # - keycloak-config-cli.jar
