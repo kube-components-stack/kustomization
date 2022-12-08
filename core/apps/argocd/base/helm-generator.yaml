@@ -195,6 +195,7 @@ valuesInline:
           - teams:devops-teams
           - slack:devops-slack
           - grafana:argocd
+          - googlechat:spaceName
         triggers:
           - on-created
           - on-deleted
@@ -207,6 +208,8 @@ valuesInline:
     # -- The notification template is used to generate the notification content
     ## For more information: https://argocd-notifications.readthedocs.io/en/stable/templates/
     # https://github.com/argoproj-labs/argocd-notifications/tree/master/catalog/templates
+    # https://github.com/argoproj/argo-cd/tree/master/notifications_catalog
+    # https://argocd-notifications.readthedocs.io/en/stable/services/overview/
     templates:
       # https://pkg.go.dev/time#Now
       # https://yourbasic.org/golang/format-parse-string-time-date-example/
@@ -540,6 +543,24 @@ valuesInline:
               }
             ]
           title: Application {{.app.metadata.name}} has been successfully synced
+        googlechat:
+          cards: |
+            - header:
+                title: Application {{.app.metadata.name}} has been successfully synced
+              sections:
+                - widgets:
+                    - textParagraph:
+                        text: The app {{ .app.metadata.name }} has succesfully synced!
+                - widgets:
+                    - keyValue:
+                        topLabel: Repository
+                        content: {{ call .repo.RepoURLToHTTPS .app.spec.source.repoURL }}
+                    - keyValue:
+                        topLabel: Revision
+                        content: {{ .app.spec.source.targetRevision }}
+                    - keyValue:
+                        topLabel: Author
+                        content: {{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}
     triggers:
       # For more information: https://argocd-notifications.readthedocs.io/en/stable/triggers/
       trigger.on-created: |
