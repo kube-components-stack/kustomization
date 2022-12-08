@@ -112,13 +112,12 @@ To uninstall the chart:
 
 ## declare vars and create directory structure and files
 ```zsh
-addon=external-dns
+addon=keycloak-jdf
 declare clusters=("kind-dev" "kind-prod" "plato-devncoargo")
-namespace=external-dns
+namespace=keycloak-jdf
 
-mkdir -p cluster-addons/$addon/base
-# touch cluster-addons/$addon/base/{helm-chart-$addon.yaml,kustomization.yaml,namespace.yaml}  
-cat << EOF > cluster-addons/$addon/base/helm-chart-$addon.yaml
+mkdir -p addons/apps/$addon/base
+cat << EOF > addons/apps/$addon/base/helm-chart-$addon.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
@@ -134,14 +133,14 @@ valuesMerge: override                 # merge, override or replace
 valuesInline: {}
 EOF
 
-cat << EOF > cluster-addons/$addon/base/namespace.yaml
+cat << EOF > addons/apps/$addon/base/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
   name: $namespace
 EOF
 
-cat << EOF > cluster-addons/$addon/base/kustomization.yaml
+cat << EOF > addons/apps/$addon/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $namespace
@@ -150,9 +149,9 @@ resources:
 EOF
 
 for c in $clusters; do 
-  mkdir -p cluster-addons/$addon/overlays/$c
-  touch cluster-addons/$addon/overlays/$c/{kustomization.yaml,values-$addon.yaml}
-  cat << EOF > cluster-addons/$addon/overlays/$c/kustomization.yaml
+  mkdir -p addons/apps/$addon/overlays/$c
+  touch addons/apps/$addon/overlays/$c/{kustomization.yaml,values-$addon.yaml}
+  cat << EOF > addons/apps/$addon/overlays/$c/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $namespace
