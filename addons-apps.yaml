@@ -42,7 +42,7 @@ spec:
                 - path: addons/apps/ingress-nginx
                   exclude: false
                 - path: addons/apps/keycloak
-                  exclude: true
+                  exclude: false
                 - path: addons/apps/kyverno
                   exclude: true
                 - path: addons/apps/loki

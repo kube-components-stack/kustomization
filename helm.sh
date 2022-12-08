@@ -10,7 +10,7 @@ helm template \
   --namespace kube-system \
   --set env.fromValues.CLUSTER=plato \
   --set env.fromValues.ENV=devncoargo \
-  deploy/charts/kustomization > /tmp/kustomization.yaml
+  charts/kustomization > /tmp/kustomization.yaml
 
 cat /tmp/kustomization.yaml |yq e -P
 
@@ -18,7 +18,7 @@ cat /tmp/kustomization.yaml |yq e -P
 #   --namespace kube-system
 
 helm upgrade \
-  --install kustomization deploy/charts/kustomization \
+  --install kustomization charts/kustomization \
   --namespace kube-system \
   --set env.fromValues.CLUSTER=plato \
   --set env.fromValues.ENV=devncoargo
