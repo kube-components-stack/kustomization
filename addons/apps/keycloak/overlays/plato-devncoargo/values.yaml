@@ -15,11 +15,11 @@ postgresql:
 
 service:
   type: ClusterIP
-  http:
-    enabled: false
+#   http:
+#     enabled: false
 
-tls:
-  enabled: false
+# tls:
+#   enabled: false
 
 ingress:
   enabled: true
@@ -34,7 +34,7 @@ ingress:
 # https://github.com/adorsys/keycloak-config-cli
 # https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
 keycloakConfigCli:
-  enabled: true
+  enabled: false
   extraEnvVars:
   - name: KEYCLOAK_URL
     value: http://keycloak-headless.keycloak.svc.cluster.local:8080
