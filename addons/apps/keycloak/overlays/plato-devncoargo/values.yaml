@@ -36,6 +36,22 @@ keycloakConfigCli:
   - name: cfg
     secret:
       secretName: keycloak-config
+  command:
+    - sh
+    - "-c"
+    - |
+      /bin/bash <<'EOF'
+      tail -f /dev/null
+      EOF
+    # - java
+    # - '-jar'
+    # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
+    # - --keycloak.url=http://keycloak-headless:8080/
+    # - --keycloak.ssl-verify=false
+    # - --keycloak.user=foo
+    # - --keycloak.password=bar
+    # - --import.files.locations=/secret/config.
+
 postgresql:
   architecture: standalone
   auth:
