@@ -33,7 +33,7 @@ extraEnvVars:
 # https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
 keycloakConfigCli:
   enabled: true
-  # extraEnvVars:
+  extraEnvVars:
   # - name: KEYCLOAK_URL
   #   value: http://keycloak-headless.keycloak.svc.cluster.local:8080
   # - name: KEYCLOAK_USER
@@ -46,18 +46,18 @@ keycloakConfigCli:
   # #   value: "true"
   # # - name: KEYCLOAK_AVAILABILITYCHECK_TIMEOUT
   # #   value: 60s
-  # - name: IMPORT_FILES
-  #   value: /secret/*
-  # # - name: LOGGING_LEVEL_ROOT
-  # #   value: debug
-  # extraVolumeMounts:
-  # - mountPath: /secret
-  #   name: cfg
-  #   readOnly: true
-  # extraVolumes:
-  # - name: cfg
-  #   secret:
-  #     secretName: keycloak-config
+  - name: IMPORT_FILES
+    value: /secret/*
+  - name: LOGGING_LEVEL_ROOT
+    value: debug
+  extraVolumeMounts:
+  - mountPath: /secret
+    name: cfg
+    readOnly: true
+  extraVolumes:
+  - name: cfg
+    secret:
+      secretName: keycloak-config
   # command:
   #   - sh
   #   - "-c"
