@@ -61,8 +61,9 @@ keycloakConfigCli:
    - "-c"
    - |
      /bin/bash <<'EOF'
-       tail -f /dev/null
+      echo "done"
      EOF
+   #tail -f /dev/null
    #java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
 
   # command:
