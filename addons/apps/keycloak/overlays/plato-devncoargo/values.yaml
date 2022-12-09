@@ -8,11 +8,13 @@ extraEnvVars:
 proxy: edge # passthrough/edge/none/reencrytpt
 
 auth:
-  existingSecret:
-    name: keycloak-auth
-    keyMapping:
-      admin-password: admin-password
-      management-password: management-password
+  existingSecret: keycloak-auth
+  passwordSecretKey: admin-password
+  # existingSecret:
+  #   name: keycloak-auth
+  #   keyMapping:
+  #     admin-password: admin-password
+  #     management-password: management-password
 ingress:
   enabled: true
   # path: / #/*
