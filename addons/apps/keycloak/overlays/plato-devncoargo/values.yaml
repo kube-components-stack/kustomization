@@ -60,14 +60,13 @@ keycloakConfigCli:
     secret:
       secretName: keycloak-config
   command:
-    - exit
-  # command:
-  #   - sh
-  #   - "-c"
-  #   - |
-  #     /bin/bash <<'EOF'
-  #     java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
-  #     EOF
+    - sh
+    - "-c"
+    - |
+      /bin/bash <<'EOF'
+        echo "done"
+      EOF
+    #java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
     # tail -f /dev/null
     # - |
     #   /bin/bash <<'EOF'
