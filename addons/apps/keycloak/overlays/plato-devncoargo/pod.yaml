@@ -24,12 +24,22 @@ spec:
           dig A +short keycloak.keycloak.svc.cluster.local
           nc -w 5 -vz keycloak.keycloak.svc.cluster.local 80
 
+          output=$(curl \
+            --write-out "%{http_code}" \
+            --data "client_id=admin-cli" \
+            --data "username=${KEYCLOAK_USER}" \
+            --data "password=${KEYCLOAK_PASSWORD}" \
+            --data "grant_type=password" \
+            "${KEYCLOAK_URL}realms/master/protocol/openid-connect/token")
+          
+          echo "$output"
+
           tail -f /dev/null
         EOF
       # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
     env:
       - name: KEYCLOAK_URL
-        value: http://keycloak-headless:8080/
+        value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
       - name: KEYCLOAK_USER
         value: admin
       - name: KEYCLOAK_PASSWORD
