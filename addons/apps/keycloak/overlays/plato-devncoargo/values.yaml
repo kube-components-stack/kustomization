@@ -18,6 +18,9 @@ service:
   http:
     enabled: false
 
+tls:
+  enabled: false
+
 ingress:
   enabled: true
   ingressClassName: ingress-nginx-admin
@@ -34,7 +37,7 @@ keycloakConfigCli:
   enabled: true
   extraEnvVars:
   - name: KEYCLOAK_URL
-    value: https://keycloak-headless.keycloak.svc.cluster.local:8443
+    value: http://keycloak-headless.keycloak.svc.cluster.local:8080
   - name: KEYCLOAK_USER
     value: *adminUser
   - name: KEYCLOAK_PASSWORD
@@ -62,9 +65,9 @@ keycloakConfigCli:
     - "-c"
     - |
       /bin/bash <<'EOF'
-      tail -f /dev/null
+      java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
       EOF
-    # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
+    # tail -f /dev/null
     # - |
     #   /bin/bash <<'EOF'
     #   apt update && apt install -y dnsutils curl ncat openssl
