@@ -101,7 +101,7 @@ auth:
   adminUser: adminuser
   ## @param auth.adminPassword Keycloak administrator password for the new user
   ##
-  adminPassword: "password"
+  adminPassword: "N0password"
   ## @param auth.existingSecret Existing secret containing Keycloak admin password
   ##
   existingSecret: ""
@@ -984,9 +984,9 @@ keycloakConfigCli:
 postgresql:
   enabled: true
   auth:
-    postgresPassword: ""  
+    postgresPassword: "N0password"  
     username: bn_keycloak
-    password: "nopass"
+    password: "N0password"
     database: bitnami_keycloak
     existingSecret: ""
   architecture: standalone
@@ -1005,7 +1005,7 @@ externalDatabase:
   port: 5432
   user: bn_keycloak
   database: bitnami_keycloak
-  password: "nopass"
+  password: "N0password"
   existingSecret: ""
   existingSecretPasswordKey: ""
 
