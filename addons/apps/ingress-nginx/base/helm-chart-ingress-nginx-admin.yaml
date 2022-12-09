@@ -22,6 +22,7 @@ valuesInline:
       controllerValue: k8s.io/ingress-nginx-admin
     ingressClassByName: true
     ingressClass: ingress-nginx-admin
+    allowSnippetAnnotations: true
     admissionWebhooks:
       enabled: true
     metrics:

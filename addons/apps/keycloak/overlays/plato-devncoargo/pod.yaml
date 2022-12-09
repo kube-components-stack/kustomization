@@ -34,6 +34,8 @@ spec:
           
           echo "$output"
 
+          env | sort
+
           tail -f /dev/null
         EOF
       # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
