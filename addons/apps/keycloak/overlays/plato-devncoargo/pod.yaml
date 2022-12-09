@@ -4,7 +4,10 @@ kind: Pod
 metadata:
   name: debug
   namespace: keycloak
+  labels:
+    foo: bar
 spec:
+  terminationGracePeriodSeconds: 5
   containers:
   - 
     command:
@@ -12,7 +15,16 @@ spec:
       - "-c"
       - |
         /bin/bash <<'EOF'
-        tail -f /dev/null
+          apt update && apt install -y dnsutils curl ncat openssl
+
+          set -x
+          dig A +short keycloak-headless.keycloak.svc.cluster.local
+          nc -w 5 -vz keycloak-headless.keycloak.svc.cluster.local 8080
+
+          dig A +short keycloak.keycloak.svc.cluster.local
+          nc -w 5 -vz keycloak.keycloak.svc.cluster.local 80
+
+          tail -f /dev/null
         EOF
       # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
     env:
@@ -39,16 +51,17 @@ spec:
     resources:
       limits: {}
       requests: {}
-    # securityContext:
-    #   runAsNonRoot: true
-    #   runAsUser: 1001
+    securityContext:
+      allowPrivilegeEscalation: true
+      runAsNonRoot: false
+      runAsUser: 0
     volumeMounts:
       - mountPath: /secret
         name: cfg
         readOnly: true
   restartPolicy: Never
-  # securityContext:
-  #   fsGroup: 1001
+  securityContext:
+    fsGroup: 0
   serviceAccountName: keycloak
   volumes:
     - name: cfg
