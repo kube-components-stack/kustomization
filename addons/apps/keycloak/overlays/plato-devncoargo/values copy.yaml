@@ -14,7 +14,7 @@
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
 ##
-proxy: edge # passthrough/edge/none/reencrytpt
+# proxy: edge # passthrough/edge/none/reencrytpt
 auth:
   existingSecret:
     name: keycloak-auth

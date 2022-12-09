@@ -22,11 +22,13 @@ keycloakConfigCli:
   enabled: true
   extraEnvVars:
   - name: KEYCLOAK_URL
-    value: http://keycloak-headless:8080/
+    value: http://keycloak-headless.keycloak.svc.cluster.local:8080/auth
   - name: KEYCLOAK_USER
     value: *adminUser
   - name: KEYCLOAK_PASSWORD
     value: *adminPassword
+  - name: KEYCLOAK_GRANTTYPE
+    value: password
   - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
     value: "true"
   - name: KEYCLOAK_AVAILABILITYCHECK_TIMEOUT
@@ -43,16 +45,32 @@ keycloakConfigCli:
   - name: cfg
     secret:
       secretName: keycloak-config
-  # command:
-  #   - sh
-  #   - "-c"
-  #   - |
-  #     /bin/bash <<'EOF'
-  #     tail -f /dev/null
-  #     EOF
+  command:
+    - sh
+    - "-c"
+    - |
+      /bin/bash <<'EOF'
+      tail -f /dev/null
+      EOF
     # - |
     #   /bin/bash <<'EOF'
+    #   apt update && apt install -y dnsutils curl ncat openssl
+    #   dig A +short keycloak-headless.keycloak.svc.cluster.local
+    #   nc -vz keycloak-headless.keycloak.svc.cluster.local 8080
+
+    # https://www.keycloak.org/docs/latest/server_development/#authenticate-with-a-service-account
+    # curl \
+    #   --write-out "%{http_code}" \
+    #   -d "client_id=admin-cli" \
+    #   -d "username=foo" \
+    #   -d "password=bar" \
+    #   -d "grant_type=password" \
+    #   "http://keycloak-headless.keycloak.svc.cluster.local:8080/realms/master/protocol/openid-connect/token"
+    # {"error":"invalid_request","error_description":"HTTPS required"}403
+    # 
+
     #   java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --keycloak.url=http://keycloak-headless.keycloak.svc.cluster.local:8080/ --keycloak.ssl-verify=false --keycloak.user=foo --keycloak.password=bar --import.files.locations=/secret/config.yaml --logging.level.root=debug
+    #   java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --keycloak.url=http://keycloak-headless.keycloak.svc.cluster.local:8080/auth --keycloak.ssl-verify=false --keycloak.user=foo --keycloak.password=bar --import.files.locations=/secret/config.yaml --logging.level.root=debug
     #   EOF
 
 postgresql:
