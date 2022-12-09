@@ -1001,11 +1001,11 @@ postgresql:
 ## @param externalDatabase.existingSecretPasswordKey Name of an existing secret key containing the database credentials
 ##
 externalDatabase:
-  host: "keycloak-bitnami-postgresql"
+  host: ""
   port: 5432
-  user: bn_keycloak
-  database: bitnami_keycloak
-  password: admin1234
+  user: 
+  database: 
+  password: 
   existingSecret: ""
   existingSecretPasswordKey: ""
 
