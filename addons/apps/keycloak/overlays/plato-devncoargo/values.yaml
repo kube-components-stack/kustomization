@@ -57,6 +57,7 @@ keycloakConfigCli:
     #   apt update && apt install -y dnsutils curl ncat openssl
     #   dig A +short keycloak-headless.keycloak.svc.cluster.local
     #   nc -vz keycloak-headless.keycloak.svc.cluster.local 8080
+    #   echo "" | openssl s_client -showcerts -connect 127.0.0.1:8080 2>&1
 
     # https://www.keycloak.org/docs/latest/server_development/#authenticate-with-a-service-account
     # curl \
