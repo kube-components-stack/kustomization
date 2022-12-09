@@ -15,6 +15,8 @@ postgresql:
 
 service:
   type: ClusterIP
+  http:
+    enabled: false
 
 ingress:
   enabled: true
@@ -32,21 +34,21 @@ keycloakConfigCli:
   enabled: true
   extraEnvVars:
   - name: KEYCLOAK_URL
-    value: http://keycloak-headless.keycloak.svc.cluster.local:8080/auth
+    value: https://keycloak-headless.keycloak.svc.cluster.local:8443
   - name: KEYCLOAK_USER
     value: *adminUser
   - name: KEYCLOAK_PASSWORD
     value: *adminPassword
-  - name: KEYCLOAK_GRANTTYPE
-    value: password
-  - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
-    value: "true"
-  - name: KEYCLOAK_AVAILABILITYCHECK_TIMEOUT
-    value: 60s
+  # - name: KEYCLOAK_GRANTTYPE
+  #   value: password
+  # - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
+  #   value: "true"
+  # - name: KEYCLOAK_AVAILABILITYCHECK_TIMEOUT
+  #   value: 60s
   - name: IMPORT_FILES
     value: /secret/*
-  - name: LOGGING_LEVEL_ROOT
-    value: debug
+  # - name: LOGGING_LEVEL_ROOT
+  #   value: debug
   extraVolumeMounts:
   - mountPath: /secret
     name: cfg
@@ -62,6 +64,7 @@ keycloakConfigCli:
       /bin/bash <<'EOF'
       tail -f /dev/null
       EOF
+    # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
     # - |
     #   /bin/bash <<'EOF'
     #   apt update && apt install -y dnsutils curl ncat openssl
