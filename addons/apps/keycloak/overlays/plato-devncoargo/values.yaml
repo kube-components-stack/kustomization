@@ -1,11 +1,21 @@
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
 ##
-proxy: edge # passthrough/edge/none/reencrytpt
+# proxy: edge # passthrough/edge/none/reencrytpt
 
 auth:
-  adminUser: &adminUser foo
-  adminPassword: &adminPassword bar 
+  adminUser: &adminUser admin
+  adminPassword: &adminPassword admin
+  managementUser: manager
+  managementPassword: manager
+
+postgresql:
+  auth:
+    password: password
+
+service:
+  type: ClusterIP
+
 ingress:
   enabled: true
   ingressClassName: ingress-nginx-admin
@@ -74,14 +84,3 @@ keycloakConfigCli:
     #   java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --keycloak.url=http://keycloak-headless.keycloak.svc.cluster.local:8080/auth --keycloak.ssl-verify=false --keycloak.user=foo --keycloak.password=bar --import.files.locations=/secret/config.yaml --logging.level.root=debug
     #   EOF
 
-service:
-  type: ClusterIP
-
-postgresql:
-  architecture: standalone
-  auth:
-    database: bitnami_keycloak
-    existingSecret: ''
-    password: bar
-    username: bn_keycloak
-  enabled: true
