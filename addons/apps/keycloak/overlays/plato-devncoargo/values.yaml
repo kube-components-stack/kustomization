@@ -31,6 +31,7 @@ extraEnvVars:
     value: DEBUG
 # https://github.com/adorsys/keycloak-config-cli
 # https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
+# https://hub.docker.com/r/adorsys/keycloak-config-cli
 keycloakConfigCli:
   enabled: true
   extraEnvVars:
@@ -58,6 +59,8 @@ keycloakConfigCli:
   - name: cfg
     secret:
       secretName: keycloak-config
+  command:
+    - exit
   # command:
   #   - sh
   #   - "-c"

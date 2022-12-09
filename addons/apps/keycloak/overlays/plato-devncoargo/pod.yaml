@@ -7,10 +7,6 @@ metadata:
 spec:
   containers:
   - 
-    # command:
-    # - java
-    # - -jar
-    # - /opt/bitnami/keycloak-config-cli/keycloak-config-cli-18.0.0.jar
     command:
       - sh
       - "-c"
@@ -20,42 +16,39 @@ spec:
         EOF
       # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
     env:
-    # - name: KEYCLOAK_URL
-    #   value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
-    - name: KEYCLOAK_URL
-      value: http://keycloak-headless:8080/
-    # - name: KEYCLOAK_USER
-    #   value: user
-    # - name: KEYCLOAK_PASSWORD
-    #   valueFrom:
-    #     secretKeyRef:
-    #       key: admin-password
-    #       name: keycloak-auth
-    - name: KEYCLOAK_USER
-      value: foo
-    - name: KEYCLOAK_PASSWORD
-      value: bar
-    - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
-      value: "true"
-    - name: IMPORT_FILES_LOCATIONS
-      value: /secret/*
+      - name: KEYCLOAK_URL
+        value: http://keycloak-headless:8080/
+      - name: KEYCLOAK_USER
+        value: admin
+      - name: KEYCLOAK_PASSWORD
+        valueFrom:
+          secretKeyRef:
+            key: admin-password
+            name: keycloak
+      - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
+        value: "true"
+      - name: IMPORT_FILES
+        value: /secret/*
+      - name: LOGGING_LEVEL_ROOT
+        value: debug
     # docker run quay.io/skopeo/stable:latest list-tags docker://docker.io/bitnami/keycloak-config-cli  | yq e -P
-    image: docker.io/bitnami/keycloak-config-cli:5.5.0-debian-11-r8
+    image: docker.io/bitnami/keycloak-config-cli:5.5.0-debian-11-r4
+    # image: docker.io/bitnami/keycloak-config-cli:5.5.0-debian-11-r8
     imagePullPolicy: IfNotPresent
     name: keycloak-config-cli
     resources:
       limits: {}
       requests: {}
-    securityContext:
-      runAsNonRoot: true
-      runAsUser: 1001
+    # securityContext:
+    #   runAsNonRoot: true
+    #   runAsUser: 1001
     volumeMounts:
       - mountPath: /secret
         name: cfg
         readOnly: true
   restartPolicy: Never
-  securityContext:
-    fsGroup: 1001
+  # securityContext:
+  #   fsGroup: 1001
   serviceAccountName: keycloak
   volumes:
     - name: cfg
