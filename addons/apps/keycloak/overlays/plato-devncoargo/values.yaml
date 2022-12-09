@@ -15,11 +15,6 @@ postgresql:
 
 service:
   type: ClusterIP
-#   http:
-#     enabled: false
-
-# tls:
-#   enabled: false
 
 ingress:
   enabled: true
@@ -31,42 +26,45 @@ ingress:
   - secretName: *hostname
     hosts:
       - *hostname
+extraEnvVars:
+  - name: KEYCLOAK_LOG_LEVEL
+    value: DEBUG
 # https://github.com/adorsys/keycloak-config-cli
 # https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
 keycloakConfigCli:
-  enabled: false
-  extraEnvVars:
-  - name: KEYCLOAK_URL
-    value: http://keycloak-headless.keycloak.svc.cluster.local:8080
-  - name: KEYCLOAK_USER
-    value: *adminUser
-  - name: KEYCLOAK_PASSWORD
-    value: *adminPassword
-  # - name: KEYCLOAK_GRANTTYPE
-  #   value: password
-  # - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
-  #   value: "true"
-  # - name: KEYCLOAK_AVAILABILITYCHECK_TIMEOUT
-  #   value: 60s
-  - name: IMPORT_FILES
-    value: /secret/*
-  # - name: LOGGING_LEVEL_ROOT
-  #   value: debug
-  extraVolumeMounts:
-  - mountPath: /secret
-    name: cfg
-    readOnly: true
-  extraVolumes:
-  - name: cfg
-    secret:
-      secretName: keycloak-config
-  command:
-    - sh
-    - "-c"
-    - |
-      /bin/bash <<'EOF'
-      java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
-      EOF
+  enabled: true
+  # extraEnvVars:
+  # - name: KEYCLOAK_URL
+  #   value: http://keycloak-headless.keycloak.svc.cluster.local:8080
+  # - name: KEYCLOAK_USER
+  #   value: *adminUser
+  # - name: KEYCLOAK_PASSWORD
+  #   value: *adminPassword
+  # # - name: KEYCLOAK_GRANTTYPE
+  # #   value: password
+  # # - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
+  # #   value: "true"
+  # # - name: KEYCLOAK_AVAILABILITYCHECK_TIMEOUT
+  # #   value: 60s
+  # - name: IMPORT_FILES
+  #   value: /secret/*
+  # # - name: LOGGING_LEVEL_ROOT
+  # #   value: debug
+  # extraVolumeMounts:
+  # - mountPath: /secret
+  #   name: cfg
+  #   readOnly: true
+  # extraVolumes:
+  # - name: cfg
+  #   secret:
+  #     secretName: keycloak-config
+  # command:
+  #   - sh
+  #   - "-c"
+  #   - |
+  #     /bin/bash <<'EOF'
+  #     java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
+  #     EOF
     # tail -f /dev/null
     # - |
     #   /bin/bash <<'EOF'
