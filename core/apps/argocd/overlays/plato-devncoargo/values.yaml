@@ -39,7 +39,7 @@ server:
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/
     oidc.config: |
       name: Keycloak
-      issuer: https://keycloak.admin.plato-devncoargo.dev-sbr.com/realms/master
+      issuer: https://keycloak-nco.admin.plato-devncoargo.dev-sbr.com/realms/master
       clientID: argocd
       clientSecret: $oidc.keycloak.clientSecret
       requestedScopes: ["openid", "profile", "email", "groups"]
