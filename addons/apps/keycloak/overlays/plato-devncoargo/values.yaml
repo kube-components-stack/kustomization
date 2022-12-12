@@ -10,14 +10,8 @@ proxy: edge # passthrough/edge/none/reencrytpt
 auth:
   existingSecret: keycloak-auth
   passwordSecretKey: admin-password
-  # existingSecret:
-  #   name: keycloak-auth
-  #   keyMapping:
-  #     admin-password: admin-password
-  #     management-password: management-password
 ingress:
   enabled: true
-  # path: / #/*
   ingressClassName: ingress-nginx-admin
   hostname: &hostname keycloak.admin.plato-devncoargo.dev-sbr.com
   extraTls:

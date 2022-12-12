@@ -18,12 +18,16 @@ spec:
         /bin/bash <<'EOF'
           apt update && apt install -y dnsutils curl ncat openssl
 
+          env | sort
+
           set -x
           dig A +short keycloak-headless.keycloak.svc.cluster.local
           nc -w 5 -vz keycloak-headless.keycloak.svc.cluster.local 8080
+          nc -w 5 -vz keycloak-headless.keycloak.svc.cluster.local 8443
 
           dig A +short keycloak.keycloak.svc.cluster.local
           nc -w 5 -vz keycloak.keycloak.svc.cluster.local 80
+          nc -w 5 -vz keycloak.keycloak.svc.cluster.local 443
 
           output=$(curl \
             --write-out "%{http_code}" \
@@ -35,7 +39,22 @@ spec:
           
           echo "$output"
 
-          env | sort
+          KEYCLOAK_URL=https://keycloak-headless.keycloak.svc.cluster.local:8443/
+          output=$(curl \
+            --write-out "%{http_code}" \
+            --data "client_id=admin-cli" \
+            --data "username=${KEYCLOAK_USER}" \
+            --data "password=${KEYCLOAK_PASSWORD}" \
+            --data "grant_type=password" \
+            --insecure \
+            "${KEYCLOAK_URL}realms/master/protocol/openid-connect/token")
+          
+          echo "$output"
+
+          echo "" | openssl s_client -showcerts -connect keycloak-headless.keycloak.svc.cluster.local:8443 2>&1 |\
+          sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p;/-END CERTIFICATE-/a\\x0' |\
+          sed -e '$ d' |\
+          xargs -0rl -I% sh -c "echo '%' | openssl x509 -subject -issuer -dates -fingerprint -noout"
 
           tail -f /dev/null
         EOF
@@ -44,7 +63,7 @@ spec:
       - name: KEYCLOAK_URL
         value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
       - name: KEYCLOAK_USER
-        value: admin
+        value: user
       - name: KEYCLOAK_PASSWORD
         valueFrom:
           secretKeyRef:
