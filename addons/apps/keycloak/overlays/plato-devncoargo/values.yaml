@@ -44,12 +44,12 @@ service:
 keycloakConfigCli:
   enabled: true
   extraEnvVars:
-  - name: IMPORT_FILES
-    value: /secret/*
+  - name: KEYCLOAK_URL
+    value: https://keycloak-headless:8443/
   - name: LOGGING_LEVEL_ROOT
     value: debug
   extraVolumeMounts:
-  - mountPath: /secret
+  - mountPath: /import
     name: cfg
     readOnly: true
   extraVolumes:
@@ -61,15 +61,5 @@ keycloakConfigCli:
    - "-c"
    - |
      /bin/bash <<'EOF'
-      echo "done"
+      java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/import/config.yaml --keycloak.ssl-verify=false
      EOF
-   #tail -f /dev/null
-   #java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/secret/config.yaml --keycloak.ssl-verify=false
-
-  # command:
-  #   - sh
-  #   - "-c"
-  #   - |
-  #     /bin/bash <<'EOF'
-  #       echo "done"
-  #     EOF
