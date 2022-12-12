@@ -35,10 +35,13 @@ ingress:
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Forwarded-Host $host;
       }
+tls: 
+  enabled: true
+  existingSecret: keycloak-ca
 service:
   type: ClusterIP
   http:
-    enabled: false
+    enabled: true
 
 # https://github.com/adorsys/keycloak-config-cli
 # https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
