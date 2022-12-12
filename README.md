@@ -210,3 +210,26 @@ rm -Rf tls.crt tls.key
 ## sign secret with certificate
 
 edit Makefile, in target "create-secrets:" adjust cluster & env vars and use command: `make create-secrets`
+
+## create keycloak cert without openssl
+
+edit ingress values like this
+```yaml
+ingress:
+  enabled: true
+  hostname: keycloak-nco.admin.plato-devncoargo.dev-sbr.com
+  tls: true
+  selfSigned: true
+```
+
+generate template, catch secret, extract datas, store them into a file and create, ca, crt and key files.
+```zsh
+kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone addons/apps/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-nco.admin.plato-devncoargo.dev-sbr.com-tls")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
+
+cd secrets/addons/keycloak/overlays/plato-devncoargo/secrets
+cat tls.json| jq -r '.["ca.crt"]' > ca.crt
+cat tls.json| jq -r '.["tls.crt"]' > tls.crt
+cat tls.json| jq -r '.["tls.key"]' > tls.key
+rm tls.json
+cd $OLDPWD
+```
