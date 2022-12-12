@@ -10,6 +10,7 @@ spec:
   terminationGracePeriodSeconds: 5
   containers:
   - 
+    name: keycloak-config-cli
     command:
       - sh
       - "-c"
@@ -48,7 +49,7 @@ spec:
         valueFrom:
           secretKeyRef:
             key: admin-password
-            name: keycloak
+            name: keycloak-auth
       - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
         value: "true"
       - name: IMPORT_FILES
@@ -59,7 +60,6 @@ spec:
     image: docker.io/bitnami/keycloak-config-cli:5.5.0-debian-11-r4
     # image: docker.io/bitnami/keycloak-config-cli:5.5.0-debian-11-r8
     imagePullPolicy: IfNotPresent
-    name: keycloak-config-cli
     resources:
       limits: {}
       requests: {}

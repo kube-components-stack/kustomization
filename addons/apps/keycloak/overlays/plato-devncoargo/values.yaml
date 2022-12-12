@@ -37,6 +37,8 @@ ingress:
       }
 service:
   type: ClusterIP
+  http:
+    enabled: false
 
 # https://github.com/adorsys/keycloak-config-cli
 # https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
