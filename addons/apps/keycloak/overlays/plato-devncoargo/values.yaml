@@ -15,7 +15,7 @@ ingress:
   ingressClassName: ingress-nginx-admin
   hostname: &hostname keycloak.admin.plato-devncoargo.dev-sbr.com
   extraTls:
-  - secretName: keycloak-ca #keycloak-tls-certificate
+  - secretName: &hostname #keycloak-ca #keycloak-tls-certificate
     hosts:
       - *hostname
   annotations:
