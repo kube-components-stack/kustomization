@@ -32,11 +32,11 @@ server:
       - argocd.admin.plato-devncoargo.dev-sbr.com
   config:
     url: https://argocd.admin.plato-devncoargo.dev-sbr.com
-    accounts.webhook: apiKey, login # authentik oauth ?
     # https://github.com/argoproj/argo-cd/issues/4344#issuecomment-890382825
     # https://github.com/argoproj/argo-cd/issues/1171
     # https://argo-cd.readthedocs.io/en/stable/user-guide/private-repositories/#self-signed-untrusted-tls-certificates
     # https://argo-cd.readthedocs.io/en/stable/operator-manual/user-management/keycloak/
+    # https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/user-management/keycloak.md
     oidc.config: |
       name: Keycloak
       issuer: https://keycloak-nco.admin.plato-devncoargo.dev-sbr.com/realms/master
