@@ -14,10 +14,10 @@ ingress:
   enabled: true
   ingressClassName: ingress-nginx-admin
   hostname: &hostname keycloak.admin.plato-devncoargo.dev-sbr.com
-  extraTls:
-  - secretName: &hostname #keycloak-ca #keycloak-tls-certificate
-    hosts:
-      - *hostname
+  # extraTls:
+  # - secretName: &hostname #keycloak-ca #keycloak-tls-certificate
+  #   hosts:
+  #     - *hostname
   annotations:
     kubernetes.io/tls-acme: "true"
     nginx.ingress.kubernetes.io/enable-access-log: "true"
@@ -29,6 +29,7 @@ ingress:
     #     proxy_set_header X-Forwarded-Proto $scheme;
     #     proxy_set_header X-Forwarded-Host $host;
     #   }
+  tls: true
 tls: 
   enabled: true
   # existingSecret: keycloak-ca
