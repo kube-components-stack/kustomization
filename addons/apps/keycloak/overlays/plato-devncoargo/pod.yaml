@@ -58,6 +58,20 @@ spec:
           sed -e '$ d' |\
           xargs -0rl -I% sh -c "echo '%' | openssl x509 -subject -issuer -dates -fingerprint -noout -ext subjectAltName"
 
+          update-ca-certificates --fresh
+
+          KEYCLOAK_URL=https://keycloak.keycloak.svc.cluster.local:443/
+          output=$(curl \
+            --write-out "%{http_code}" \
+            --data "client_id=admin-cli" \
+            --data "username=${KEYCLOAK_USER}" \
+            --data "password=${KEYCLOAK_PASSWORD}" \
+            --data "grant_type=password" \
+            --insecure \
+            "${KEYCLOAK_URL}realms/master/protocol/openid-connect/token")
+          
+          echo "$output"
+
           tail -f /dev/null
         EOF
       # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
@@ -93,10 +107,7 @@ spec:
         name: cfg
         readOnly: true
       - name: certificate
-        mountPath: /etc/ssl/certs/tls.crt #/etc/ssl/certs/ca.crt # your self-signed CA part inside the secret 
-        subPath: tls.crt #ca.crt 
-      - name: certificate
-        mountPath: /etc/ssl/certs/ca.crt
+        mountPath: /etc/ssl/certs/ca.crt # your self-signed CA part inside the secret 
         subPath: ca.crt
   restartPolicy: Never
   securityContext:
