@@ -16,16 +16,18 @@ spec:
       - "-c"
       - |
         /bin/bash <<'EOF'
-          apt update && apt install -y dnsutils curl ncat openssl
+          apt update && apt install -y dnsutils curl ncat openssl iputils-ping
 
           env | sort
 
           set -x
           dig A +short keycloak-headless.keycloak.svc.cluster.local
+          ping keycloak-headless -w 1
           nc -w 5 -vz keycloak-headless.keycloak.svc.cluster.local 8080
           nc -w 5 -vz keycloak-headless.keycloak.svc.cluster.local 8443
 
           dig A +short keycloak.keycloak.svc.cluster.local
+          ping keycloak -w 1
           nc -w 5 -vz keycloak.keycloak.svc.cluster.local 80
           nc -w 5 -vz keycloak.keycloak.svc.cluster.local 443
 
