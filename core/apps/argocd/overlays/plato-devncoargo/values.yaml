@@ -42,6 +42,7 @@ server:
   rbacConfig:
     policy.csv: |
       g, ArgoCDAdmins, role:admin
+      g, ArgoCDViewer, role:readonly
     policy.default: role:readonly
 configs:
   secret:
