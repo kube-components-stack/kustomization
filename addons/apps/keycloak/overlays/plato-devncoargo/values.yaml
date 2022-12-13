@@ -19,7 +19,7 @@
 # KEYCLOAK_PROXY: edge
 
 
-production: true
+production: false
 
 # keycloak 18
 extraEnvVars:
@@ -72,7 +72,7 @@ tls:
 ## @param proxy reverse Proxy mode edge, reencrypt, passthrough or none
 ## ref: https://www.keycloak.org/server/reverseproxy
 ##
-proxy: edge #reencrypt #edge #reencrypt
+proxy: reencrypt #reencrypt #edge #reencrypt
 
 service:
   type: ClusterIP
