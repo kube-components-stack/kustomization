@@ -4,7 +4,7 @@ metadata:
   name: argocd-applicationset-controller
   # namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-options: PruneLast=false
+    argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -15,7 +15,7 @@ kind: Deployment
 metadata:
   name: argocd-dex-server
   annotations:
-    argocd.argoproj.io/sync-options: PruneLast=false
+    argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -26,7 +26,7 @@ kind: Deployment
 metadata:
   name: argocd-notifications
   annotations:
-    argocd.argoproj.io/sync-options: PruneLast=false
+    argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -37,7 +37,7 @@ kind: Deployment
 metadata:
   name: argocd-redis
   annotations:
-    argocd.argoproj.io/sync-options: PruneLast=false
+    argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -48,7 +48,7 @@ kind: Deployment
 metadata:
   name: argocd-repo-server
   annotations:
-    argocd.argoproj.io/sync-options: PruneLast=false
+    argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -59,7 +59,7 @@ kind: Deployment
 metadata:
   name: argocd-server
   annotations:
-    argocd.argoproj.io/sync-options: PruneLast=false
+    argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
