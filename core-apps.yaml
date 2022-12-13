@@ -77,6 +77,8 @@ spec:
           # https://github.com/argoproj/argo-cd/issues/4979 - ArgoCD Application Sync stuck forever waiting for PreSync jobs to complete
           - PrunePropagationPolicy=foreground   # Supported policies are background, foreground and orphan.
           - PruneLast=true                      # Allow the ability for resource pruning to happen as a final, implicit wave of a sync operation
+          # - ServerSideApply=true
+          # - Replace=true                        # If the Replace=true sync option is set the Argo CD will use kubectl replace or kubectl create command to apply changes.
       ignoreDifferences:
       - group: kyverno.io
         kind: ClusterPolicy
