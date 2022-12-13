@@ -706,7 +706,7 @@ valuesInline:
     # -- [General Argo CD configuration]
     # @default -- See [values.yaml]
     config:
-      timeout.reconciliation: 15s #3m #15s
+      timeout.reconciliation: 3m #15s
       kustomize.buildOptions: --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone
 
     # -- The number of server pods to run
