@@ -15,8 +15,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-dex-server
-  annotations:
-    argocd.argoproj.io/sync-options: ServerSideApply=true
+  # annotations:
+  #   argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -27,8 +27,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-notifications
-  annotations:
-    argocd.argoproj.io/sync-options: ServerSideApply=true
+  # annotations:
+  #   argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -39,8 +39,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-redis
-  annotations:
-    argocd.argoproj.io/sync-options: ServerSideApply=true
+  # annotations:
+  #   argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -51,8 +51,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-repo-server
-  annotations:
-    argocd.argoproj.io/sync-options: ServerSideApply=true
+  # annotations:
+  #   argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
@@ -63,8 +63,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: argocd-server
-  annotations:
-    argocd.argoproj.io/sync-options: ServerSideApply=true
+  # annotations:
+  #   argocd.argoproj.io/sync-options: ServerSideApply=true
 spec:
   strategy:
     rollingUpdate: null
