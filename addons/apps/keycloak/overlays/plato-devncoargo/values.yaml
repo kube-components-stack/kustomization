@@ -47,7 +47,7 @@ extraEnvVars:
   # - name: KC_HOSTNAME
   #   value: keycloak.keycloak.svc.cluster.local
   # - name: KC_HOSTNAME_URL
-  #   value: https://keycloak-nco.admin.plato-devncoargo.dev-sbr.com
+  #   value: https://keycloak-01.admin.plato-devncoargo.dev-sbr.com
 
 auth:
   existingSecret: keycloak-auth
@@ -56,7 +56,7 @@ auth:
 ingress:
   enabled: true
   ingressClassName: ingress-nginx-admin
-  hostname: &hostname keycloak-nco.admin.plato-devncoargo.dev-sbr.com
+  hostname: &hostname keycloak-01.admin.plato-devncoargo.dev-sbr.com
   annotations:
     kubernetes.io/tls-acme: "true" # one of certmanager annotations: cert-manager.io/cluster-issuer, cert-manager.io/issuer or kubernetes.io/tls-acme
   tls: true
