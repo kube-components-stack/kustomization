@@ -16,6 +16,7 @@ spec:
       - "-c"
       - |
         /bin/bash <<'EOF'
+          update-ca-certificates --fresh
           apt update && apt install -y dnsutils curl ncat openssl iputils-ping
 
           env | sort
@@ -31,14 +32,14 @@ spec:
           nc -w 5 -vz keycloak.keycloak.svc.cluster.local 80
           nc -w 5 -vz keycloak.keycloak.svc.cluster.local 443
 
+          KEYCLOAK_URL=http://keycloak-headless.keycloak.svc.cluster.local:8080/
           output=$(curl \
             --write-out "%{http_code}" \
             --data "client_id=admin-cli" \
             --data "username=${KEYCLOAK_USER}" \
             --data "password=${KEYCLOAK_PASSWORD}" \
             --data "grant_type=password" \
-            "${KEYCLOAK_URL}realms/master/protocol/openid-connect/token")
-          
+            "${KEYCLOAK_URL}realms/master/protocol/openid-connect/token")         
           echo "$output"
 
           KEYCLOAK_URL=https://keycloak-headless.keycloak.svc.cluster.local:8443/
@@ -50,15 +51,12 @@ spec:
             --data "grant_type=password" \
             --insecure \
             "${KEYCLOAK_URL}realms/master/protocol/openid-connect/token")
-          
           echo "$output"
 
           echo "" | openssl s_client -showcerts -connect keycloak-headless.keycloak.svc.cluster.local:8443 2>&1 |\
           sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p;/-END CERTIFICATE-/a\\x0' |\
           sed -e '$ d' |\
           xargs -0rl -I% sh -c "echo '%' | openssl x509 -subject -issuer -dates -fingerprint -noout -ext subjectAltName"
-
-          update-ca-certificates --fresh
 
           KEYCLOAK_URL=https://keycloak.keycloak.svc.cluster.local:443/
           output=$(curl \
@@ -69,15 +67,15 @@ spec:
             --data "grant_type=password" \
             --insecure \
             "${KEYCLOAK_URL}realms/master/protocol/openid-connect/token")
-          
           echo "$output"
 
           tail -f /dev/null
         EOF
       # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar
+      # java -jar /opt/bitnami/keycloak-config-cli/keycloak-config-cli-19.0.3.jar --import.files.locations=/import/config.yaml --keycloak.ssl-verify=false
     env:
       - name: KEYCLOAK_URL
-        value: http://keycloak-headless.keycloak.svc.cluster.local:8080/
+        value: https://keycloak.keycloak.svc.cluster.local:443/ # http://keycloak-headless.keycloak.svc.cluster.local:8080/
       - name: KEYCLOAK_USER
         value: user
       - name: KEYCLOAK_PASSWORD
@@ -88,7 +86,7 @@ spec:
       - name: KEYCLOAK_AVAILABILITYCHECK_ENABLED
         value: "true"
       - name: IMPORT_FILES
-        value: /secret/*
+        value: /import/*
       - name: LOGGING_LEVEL_ROOT
         value: debug
     # docker run quay.io/skopeo/stable:latest list-tags docker://docker.io/bitnami/keycloak-config-cli  | yq e -P
@@ -103,12 +101,15 @@ spec:
       runAsNonRoot: false
       runAsUser: 0
     volumeMounts:
-      - mountPath: /secret
+      - mountPath: /import
         name: cfg
         readOnly: true
       - name: certificate
-        mountPath: /etc/ssl/certs/ca.crt # your self-signed CA part inside the secret 
+        mountPath: /etc/ssl/certs/keycloak-ca.crt # your self-signed CA part inside the secret 
         subPath: ca.crt
+      - name: certificate
+        mountPath: /etc/ssl/certs/keycloak-tls.crt
+        subPath: tls.crt
   restartPolicy: Never
   securityContext:
     fsGroup: 0
