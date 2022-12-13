@@ -6,3 +6,5 @@ generators:
 resources:
 - ../../base
 - secrets.yaml
+transformers:
+- transformer-annotation-job-keycloak-config-cli.yaml

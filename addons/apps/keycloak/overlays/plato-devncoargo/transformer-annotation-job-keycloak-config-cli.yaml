@@ -1,0 +1,10 @@
+apiVersion: builtin
+kind: AnnotationsTransformer
+metadata:
+  name: notImportantHere
+annotations:
+  helm.sh/hook-delete-policy: before-hook-creation
+fieldSpecs:
+- kind: Job
+  path: metadata/annotations # keycloak-keycloak-config-cli
+  create: true
