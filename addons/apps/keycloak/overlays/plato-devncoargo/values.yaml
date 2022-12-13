@@ -55,6 +55,10 @@ auth:
   existingSecret: keycloak-auth
   passwordSecretKey: admin-password
 
+postgresql:
+  auth:
+    existingSecret: keycloak-postgresql
+
 ingress:
   enabled: true
   ingressClassName: ingress-nginx-admin
