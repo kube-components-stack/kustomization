@@ -56,7 +56,7 @@ spec:
           echo "" | openssl s_client -showcerts -connect keycloak-headless.keycloak.svc.cluster.local:8443 2>&1 |\
           sed -ne '/-BEGIN CERTIFICATE-/,/-END CERTIFICATE-/p;/-END CERTIFICATE-/a\\x0' |\
           sed -e '$ d' |\
-          xargs -0rl -I% sh -c "echo '%' | openssl x509 -subject -issuer -dates -fingerprint -noout"
+          xargs -0rl -I% sh -c "echo '%' | openssl x509 -subject -issuer -dates -fingerprint -noout -ext subjectAltName"
 
           tail -f /dev/null
         EOF
