@@ -39,7 +39,7 @@ valuesInline:
         service.beta.kubernetes.io/aws-load-balancer-type: nlb
         service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"
         service.beta.kubernetes.io/aws-load-balancer-internal: "false"
-        #service.beta.kubernetes.io/load-balancer-source-ranges: 78.244.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12,158.255.112.194/32,54.77.161.131/32,54.72.69.139/32,54.76.126.49/32,54.77.166.29/32,3.250.209.51/32,54.219.59.241/32
+        service.beta.kubernetes.io/load-balancer-source-ranges: 78.244.0.0/14,37.1.232.0/21,37.8.160.0/19,37.160.0.0/12,158.255.112.194/32,54.77.161.131/32,54.72.69.139/32,54.76.126.49/32,54.77.166.29/32,3.250.209.51/32,54.219.59.241/32
         # service.beta.kubernetes.io/aws-load-balancer-type: nlb
         # service.beta.kubernetes.io/aws-load-balancer-cross-zone-load-balancing-enabled: "true"                  # deprecated since v2.3.0 release in favor of the new aws-load-balancer-attributes annotation
         # service.beta.kubernetes.io/aws-load-balancer-internal: "false"                                          # deprecated since v2.2.0 release in favor of the new aws-load-balancer-scheme annotation
