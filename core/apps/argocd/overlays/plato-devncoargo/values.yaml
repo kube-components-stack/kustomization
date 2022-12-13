@@ -41,8 +41,11 @@ server:
       requestedScopes: ["openid", "profile", "email", "groups"]
   rbacConfig:
     policy.csv: |
+      p, ArgoCDViewer, applications, sync, addons-apps/*, allow
+      p, ArgoCDViewer, applications, sync, addons-crds/*, allow
+      p, ArgoCDViewer, applications, sync, core-apps/*, allow
+      p, ArgoCDViewer, applications, sync, core-crds/*, allow
       g, ArgoCDAdmins, role:admin
-      g, ArgoCDViewer, role:readonly
     policy.default: role:readonly
 configs:
   secret:
