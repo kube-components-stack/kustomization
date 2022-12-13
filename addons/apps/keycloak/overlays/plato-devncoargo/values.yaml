@@ -81,7 +81,7 @@ service:
 # https://github.com/adorsys/keycloak-config-cli/blob/main/docs/FEATURES.md
 # https://hub.docker.com/r/adorsys/keycloak-config-cli
 keycloakConfigCli:
-  enabled: false
+  enabled: true
   extraEnvVars:
   - name: KEYCLOAK_URL
     value: https://keycloak-headless:8443/
