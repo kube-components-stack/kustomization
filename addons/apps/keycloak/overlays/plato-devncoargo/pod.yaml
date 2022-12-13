@@ -90,6 +90,12 @@ spec:
       - mountPath: /secret
         name: cfg
         readOnly: true
+      - name: certificate
+        mountPath: /etc/ssl/certs/tls.crt #/etc/ssl/certs/ca.crt # your self-signed CA part inside the secret 
+        subPath: tls.crt #ca.crt 
+      - name: certificate
+        mountPath: /etc/ssl/certs/ca.crt
+        subPath: ca.crt
   restartPolicy: Never
   securityContext:
     fsGroup: 0
@@ -98,3 +104,7 @@ spec:
     - name: cfg
       secret:
         secretName: keycloak-config
+    - name: certificate
+      secret:
+        secretName: keycloak-ca
+        defaultMode: 420
