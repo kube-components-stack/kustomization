@@ -19,6 +19,8 @@
 # KEYCLOAK_PROXY: edge
 
 
+production: true
+
 # keycloak 18
 extraEnvVars:
   - name: KEYCLOAK_LOG_LEVEL
