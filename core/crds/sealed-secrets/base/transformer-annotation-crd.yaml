@@ -1,0 +1,10 @@
+apiVersion: builtin
+kind: AnnotationsTransformer
+metadata:
+  name: notImportantHere
+annotations:
+  helm.sh/resource-policy: keep
+fieldSpecs:
+- kind: CustomResourceDefinition
+  path: metadata/annotations
+  create: true
