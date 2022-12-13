@@ -14,9 +14,25 @@
 # KEYCLOAK_PRODUCTION: "false"
 # KEYCLOAK_PROXY: edge
 
+# keycloak 18
 extraEnvVars:
   - name: KEYCLOAK_LOG_LEVEL
     value: DEBUG
+
+  - name: KC_SPI_TRUSTSTORE_FILE_FILE
+    value: /truststore/truststore.jks
+  - name: KC_SPI_TRUSTSTORE_FILE_PASSWORD
+    value: changeit
+    ## Activate nginx provider
+  - name: KC_SPI_X509CERT_LOOKUP_PROVIDER
+    value: nginx
+    ## Set nginx provider header name
+  - name: KC_SPI_X509CERT_LOOKUP_NGINX_SSL_CLIENT_CERT
+    value: ssl-client-cert
+    ## Set loglevel for the nginx provider
+  - name: QUARKUS_LOG_CATEGORY__ORG_KEYCLOAK_SERVICES_X509__LEVEL
+    value: TRACE
+
   - name: KC_HOSTNAME_STRICT_HTTPS
     value: "false"
   - name: KC_HOSTNAME_STRICT
