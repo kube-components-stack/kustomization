@@ -65,6 +65,9 @@ ingress:
   hostname: &hostname keycloak-01.admin.plato-devncoargo.dev-sbr.com
   annotations:
     kubernetes.io/tls-acme: "true" # one of certmanager annotations: cert-manager.io/cluster-issuer, cert-manager.io/issuer or kubernetes.io/tls-acme
+    nginx.ingress.kubernetes.io/enable-access-log: "true"
+    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
   tls: true
   # selfSigned: false
 
