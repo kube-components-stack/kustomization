@@ -2,15 +2,18 @@ notifications:
   argocdUrl: https://argocd.admin.plato-devncoargo.dev-sbr.com
   enabled: false
 server:
-  # volumeMounts:
-  #    - name: certificate
-  #      mountPath: /etc/ssl/certs/tls.crt #/etc/ssl/certs/ca.crt # your self-signed CA part inside the secret 
-  #      subPath: tls.crt #ca.crt 
-  # volumes:
-  #    - name: certificate
-  #      secret:
-  #        secretName: keycloak-ca # argocd-tls-ca
-  #        defaultMode: 420
+  volumeMounts:
+     - name: certificate
+       mountPath: /etc/ssl/certs/ca.crt # your self-signed CA part inside the secret 
+       subPath: ca.crt
+     - name: certificate
+       mountPath: /etc/ssl/certs/tls.crt
+       subPath: tls.crt
+  volumes:
+     - name: certificate
+       secret:
+         secretName: keycloak-ca
+         defaultMode: 420
   ingress:
     enabled: true
     ingressClassName: ingress-nginx-admin
@@ -32,7 +35,7 @@ server:
     # https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/user-management/keycloak.md
     oidc.config: |
       name: Keycloak
-      issuer: https://keycloak-nco.admin.plato-devncoargo.dev-sbr.com/realms/master
+      issuer: https://keycloak.keycloak.svc.cluster.local/realms/master
       clientID: argocd
       clientSecret: $oidc.keycloak.clientSecret
       requestedScopes: ["openid", "profile", "email", "groups"]
