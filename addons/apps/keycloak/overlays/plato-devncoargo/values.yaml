@@ -49,7 +49,7 @@ extraEnvVars:
   # - name: KC_HOSTNAME
   #   value: keycloak.keycloak.svc.cluster.local
   # - name: KC_HOSTNAME_URL
-  #   value: https://keycloak-01.admin.plato-devncoargo.dev-sbr.com
+  #   value: https://keycloak-01.admin.plato-devncoargo.dev-sbr.com # admin.plato-devncoargo.dev-sbr.com
 
 auth:
   existingSecret: keycloak-auth
