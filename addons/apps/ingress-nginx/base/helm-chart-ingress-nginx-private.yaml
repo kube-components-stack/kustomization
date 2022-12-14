@@ -12,6 +12,10 @@ valuesFile: values-ingress-nginx-private.yaml
 valuesMerge: override                                                               # merge, override or replace
 valuesInline:
   controller:
+    labels:
+      vector.sources.kubernetes-logs/label: ingress-nginx
+    config:
+      enable-brotli: "true"                                                         # https://kubernetes.github.io/ingress-nginx/user-guide/nginx-configuration/configmap/#enable-brotli
     ingressClassResource:
       name: ingress-nginx-private
       controllerValue: k8s.io/ingress-nginx-private
