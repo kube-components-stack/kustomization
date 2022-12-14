@@ -41,18 +41,27 @@ spec:
             declare TMP=$(mktemp --directory /tmp/kubectl.XXXXXXXXXX)
             set -euo pipefail
             set -x
+            git clone https://github.com/${OWNER}/${REPO}.git --depth=1 --branch ${REF} --single-branch $TMP/${REPO}
 
             folder=core/crds
             for crd in $(curl -s https://api.github.com/repos/${OWNER}/${REPO}/contents/${folder}\?ref\=${REF} | jq -r '.[].name'); do
-              kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV}/\?ref\=${REF} --server-side=true --force-conflicts
+              kustomize \
+                --stack-trace \
+                --enable-alpha-plugins \
+                --enable-helm \
+                --load-restrictor LoadRestrictionsNone build $TMP/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV} \
+                | kubectl apply --server-side=true --force-conflicts -f -
             done
 
             folder=addons/crds
             for crd in $(curl -s https://api.github.com/repos/${OWNER}/${REPO}/contents/${folder}\?ref\=${REF} | jq -r '.[].name'); do
-              kubectl apply -k https://github.com/${OWNER}/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV}/\?ref\=${REF} --server-side=true --force-conflicts
+              kustomize \
+                --stack-trace \
+                --enable-alpha-plugins \
+                --enable-helm \
+                --load-restrictor LoadRestrictionsNone build $TMP/${REPO}/${folder}/${crd}/overlays/${CLUSTER}-${ENV} \
+                | kubectl apply --server-side=true --force-conflicts -f -
             done
-
-            git clone https://github.com/${OWNER}/${REPO}.git --depth=1 --branch ${REF} --single-branch $TMP/${REPO}
 
             folder=core/apps
             app=kube-system
