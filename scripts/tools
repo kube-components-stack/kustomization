@@ -165,7 +165,7 @@ function render_dashboards_from_helm_template () {
   version=$(yq '.version' $yaml)
   repository=$(yq '.repo' $yaml)
 
-  # helm repo add --force-update $name $repository >/dev/null 2>&1
+  helm repo add --force-update $name $repository >/dev/null 2>&1
   
   dashboards=$(mktemp /tmp/dashboards.XXXXXXXXXX)
   helm template $name $name/$name --set grafana.defaultDashboardsTimezone=browser | yq -o=json | jq '[.]' | jq -r '.[] | select(.kind | match("ConfigMap") ) | select(.metadata.labels.grafana_dashboard == "1" ) | { name: .metadata.name, json: (.data|to_entries[]|.value) }' | jq -s > $dashboards
