@@ -1,4 +1,5 @@
-# artifacthub                                       https://github.com/minio/minio/tree/master/helm/minio
+# artifacthub                                       https://artifacthub.io/packages/helm/minio-official/minio
+#                                                   https://github.com/minio/minio/tree/master/helm/minio
 # releases                                          https://github.com/minio/minio/tree/master/helm-releases
 # values.yaml                                       https://github.com/minio/minio/blob/master/helm/minio/values.yaml
 apiVersion: builtin
@@ -6,7 +7,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: minio-helm-chart
 name: &name minio
-version: v4.0.2
+version: 5.0.1 #v4.0.2 #                                     # https://github.com/minio/minio/compare/RELEASE.2022-05-08T23-50-31Z...RELEASE.2022-11-11T03-44-20Z
 repo: https://charts.min.io
 releaseName: *name
 namespace: *name
