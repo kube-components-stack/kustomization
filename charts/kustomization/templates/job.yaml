@@ -107,13 +107,13 @@ spec:
           - name: {{ $key }}
             value: {{ $value | quote }}
           {{- end }}
-        securityContext:
-          runAsNonRoot: false #true
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - ALL
+        # securityContext:
+        #   runAsNonRoot: false #true
+        #   readOnlyRootFilesystem: true
+        #   allowPrivilegeEscalation: false
+        #   capabilities:
+        #     drop:
+        #     - ALL
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
         volumeMounts:
