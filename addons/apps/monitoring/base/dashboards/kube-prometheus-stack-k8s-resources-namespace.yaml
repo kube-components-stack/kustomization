@@ -1,11 +1,21 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard-kube-prometheus-stack-k8s-resources-namespace
+  # name: grafana-dashboard-kube-prometheus-stack-k8s-resources-namespace
+  name: kube-prometheus-stack-k8s-resources-namespace
   namespace: monitoring
   labels:
     grafana_dashboard: "1"
-    id: kube-prometheus-stack-k8s-resources-namespace
+    # id: kube-prometheus-stack-k8s-resources-namespace
+    # app: kube-prometheus-stack-grafana
+    # app.kubernetes.io/instance: kube-prometheus-stack
+    # app.kubernetes.io/managed-by: Helm
+    # app.kubernetes.io/part-of: kube-prometheus-stack
+    # app.kubernetes.io/version: 43.0.0
+    # chart: kube-prometheus-stack-43.0.0
+    # grafana_dashboard: "1"
+    # heritage: Helm
+    # release: kube-prometheus-stack
 data:
   grafana-dashboard-kube-prometheus-stack-k8s-resources-namespace: |
     {

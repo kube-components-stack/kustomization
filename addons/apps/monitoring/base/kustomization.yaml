@@ -28,10 +28,10 @@ resources:
 # - dashboards/kube-prometheus-stack-k8s-coredns.yaml
 # - dashboards/kube-prometheus-stack-k8s-resources-cluster.yaml
 - dashboards/kube-prometheus-stack-k8s-resources-namespace.yaml
-- dashboards/kube-prometheus-stack-k8s-resources-node.yaml
-- dashboards/kube-prometheus-stack-k8s-resources-pod.yaml
-- dashboards/kube-prometheus-stack-k8s-resources-workloads-namespace.yaml
-- dashboards/kube-prometheus-stack-k8s-resources-workload.yaml
+# - dashboards/kube-prometheus-stack-k8s-resources-node.yaml
+# - dashboards/kube-prometheus-stack-k8s-resources-pod.yaml
+# - dashboards/kube-prometheus-stack-k8s-resources-workloads-namespace.yaml
+# - dashboards/kube-prometheus-stack-k8s-resources-workload.yaml
 # - dashboards/kube-prometheus-stack-kubelet.yaml
 # - dashboards/kube-prometheus-stack-namespace-by-pod.yaml
 # - dashboards/kube-prometheus-stack-namespace-by-workload.yaml
