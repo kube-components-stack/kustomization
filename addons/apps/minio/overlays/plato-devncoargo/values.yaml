@@ -43,3 +43,17 @@ buckets:
     purge: false
     # set versioning for
     versioning: ~ # true, false or ~ (standalone)
+## OpenID Identity Management
+## The following section documents environment variables for enabling external identity management using an OpenID Connect (OIDC)-compatible provider.
+## See https://min.io/docs/minio/linux/operations/external-iam/configure-openid-external-identity-management.html for a tutorial on using these variables.
+oidc:
+  enabled: true
+  configUrl: https://keycloak-01.admin.plato-devncoargo.dev-sbr.com/realms/master/.well-known/openid-configuration
+  clientId: minio
+  clientSecret: vgnExUewhNvj0WbrNOppntJ4qc1NQyjl
+  claimName: policy
+  scopes: openid,profile,email
+  redirectUri: https://minio-console.admin.plato-devncoargo.dev-sbr.com/oauth_callback
+  # Can leave empty
+  claimPrefix: ""
+  comment: ""
