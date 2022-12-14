@@ -6,7 +6,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: argo-cd-helm-chart
 name: &name argo-cd
-version: 5.2.0 # 4.10.0
+version: 5.3.0 # 4.10.0
 repo: https://argoproj.github.io/argo-helm
 releaseName: *name
 namespace: argocd
@@ -20,14 +20,22 @@ valuesInline:
   global:
     image:
       imagePullPolicy: Always
+    logging:
+      # -- Set the global logging format. Either: `text` or `json`
+      format: text
+      # -- Set the global logging level. One of: `debug`, `info`, `warn` or `error`
+      level: info
     securityContext:
       runAsUser: 999
       runAsGroup: 999
       fsGroup: 999
   applicationSet:
-    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
-    extraArgs:
-    - --loglevel=debug
+    # -- ApplicationSet controller log format. Either `text` or `json`
+    # @default -- `""` (defaults to global.logging.format)
+    logFormat: ""
+    # -- ApplicationSet controller log level. One of: `debug`, `info`, `warn`, `error`
+    # @default -- `""` (defaults to global.logging.level)
+    logLevel: ""
 
     image:
       imagePullPolicy: Always
@@ -46,8 +54,12 @@ valuesInline:
       runAsNonRoot: true
       allowPrivilegeEscalation: false
   controller:
-    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
-    logLevel: debug
+    # -- Application controller log format. Either `text` or `json`
+    # @default -- `""` (defaults to global.logging.format)
+    logFormat: ""
+    # -- Application controller log level. One of: `debug`, `info`, `warn` or `error`
+    # @default -- `""` (defaults to global.logging.level)
+    logLevel: ""
 
     # -- Environment variables to pass to Argo CD controller
     # https://github.com/argoproj/argo-helm/issues/446
@@ -155,11 +167,12 @@ valuesInline:
       ## If not set and create is true, the default name 'argocd-notifications-secret' is used
       name: argocd-notifications-secret
 
-    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
-    logLevel: info
-
-    # -- Application controller log format. Either `text` or `json`
-    logFormat: text
+    # -- Notifications log format. Either `text` or `json`
+    # @default -- `""` (defaults to global.logging.format)
+    logFormat: ""
+    # -- Notifications log level. One of: `debug`, `info`, `warn`, `error`
+    # @default -- `""` (defaults to global.logging.level)
+    logLevel: ""
 
     # Additional container environment variables
     extraEnv:
@@ -643,8 +656,12 @@ valuesInline:
       runAsNonRoot: true
       allowPrivilegeEscalation: false
   repoServer:
-    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
-    logLevel: debug
+    # -- Repo server log format: Either `text` or `json`
+    # @default -- `""` (defaults to global.logging.level)
+    logFormat: ""
+    # -- Repo server log level. One of: `debug`, `info`, `warn` or `error`
+    # @default -- `""` (defaults to global.logging.format)
+    logLevel: ""
 
     image:
       imagePullPolicy: Always
@@ -748,10 +765,13 @@ valuesInline:
     extraArgs:
     - --parallelismlimit 5 #70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
     # - --tlsmaxversion 1.2
-
   server:
-    # -- Set the logging level. (One of: `debug`, `info`, `warn`, `error`)
-    logLevel: debug
+    # -- Argo CD server log format: Either `text` or `json`
+    # @default -- `""` (defaults to global.logging.format)
+    logFormat: ""
+    # -- Argo CD server log level. One of: `debug`, `info`, `warn` or `error`
+    # @default -- `""` (defaults to global.logging.level)
+    logLevel: ""
 
     # -- Manage Argo CD configmap (Declarative Setup)
     ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
