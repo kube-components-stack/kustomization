@@ -6,7 +6,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: loki-distributed-helm-chart
 name: &name loki-distributed
-version: 0.66.0
+version: 0.67.0                                     # https://github.com/grafana/helm-charts/compare/loki-distributed-0.66.0...loki-distributed-0.67.0
 repo: https://grafana.github.io/helm-charts
 releaseName: *name
 namespace: loki
