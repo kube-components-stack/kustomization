@@ -724,12 +724,12 @@ valuesInline:
             name: tmp
     # 3. Volume mount the custom binary to the bin directory (overriding the existing version)
     volumeMounts:
-      - mountPath: /usr/local/bin/helm
-        name: custom-tools
-        subPath: helm
-      - mountPath: /usr/local/bin/kustomize
-        name: custom-tools
-        subPath: kustomize
+      # - mountPath: /usr/local/bin/helm
+      #   name: custom-tools
+      #   subPath: helm
+      # - mountPath: /usr/local/bin/kustomize
+      #   name: custom-tools
+      #   subPath: kustomize
       - mountPath: /usr/local/bin/.kustomize
         name: custom-tools
         subPath: .kustomize
