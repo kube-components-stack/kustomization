@@ -668,7 +668,7 @@ valuesInline:
       capabilities:
         drop:
           - ALL
-      readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: false #true
       runAsNonRoot: true
       allowPrivilegeEscalation: false
 
