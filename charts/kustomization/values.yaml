@@ -65,6 +65,7 @@ env:
     REF: master
     CLUSTER: ""
     ENV: ""
+    KUSTOMIZE_PLUGIN_HOME: /tmp/.kustomize/plugins
 
 volumesAndMounts:
   volumes:

@@ -30,6 +30,14 @@ spec:
         - |
           /bin/bash <<'EOF'
             trap "kubectl delete clusterroles.rbac.authorization.k8s.io system:{{ include "kustomization.fullname" . }}" EXIT
+
+            cd /tmp && 
+            OS=$(uname | tr '[:upper:]' '[:lower:]') &&
+            ARCH=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') &&
+            mkdir -p $KUSTOMIZE_PLUGIN_HOME/khelm.mgoltzsche.github.com/v2/chartrenderer &&
+            wget -qO- https://github.com/mgoltzsche/khelm/releases/latest/download/khelm-${OS}-${ARCH} > $KUSTOMIZE_PLUGIN_HOME/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer &&
+            chmod +x $KUSTOMIZE_PLUGIN_HOME/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer
+
             declare TMP=$(mktemp --directory /tmp/kubectl.XXXXXXXXXX)
             set -euo pipefail
             set -x
