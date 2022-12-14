@@ -701,7 +701,7 @@ valuesInline:
             OS=$(uname | tr '[:upper:]' '[:lower:]') &&
             ARCH=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') &&
             mkdir -p /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer &&
-            curl -fsSL https://github.com/mgoltzsche/khelm/releases/latest/download/khelm-${OS}-${ARCH} > /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer &&
+            wget -qO- https://github.com/mgoltzsche/khelm/releases/latest/download/khelm-${OS}-${ARCH} > /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer &&
             chmod +x /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer
         volumeMounts:
           - mountPath: /custom-tools
