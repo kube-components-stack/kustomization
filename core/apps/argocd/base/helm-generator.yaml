@@ -14,6 +14,8 @@ includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline:
+  crds:
+    install: false
   fullnameOverride: argocd
   global:
     image:
