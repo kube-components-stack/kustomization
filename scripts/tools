@@ -144,7 +144,7 @@ metadata:
     grafana_dashboard: "1"
     id: $(basename $path/$id-$revision.json .json)
 data:
-  grafana-dashboard-$(basename $path/$id-$revision.json).json: |
+  grafana-dashboard-$(basename $path/$id-$revision.json): |
 $(cat "$path/$id-$revision.json" | jq --argjson tags "${tags}" '.tags = $tags' | sed -r "s/^/    /g")
 EOF
   
@@ -158,8 +158,8 @@ EOF
 
 function render_dashboards_from_helm_template () {
   actual_path=$PWD
-  path=cluster-addons/monitoring/base/dashboards
-  yaml=cluster-addons/monitoring/base/helm-generator.yaml
+  path=addons/apps/monitoring/base/dashboards
+  yaml=addons/apps/monitoring/base/helm-generator.yaml
 
   name=$(yq '.name' $yaml)
   version=$(yq '.version' $yaml)
@@ -191,7 +191,7 @@ metadata:
     grafana_dashboard: "1"
     id: ${dashboard}
 data:
-  grafana-dashboard-${dashboard}: |
+  grafana-dashboard-${dashboard}.json: |
 $(cat $path/${dashboard}.json | jq '.annotations.list = [{"datasource": "-- Grafana --","enable": true,"hide": true,"iconColor": "rgb(255, 255, 255)","limit": 100,"name": "ArgoCD Notifications","showIn": 0,"tags": ["argocd"],"type": "tags"}]' | sed -r "s/^/    /g")
 EOF
 
