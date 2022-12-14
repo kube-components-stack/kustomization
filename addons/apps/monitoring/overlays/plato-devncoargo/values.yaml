@@ -22,6 +22,9 @@ grafana:
       label: grafana_dashboard
       labelValue: "1"
 
+  dashboardsConfigMaps:
+    kube-prometheus-stack-alertmanager-overview: grafana-dashboard-kube-prometheus-stack-alertmanager-overview
+
   # https://grafana.com/docs/grafana/latest/administration/configuration/
   grafana.ini:
     server:
