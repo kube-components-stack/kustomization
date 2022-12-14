@@ -17,7 +17,7 @@ metadata:
     # heritage: Helm
     # release: kube-prometheus-stack
 data:
-  grafana-dashboard-kube-prometheus-stack-k8s-resources-namespace: |
+  k8s-resources-namespace.json: |
     {
       "annotations": {
         "list": [
