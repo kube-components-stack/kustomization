@@ -690,15 +690,16 @@ valuesInline:
         command: [sh, -c]
         args:
           # - pwd && id
-          - wget -qO- https://get.helm.sh/helm-v3.9.3-linux-amd64.tar.gz | tar -xvzf - &&
+          - cd /tmp && wget -qO- https://get.helm.sh/helm-v3.9.3-linux-amd64.tar.gz | tar -xvzf - &&
             mv linux-amd64/helm /custom-tools/ &&
             chmod +x /custom-tools/helm
 
-          - wget -qO- https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.7/kustomize_v4.5.7_linux_amd64.tar.gz | tar -xvzf - &&
+          - cd /tmp && wget -qO- https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.7/kustomize_v4.5.7_linux_amd64.tar.gz | tar -xvzf - &&
             mv kustomize /custom-tools/ &&
             chmod +x /custom-tools/kustomize
 
-          - OS=$(uname | tr '[:upper:]' '[:lower:]') &&
+          - cd /tmp && 
+            OS=$(uname | tr '[:upper:]' '[:lower:]') &&
             ARCH=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') &&
             mkdir -p /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer &&
             curl -fsSL https://github.com/mgoltzsche/khelm/releases/latest/download/khelm-${OS}-${ARCH} > /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer &&
