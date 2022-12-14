@@ -676,7 +676,8 @@ valuesInline:
     volumes:
       - name: custom-tools
         emptyDir: {}
-
+      - name: tmp
+        emptyDir: {}
     # 2. Use an init container to download/copy custom binaries into the emptyDir
     # -- Init containers to add to the repo server pods
     initContainers:  #[]
@@ -690,15 +691,13 @@ valuesInline:
         command: [sh, -c]
         args:
           # - pwd && id
-          - cd /tmp && wget -qO- https://get.helm.sh/helm-v3.9.3-linux-amd64.tar.gz | tar -xvzf - &&
+          - set  -x && cd /tmp && wget -qO- https://get.helm.sh/helm-v3.9.3-linux-amd64.tar.gz | tar -xvzf - &&
             mv linux-amd64/helm /custom-tools/ &&
-            chmod +x /custom-tools/helm
-
-          - cd /tmp && wget -qO- https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.7/kustomize_v4.5.7_linux_amd64.tar.gz | tar -xvzf - &&
+            chmod +x /custom-tools/helm &&
+            cd /tmp && wget -qO- https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv4.5.7/kustomize_v4.5.7_linux_amd64.tar.gz | tar -xvzf - &&
             mv kustomize /custom-tools/ &&
-            chmod +x /custom-tools/kustomize
-
-          - cd /tmp && 
+            chmod +x /custom-tools/kustomize &&
+            cd /tmp && 
             OS=$(uname | tr '[:upper:]' '[:lower:]') &&
             ARCH=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') &&
             mkdir -p /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer &&
@@ -707,6 +706,8 @@ valuesInline:
         volumeMounts:
           - mountPath: /custom-tools
             name: custom-tools
+          - mountPath: /tmp
+            name: tmp
     # 3. Volume mount the custom binary to the bin directory (overriding the existing version)
     volumeMounts:
       - mountPath: /usr/local/bin/helm
