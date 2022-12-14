@@ -7,7 +7,7 @@ metadata:
     grafana_dashboard: "1"
     id: kube-prometheus-stack-scheduler
 data:
-  grafana-dashboard-kube-prometheus-stack-scheduler: |
+  grafana-dashboard-kube-prometheus-stack-scheduler.json: |
     {
       "__inputs": [],
       "__requires": [],

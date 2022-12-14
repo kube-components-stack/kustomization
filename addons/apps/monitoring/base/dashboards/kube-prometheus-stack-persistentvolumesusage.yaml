@@ -7,7 +7,7 @@ metadata:
     grafana_dashboard: "1"
     id: kube-prometheus-stack-persistentvolumesusage
 data:
-  grafana-dashboard-kube-prometheus-stack-persistentvolumesusage: |
+  grafana-dashboard-kube-prometheus-stack-persistentvolumesusage.json: |
     {
       "__inputs": [],
       "__requires": [],

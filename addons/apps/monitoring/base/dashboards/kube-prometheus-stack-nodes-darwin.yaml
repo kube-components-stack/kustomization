@@ -7,7 +7,7 @@ metadata:
     grafana_dashboard: "1"
     id: kube-prometheus-stack-nodes-darwin
 data:
-  grafana-dashboard-kube-prometheus-stack-nodes-darwin: |
+  grafana-dashboard-kube-prometheus-stack-nodes-darwin.json: |
     {
       "__inputs": [],
       "__requires": [],

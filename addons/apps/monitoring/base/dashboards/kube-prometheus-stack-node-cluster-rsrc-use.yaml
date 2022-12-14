@@ -7,7 +7,7 @@ metadata:
     grafana_dashboard: "1"
     id: kube-prometheus-stack-node-cluster-rsrc-use
 data:
-  grafana-dashboard-kube-prometheus-stack-node-cluster-rsrc-use: |
+  grafana-dashboard-kube-prometheus-stack-node-cluster-rsrc-use.json: |
     {
       "__inputs": [],
       "__requires": [],

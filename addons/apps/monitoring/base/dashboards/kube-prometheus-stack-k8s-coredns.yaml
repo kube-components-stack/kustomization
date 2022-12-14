@@ -7,7 +7,7 @@ metadata:
     grafana_dashboard: "1"
     id: kube-prometheus-stack-k8s-coredns
 data:
-  grafana-dashboard-kube-prometheus-stack-k8s-coredns: |
+  grafana-dashboard-kube-prometheus-stack-k8s-coredns.json: |
     {
       "annotations": {
         "list": [

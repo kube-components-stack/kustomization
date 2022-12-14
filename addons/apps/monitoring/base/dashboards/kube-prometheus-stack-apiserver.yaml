@@ -7,7 +7,7 @@ metadata:
     grafana_dashboard: "1"
     id: kube-prometheus-stack-apiserver
 data:
-  grafana-dashboard-kube-prometheus-stack-apiserver: |
+  grafana-dashboard-kube-prometheus-stack-apiserver.json: |
     {
       "__inputs": [],
       "__requires": [],

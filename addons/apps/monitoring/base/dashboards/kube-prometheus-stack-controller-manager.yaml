@@ -7,7 +7,7 @@ metadata:
     grafana_dashboard: "1"
     id: kube-prometheus-stack-controller-manager
 data:
-  grafana-dashboard-kube-prometheus-stack-controller-manager: |
+  grafana-dashboard-kube-prometheus-stack-controller-manager.json: |
     {
       "__inputs": [],
       "__requires": [],
