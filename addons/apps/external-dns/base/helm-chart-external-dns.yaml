@@ -1,3 +1,5 @@
+# https://artifacthub.io/packages/helm/external-dns/external-dns
+# https://artifacthub.io/packages/helm/bitnami/external-dns
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
