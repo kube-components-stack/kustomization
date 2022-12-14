@@ -92,9 +92,6 @@ grafana:
       # Sets the size limit of the dashboard sidecar emptyDir volume
       sizeLimit: {}
 
-  # dashboardsConfigMaps:
-  #   kube-prometheus-stack-alertmanager-overview: grafana-dashboard-kube-prometheus-stack-alertmanager-overview
-
   # https://grafana.com/docs/grafana/latest/administration/configuration/
   grafana.ini:
     server:
@@ -107,9 +104,9 @@ grafana:
       scopes: profile,email,groups
       client_id: grafana
       client_secret: iagsmFWVLS5DcEoP9SgGCE3OFAG4g5VF
-      auth_url:   https://keycloak.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/auth
-      token_url:  https://keycloak.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/token
-      api_url:    https://keycloak.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/userinfo
+      auth_url:   https://keycloak-01.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/auth
+      token_url:  https://keycloak-01.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/token
+      api_url:    https://keycloak-01.admin.plato-devncoargo.dev-sbr.com/realms/master/protocol/openid-connect/userinfo
       role_attribute_path: contains(groups[*], 'grafana-admin') && 'Admin' || contains(groups[*], 'grafana-dev') && 'Editor' || 'Viewer'
       tls_skip_verify_insecure: "true"
   admin:
