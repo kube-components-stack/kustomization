@@ -13,6 +13,15 @@ alertmanager:
       hosts:
       - alertmanager.admin.plato-devncoargo.dev-sbr.com
 grafana:
+  defaultDashboardsEnabled: false
+  # forceDeployDashboards: true
+  defaultDashboardsTimezone: Europe/Paris
+  sidecar:
+    dashboards:
+      enabled: true
+      label: grafana_dashboard
+      labelValue: "1"
+
   # https://grafana.com/docs/grafana/latest/administration/configuration/
   grafana.ini:
     server:

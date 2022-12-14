@@ -27,11 +27,11 @@ releaseName: *name
 namespace: monitoring
 includeCRDs: false
 valuesFile: values.yaml
-valuesMerge: override                 # merge, override or replace
+valuesMerge: merge                 # merge, override or replace
 valuesInline:
   fullnameOverride: kube-prometheus-stack
   grafana:
-    defaultDashboardsEnabled: false
+    # defaultDashboardsEnabled: false
     additionalDataSources:
     - name: Loki
       access: proxy
