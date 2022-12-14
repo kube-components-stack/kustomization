@@ -102,7 +102,7 @@ data:
                   "pattern": "Value #B",
                   "thresholds": [],
                   "type": "number",
-                  "unit": "short"
+                  "unit": "s"
                 },
                 {
                   "alias": "Instance",
