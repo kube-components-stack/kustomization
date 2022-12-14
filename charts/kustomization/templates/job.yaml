@@ -44,7 +44,7 @@ spec:
             git clone https://github.com/${OWNER}/${REPO}.git --depth=1 --branch ${REF} --single-branch $TMP/${REPO}
 
             folder=core/crds
-            for crd in core/crds/*; do
+            for crd in $(ls ${folder}); do
               kustomize \
                 --stack-trace \
                 --enable-alpha-plugins \
@@ -54,7 +54,7 @@ spec:
             done
 
             folder=addons/crds
-            for crd in addons/crds/*; do
+            for crd in $(ls ${folder}); do
               kustomize \
                 --stack-trace \
                 --enable-alpha-plugins \
