@@ -92,10 +92,10 @@ spec:
             kustomize --load-restrictor LoadRestrictionsNone build | kubectl apply -f -
 
             cd $OLDPWD
-            kubectl apply -f core-crds.yaml
-            kubectl apply -f core-apps.yaml
-            kubectl apply -f addons-crds.yaml
-            kubectl apply -f addons-apps.yaml
+            kubectl apply -f $TMP/${REPO}/core-crds.yaml
+            kubectl apply -f $TMP/${REPO}/core-apps.yaml
+            kubectl apply -f $TMP/${REPO}/addons-crds.yaml
+            kubectl apply -f $TMP/${REPO}/addons-apps.yaml
           EOF
         lifecycle:
           preStop:
