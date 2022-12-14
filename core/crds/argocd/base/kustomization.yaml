@@ -7,3 +7,17 @@ resources:
 - https://raw.githubusercontent.com/argoproj/argo-helm/argo-cd-5.0.0/charts/argo-cd/crds/crd-project.yaml
 transformers:
 - transformer-annotation-crd.yaml
+# generators:
+# # - helm-generator.yaml
+# - chart-renderer.yaml
+# https://kubectl.docs.kubernetes.io/references/kustomize/kustomization/patches/
+# patches:
+# - patch: |-
+#     - op: remove
+#       path: /metadata/labels
+#     - op: remove
+#       path: /spec
+#   target:
+#     group: apps
+#     kind: "Deployment"
+#     labelSelector: "app.kubernetes.io/managed-by=Helm"
