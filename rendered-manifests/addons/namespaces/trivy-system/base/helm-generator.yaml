@@ -6,7 +6,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: trivy-operator-helm-chart
 name: &name trivy-operator
-version: v0.7.1
+version: 0.9.1
 repo: https://aquasecurity.github.io/helm-charts
 releaseName: *name
 namespace: trivy-system
