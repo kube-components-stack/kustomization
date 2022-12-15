@@ -48,7 +48,7 @@ spec:
           - Validate=false                      # disables resource validation (equivalent to 'kubectl apply --validate=false') ( true by default ).
           - CreateNamespace=true                # Namespace Auto-Creation ensures that namespace specified as the application destination exists in the destination cluster.
           - ApplyOutOfSyncOnly=true
-          - RespectIgnoreDifferences=true
+          # - RespectIgnoreDifferences=true
           # https://github.com/argoproj/argo-cd/issues/5724 - Change default deletion propagation policy from foreground to background
           # https://github.com/argoproj/argo-cd/issues/4811 - Sync gets stuck and must be terminated/restarted manually in order to work
           # https://github.com/argoproj/argo-cd/issues/3928 - Bug: Helm hooks with deletion policies don't sync

@@ -24,4 +24,4 @@ valuesInline:
   # extraArgs:
   #   kubelet-insecure-tls: true
   #   kubelet-preferred-address-types: InternalIP
-  replicas: 4
+  replicas: 1
