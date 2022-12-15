@@ -273,14 +273,22 @@ done
 ## copy an existing environment
 
 ```zsh
+current_path=$PWD
 cluster=plato
 env=devncoargo
 
-cd cluster-addons
+cd rendered-manifests/addons/apps
 for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
 cd ../crds
 for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
-cd ../secrets/cluster-addons
+cd ../../core/apps
+for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
+cd ../crds
+for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
+cd $current_path
+cd secrets/addons
+for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
+cd ../core
 for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
 cd ../clusters
 for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
@@ -352,7 +360,7 @@ tls:
 
 generate template, catch secret, extract datas, store them into a file and create, ca, crt and key files.
 ```zsh
-kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone addons/apps/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-crt")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
+kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/addons/apps/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-crt")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
 
 cd secrets/addons/keycloak/overlays/plato-devncoargo/secrets
 cat tls.json| jq -r '.["ca.crt"]' > ca.crt
