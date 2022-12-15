@@ -1,9 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.7.1/deploy/crd/aquasecurity.github.io_clusterconfigauditreports.yaml
-- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.7.1/deploy/crd/aquasecurity.github.io_configauditreports.yaml
-- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.7.1/deploy/crd/aquasecurity.github.io_exposedsecretreports.yaml
-- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.7.1/deploy/crd/aquasecurity.github.io_infraassessmentreports.yaml
-- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.7.1/deploy/crd/aquasecurity.github.io_rbacassessmentreports.yaml
-- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.7.1/deploy/crd/aquasecurity.github.io_vulnerabilityreports.yaml
+- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.9.1/deploy/crd/aquasecurity.github.io_clusterconfigauditreports.yaml
+- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.9.1/deploy/crd/aquasecurity.github.io_configauditreports.yaml
+- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.9.1/deploy/crd/aquasecurity.github.io_exposedsecretreports.yaml
+- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.9.1/deploy/crd/aquasecurity.github.io_infraassessmentreports.yaml
+- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.9.1/deploy/crd/aquasecurity.github.io_rbacassessmentreports.yaml
+- https://raw.githubusercontent.com/aquasecurity/trivy-operator/v0.9.1/deploy/crd/aquasecurity.github.io_vulnerabilityreports.yaml
