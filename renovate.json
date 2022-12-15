@@ -32,9 +32,7 @@
       "^rendered-manifests/[^\\/]+/[^\\/]+/[^\\/]+/.*\\.yaml$"
     ]
   },
-  "ignoreDeps": [
-    "cert-manager"
-  ],
+  "ignoreDeps": [],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch"],
