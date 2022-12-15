@@ -1,6 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-- https://raw.githubusercontent.com/bitnami-labs/sealed-secrets/helm-v2.6.1/helm/sealed-secrets/crds/sealedsecret-crd.yaml
+- https://raw.githubusercontent.com/bitnami-labs/sealed-secrets/helm-v2.7.2/helm/sealed-secrets/crds/sealedsecret-crd.yaml
 transformers:
 - transformer-annotation-crd.yaml
