@@ -47,7 +47,7 @@ buckets:
 ## The following section documents environment variables for enabling external identity management using an OpenID Connect (OIDC)-compatible provider.
 ## See https://min.io/docs/minio/linux/operations/external-iam/configure-openid-external-identity-management.html for a tutorial on using these variables.
 oidc:
-  enabled: true
+  enabled: false
   configUrl: https://keycloak-01.admin.plato-devncoargo.dev-sbr.com/realms/master/.well-known/openid-configuration
   clientId: minio
   clientSecret: vgnExUewhNvj0WbrNOppntJ4qc1NQyjl
