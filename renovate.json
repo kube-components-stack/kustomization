@@ -9,7 +9,7 @@
   "prConcurrentLimit": 0,
   "regexManagers": [
     {
-      "fileMatch": ["^cluster-addons/[^\\/]+/base/helm-generator\\.yaml$"],
+      "fileMatch": ["^rendered-manifests/[^\\/]+/[^\\/]+/[^\\/]+/base/.*helm.*\\.yaml$"],
       "matchStringsStrategy": "combination",
       "matchStrings": [
         "(^|\\n)name:\\s+(?:&\\S+\\s+)?(?<depName>\\S+)",
@@ -19,7 +19,7 @@
       "datasourceTemplate": "helm"
     },
     {
-      "fileMatch": ["^crds/[^\\/]+/base/kustomization\\.yaml$"],
+      "fileMatch": ["^rendered-manifests/[^\\/]+/crds/[^\\/]+/base/kustomization\\.yaml$"],
       "matchStrings": [
         "raw\\.githubusercontent\\.com\\/(?<depName>[^\\/]+\\/[^\\/]+)\\/(?<currentValue>[^\\/]+)"
       ],
@@ -29,7 +29,7 @@
   ],
   "kubernetes": {
     "fileMatch": [
-      "^cluster-addons/[^\\/]+/base/job\\.yaml$"
+      "^rendered-manifests/[^\\/]+/[^\\/]+/[^\\/]+/.*\\.yaml$"
     ]
   },
   "ignoreDeps": [
