@@ -50,61 +50,167 @@ To uninstall the chart:
 
 ```
 .
-├── cluster-addons.yaml
-├── cluster-addons
-│   ├── addon-01
-│   │   ├── base
-│   │   │   ├── helm-generator.yaml
-│   │   │   ├── kustomization.yaml
-│   │   │   └── namespace.yaml
-│   │   └── overlays
-│   │       ├── kind-dev
-│   │       │   ├── kustomization.yaml
-│   │       │   ├── secrets.yaml
-│   │       │   └── values.yaml
-│   │       └── kind-prod
-│   │           ├── kustomization.yaml
-│   │           ├── secrets.yaml
-│   │           └── values.yaml
-│   ...
-│   │
-│   └── addon-0x
-│       ├── base
-│       │   ├── helm-generator.yaml
-│       │   ├── kustomization.yaml
-│       │   └── namespace.yaml
-│       └── overlays
-│           ├── kind-dev
-│           │   └── kustomization.yaml
-│           └── kind-prod
-│               ├── kustomization.yaml
-│               ├── secrets.yaml
-│               └── values.yaml
-├── crd.yaml
-├── crds
-│   ├── crd-01
-│   │   ├── base
-│   │   │   └── kustomization.yaml
-│   │   └── overlays
-│   │       ├── kind-dev
-│   │       │   └── kustomization.yaml
-│   │       └── kind-prod
-│   │           └── kustomization.yaml
-│   ...
-│   └── crd-0x
-│       ├── base
-│       │   └── kustomization.yaml
-│       └── overlays
-│           ├── kind-dev
-│           │   └── kustomization.yaml
-│           └── kind-prod
-│               └── kustomization.yaml
+├── manifests
+│   ├── argocd-applicationset
+│   │   ├── addons-apps.yaml
+│   │   ├── addons-crds.yaml
+│   │   ├── core-apps.yaml
+│   │   └── core-crds.yaml
+│   └── argocd-appproject
+│       ├── addons-apps.yaml
+│       ├── addons-crds.yaml
+│       ├── core-apps.yaml
+│       └── core-crds.yaml
+├── rendered-manifests
+│   ├── core
+│   │   ├── apps
+│   │   │   ├── namespace-01
+│   │   │   │   ├── base
+│   │   │   │   │   ├── helm-generator.yaml
+│   │   │   │   │   ├── kustomization.yaml
+│   │   │   │   │   └── namespace.yaml
+│   │   │   │   └── overlays
+│   │   │   │       ├── kind-dev
+│   │   │   │       │   ├── kustomization.yaml
+│   │   │   |       |   ├── secrets.yaml
+│   │   │   │       │   └── values.yaml
+│   │   │   │       └── kind-prod
+│   │   │   │           ├── kustomization.yaml
+│   │   │   |           ├── secrets.yaml
+│   │   │   │           └── values.yaml
+│   │   │   └── namespace-x
+│   │   │       ├── base
+│   │   │       │   ├── helm-generator.yaml
+│   │   │       │   ├── kustomization.yaml
+│   │   │       │   └── namespace.yaml
+│   │   │       └── overlays
+│   │   │           ├── kind-dev
+│   │   │           |   ├── kustomization.yaml
+│   │   │           |   ├── secrets.yaml
+│   │   │           |   └── values.yaml
+│   │   │           └── kind-prod
+│   │   │               ├── kustomization.yaml
+│   │   │               ├── secrets.yaml
+│   │   │               └── values.yaml
+│   │   └── crds
+│   │       ├── crds-01
+│   │       │   ├── base
+│   │       │   │   └── kustomization.yaml
+│   │       │   └── overlays
+│   │       │       ├── kind-dev
+│   │       │       │   └── kustomization.yaml
+│   │       │       └── kind-prod
+│   │       │           └── kustomization.yaml
+│   │       └── crds-x
+│   │           ├── base
+│   │           │   └── kustomization.yaml
+│   │           └── overlays
+│   │               ├── kind-dev
+│   │               │   └── kustomization.yaml
+│   │               └── kind-prod
+│   │                   └── kustomization.yaml
+│   └── addons
+│       ├── apps
+│       │   ├── namespace-01
+│       │   │   ├── base
+│       │   │   │   ├── helm-generator.yaml
+│       │   │   │   ├── kustomization.yaml
+│       │   │   │   └── namespace.yaml
+│       │   │   └── overlays
+│       │   │       ├── kind-dev
+│       │   │       │   ├── kustomization.yaml
+│       │   |       |   ├── secrets.yaml
+│       │   │       │   └── values.yaml
+│       │   │       └── kind-prod
+│       │   │           ├── kustomization.yaml
+│       │   |           ├── secrets.yaml
+│       │   │           └── values.yaml
+│       │   └── namespace-x
+│       │       ├── base
+│       │       │   ├── helm-generator.yaml
+│       │       │   ├── kustomization.yaml
+│       │       │   └── namespace.yaml
+│       │       └── overlays
+│       │           ├── kind-dev
+│       │           |   ├── kustomization.yaml
+│       │           |   ├── secrets.yaml
+│       │           |   └── values.yaml
+│       │           └── kind-prod
+│       │               ├── kustomization.yaml
+│       │               ├── secrets.yaml
+│       │               └── values.yaml
+│       └── crds
+│           ├── crds-addon-01
+│           │   ├── base
+│           │   │   └── kustomization.yaml
+│           │   └── overlays
+│           │       ├── kind-dev
+│           │       │   └── kustomization.yaml
+│           │       └── kind-prod
+│           │           └── kustomization.yaml
+│           └── crds-addon-x
+│               ├── base
+│               │   └── kustomization.yaml
+│               └── overlays
+│                   ├── kind-dev
+│                   │   └── kustomization.yaml
+│                   └── kind-prod
+│                       └── kustomization.yaml
 ├── Makefile
 ├── README.md
 ├── scripts
 │   └── tools
 └── secrets
+    ├── core
+    │   ├── loki
+    │   │   └── overlays
+    │   │       ├── kind-dev
+    │   │       │   └── kustomization.yaml
+    │   │       ├── kind-prod
+    │   │       │   ├── kustomization.yaml
+    │   │       │   └── secrets
+    │   │       │       └── bucket-s3.yaml
+    │   │       └── plato-devncoargo
+    │   │           ├── kustomization.yaml
+    │   │           └── secrets
+    │   │               └── bucket-s3.yaml
+    │   └── vector
+    │       └── overlays
+    │           ├── kind-dev
+    │           │   └── kustomization.yaml
+    │           ├── kind-prod
+    │           │   ├── kustomization.yaml
+    │           │   └── secrets
+    │           │       └── bucket-s3.yaml
+    │           └── plato-devncoargo
+    │               ├── kustomization.yaml
+    │               └── secrets
+    │                   └── bucket-s3.yaml
+    ├── addons
+    │   └── argocd
+    │       └── overlays
+    │           ├── kind-dev
+    │           │   ├── kustomization.yaml
+    │           │   └── secrets
+    │           │       ├── argocd-secret.yaml
+    │           │       └── grafana-secret.yaml
+    │           ├── kind-prod
+    │           │   ├── kustomization.yaml
+    │           │   └── secrets
+    │           │       ├── argocd-notifications-secret.yaml
+    │           │       ├── argocd-secret.yaml
+    │           │       ├── grafana-secret.yaml
+    │           │       └── keycloak-ca.yaml
+    │           └── plato-devncoargo
+    │               ├── kustomization.yaml
+    │               └── secrets
+    │                   ├── argocd-notifications-secret.yaml
+    │                   ├── argocd-secret.yaml
+    │                   ├── grafana-secret.yaml
+    │                   └── keycloak-ca.yaml
     ├── clusters
+    │   ├── kind-dev
+    │   |    └── sealed-secrets-private-key.yaml
     │   └── kind-prod
     │       └── sealed-secrets-private-key.yaml
     └── README.md
@@ -116,8 +222,8 @@ addon=keycloak-jdf
 declare clusters=("kind-dev" "kind-prod" "plato-devncoargo")
 namespace=keycloak-jdf
 
-mkdir -p addons/apps/$addon/base
-cat << EOF > addons/apps/$addon/base/helm-chart-$addon.yaml
+mkdir -p rendered-manifests/addons/apps/$addon/base
+cat << EOF > rendered-manifests/addons/apps/$addon/base/helm-chart-$addon.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
@@ -133,14 +239,14 @@ valuesMerge: override                 # merge, override or replace
 valuesInline: {}
 EOF
 
-cat << EOF > addons/apps/$addon/base/namespace.yaml
+cat << EOF > rendered-manifests/addons/apps/$addon/base/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
   name: $namespace
 EOF
 
-cat << EOF > addons/apps/$addon/base/kustomization.yaml
+cat << EOF > rendered-manifests/addons/apps/$addon/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $namespace
@@ -149,9 +255,9 @@ resources:
 EOF
 
 for c in $clusters; do 
-  mkdir -p addons/apps/$addon/overlays/$c
-  touch addons/apps/$addon/overlays/$c/{kustomization.yaml,values-$addon.yaml}
-  cat << EOF > addons/apps/$addon/overlays/$c/kustomization.yaml
+  mkdir -p rendered-manifests/addons/apps/$addon/overlays/$c
+  touch rendered-manifests/addons/apps/$addon/overlays/$c/{kustomization.yaml,values-$addon.yaml}
+  cat << EOF > rendered-manifests/addons/apps/$addon/overlays/$c/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $namespace
@@ -225,7 +331,7 @@ ingress:
 
 generate template, catch secret, extract datas, store them into a file and create, ca, crt and key files.
 ```zsh
-kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone addons/apps/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-nco.admin.plato-devncoargo.dev-sbr.com-tls")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
+kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/addons/apps/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-nco.admin.plato-devncoargo.dev-sbr.com-tls")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
 
 cd secrets/addons/keycloak/overlays/plato-devncoargo/secrets
 cat tls.json| jq -r '.["ca.crt"]' > ca.crt
