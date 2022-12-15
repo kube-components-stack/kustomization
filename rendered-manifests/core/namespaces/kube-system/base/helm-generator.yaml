@@ -6,7 +6,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: sealed-secrets-helm-chart
 name: sealed-secrets
-version: 2.6.0
+version: 2.7.2
 repo: https://bitnami-labs.github.io/sealed-secrets
 releaseName: sealed-secrets
 namespace: kube-system
