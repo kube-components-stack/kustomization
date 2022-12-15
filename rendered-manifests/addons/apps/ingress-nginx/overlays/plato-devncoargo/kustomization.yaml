@@ -7,5 +7,3 @@ generators:
 - ../../base/helm-chart-ingress-nginx-admin.yaml
 - ../../base/helm-chart-ingress-nginx-private.yaml
 - ../../base/helm-chart-ingress-nginx-public.yaml
-transformers:
-- ../../base/transformer-annotation-services.yaml
