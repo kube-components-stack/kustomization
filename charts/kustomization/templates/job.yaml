@@ -63,7 +63,7 @@ spec:
                 | kubectl apply --server-side=true --force-conflicts -f -
             done
 
-            folder=rendered-manifests/core/apps
+            folder=rendered-manifests/core/namespaces
             app=kube-system
             kustomize \
               --stack-trace \

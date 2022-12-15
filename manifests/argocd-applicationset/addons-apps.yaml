@@ -12,30 +12,30 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: "rendered-manifests/addons/apps/*"
-                - path: rendered-manifests/addons/apps/cert-manager
+                - path: "rendered-manifests/addons/namespaces/*"
+                - path: rendered-manifests/addons/namespaces/cert-manager
                   exclude: false
-                - path: rendered-manifests/addons/apps/external-dns
+                - path: rendered-manifests/addons/namespaces/external-dns
                   exclude: false
-                - path: rendered-manifests/addons/apps/ingress-nginx
+                - path: rendered-manifests/addons/namespaces/ingress-nginx
                   exclude: false
-                - path: rendered-manifests/addons/apps/keycloak
+                - path: rendered-manifests/addons/namespaces/keycloak
                   exclude: false
-                - path: rendered-manifests/addons/apps/kyverno
+                - path: rendered-manifests/addons/namespaces/kyverno
                   exclude: true
-                - path: rendered-manifests/addons/apps/loki
+                - path: rendered-manifests/addons/namespaces/loki
                   exclude: false
-                - path: rendered-manifests/addons/apps/metallb
+                - path: rendered-manifests/addons/namespaces/metallb
                   exclude: true
-                - path: rendered-manifests/addons/apps/minio
+                - path: rendered-manifests/addons/namespaces/minio
                   exclude: false
-                - path: rendered-manifests/addons/apps/monitoring
+                - path: rendered-manifests/addons/namespaces/monitoring
                   exclude: false
-                - path: rendered-manifests/addons/apps/promtail
+                - path: rendered-manifests/addons/namespaces/promtail
                   exclude: false
-                - path: rendered-manifests/addons/apps/trivy-system
+                - path: rendered-manifests/addons/namespaces/trivy-system
                   exclude: true
-                - path: rendered-manifests/addons/apps/vector
+                - path: rendered-manifests/addons/namespaces/vector
                   exclude: false
           - clusters: {}
   template:
@@ -48,7 +48,7 @@ spec:
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "rendered-manifests/addons/apps/{{path.basename}}/overlays/{{name}}"
+        path: "rendered-manifests/addons/namespaces/{{path.basename}}/overlays/{{name}}"
         # plugin:
         #   name: argocd-lovely-plugin # https://github.com/crumbhole/argocd-lovely-plugin
         # rendered-manifests:

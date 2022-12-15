@@ -222,8 +222,8 @@ addon=keycloak-jdf
 declare clusters=("kind-dev" "kind-prod" "plato-devncoargo")
 namespace=keycloak-jdf
 
-mkdir -p rendered-manifests/addons/apps/$addon/base
-cat << EOF > rendered-manifests/addons/apps/$addon/base/helm-chart-$addon.yaml
+mkdir -p rendered-manifests/addons/namespaces/$addon/base
+cat << EOF > rendered-manifests/addons/namespaces/$addon/base/helm-chart-$addon.yaml
 apiVersion: builtin
 kind: HelmChartInflationGenerator
 metadata:
@@ -239,14 +239,14 @@ valuesMerge: override                 # merge, override or replace
 valuesInline: {}
 EOF
 
-cat << EOF > rendered-manifests/addons/apps/$addon/base/namespace.yaml
+cat << EOF > rendered-manifests/addons/namespaces/$addon/base/namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
   name: $namespace
 EOF
 
-cat << EOF > rendered-manifests/addons/apps/$addon/base/kustomization.yaml
+cat << EOF > rendered-manifests/addons/namespaces/$addon/base/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $namespace
@@ -255,9 +255,9 @@ resources:
 EOF
 
 for c in $clusters; do 
-  mkdir -p rendered-manifests/addons/apps/$addon/overlays/$c
-  touch rendered-manifests/addons/apps/$addon/overlays/$c/{kustomization.yaml,values-$addon.yaml}
-  cat << EOF > rendered-manifests/addons/apps/$addon/overlays/$c/kustomization.yaml
+  mkdir -p rendered-manifests/addons/namespaces/$addon/overlays/$c
+  touch rendered-manifests/addons/namespaces/$addon/overlays/$c/{kustomization.yaml,values-$addon.yaml}
+  cat << EOF > rendered-manifests/addons/namespaces/$addon/overlays/$c/kustomization.yaml
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: $namespace
@@ -277,11 +277,11 @@ current_path=$PWD
 cluster=plato
 env=devncoargo
 
-cd rendered-manifests/addons/apps
+cd rendered-manifests/addons/namespaces
 for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
 cd ../crds
 for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
-cd ../../core/apps
+cd ../../core/namespaces
 for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
 cd ../crds
 for dir in $(find $PWD -type d -regex '.*/kind-prod'); do cp -ra $dir $(dirname $dir)/$cluster-$env; done
@@ -339,7 +339,7 @@ ingress:
 
 generate template, catch secret, extract datas, store them into a file and create, ca, crt and key files.
 ```zsh
-kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/addons/apps/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-nco.admin.plato-devncoargo.dev-sbr.com-tls")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
+kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/addons/namespaces/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-nco.admin.plato-devncoargo.dev-sbr.com-tls")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
 
 cd secrets/addons/keycloak/overlays/plato-devncoargo/secrets
 cat tls.json| jq -r '.["ca.crt"]' > ca.crt
@@ -360,7 +360,7 @@ tls:
 
 generate template, catch secret, extract datas, store them into a file and create, ca, crt and key files.
 ```zsh
-kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/addons/apps/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-crt")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
+kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/addons/namespaces/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "Secret")|select(.metadata.name == "keycloak-crt")'|jq -s '.[0].data|{"ca.crt": .["ca.crt"]|@base64d,"tls.crt": .["tls.crt"]|@base64d,"tls.key": .["tls.key"]|@base64d}' > secrets/addons/keycloak/overlays/plato-devncoargo/secrets/tls.json
 
 cd secrets/addons/keycloak/overlays/plato-devncoargo/secrets
 cat tls.json| jq -r '.["ca.crt"]' > ca.crt

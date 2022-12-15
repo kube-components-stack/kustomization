@@ -1,4 +1,4 @@
-# kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone addons/apps/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "ConfigMap")'|jq -s|yq e -P
+# kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone addons/namespaces/keycloak/overlays/plato-devncoargo|yq -ojson|jq -s|jq '.[]|select(.kind == "ConfigMap")'|jq -s|yq e -P
 # JAVA_OPTS_APPEND: -Djgroups.dns.query=keycloak-headless.keycloak.svc.cluster.local
 # KEYCLOAK_ADMIN: user
 # KEYCLOAK_CACHE_STACK: kubernetes
