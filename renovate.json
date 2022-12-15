@@ -19,6 +19,16 @@
       "datasourceTemplate": "helm"
     },
     {
+      "fileMatch": ["^rendered-manifests/[^\\/]+/[^\\/]+/[^\\/]+/base/.*chart.*renderer.*\\.yaml$"],
+      "matchStringsStrategy": "combination",
+      "matchStrings": [
+        "(^|\\n)repository:\\s+(?<registryUrl>\\S+)",
+        "(^|\\n)chart:\\s+(?:&\\S+\\s+)?(?<depName>\\S+)",
+        "(^|\\n)version:\\s+(?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
       "fileMatch": ["^rendered-manifests/[^\\/]+/crds/[^\\/]+/base/kustomization\\.yaml$"],
       "matchStrings": [
         "raw\\.githubusercontent\\.com\\/(?<depName>[^\\/]+\\/[^\\/]+)\\/(?<currentValue>[^\\/]+)"
