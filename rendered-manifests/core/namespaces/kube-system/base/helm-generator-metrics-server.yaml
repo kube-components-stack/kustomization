@@ -5,7 +5,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: metrics-server-helm-chart
 name: &name metrics-server
-version: 3.8.2
+version: 3.8.3
 repo: https://kubernetes-sigs.github.io/metrics-server
 releaseName: *name
 namespace: kube-system
