@@ -35,18 +35,10 @@
   "ignoreDeps": [
     "cert-manager"
   ],
-  "minor": {
-    "automerge": true,
-    "stabilityDays": 3,
-    "prCreation": "not-pending"
-  },
-  "patch": {
-    "automerge": true,
-  },
-  "major": {
-    "automerge": false
-  },
-  "digest": {
-    "automerge": true
-  }
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
+    }
+  ]
 }
