@@ -92,8 +92,8 @@ create-secrets:
 			done
 			sed -i '$$d' $$tempfile
 			sed -i '/^$$/d' $$tempfile
-			cat "$$tempfile" > core/apps/$${namespace}/overlays/$${cluster}-$${env}/secrets.yaml
-			cd core/apps/$${namespace}/overlays/$${cluster}-$${env}
+			cat "$$tempfile" > kustomize/core/apps/$${namespace}/overlays/$${cluster}-$${env}/secrets.yaml
+			cd kustomize/core/apps/$${namespace}/overlays/$${cluster}-$${env}
 			kustomize edit add resource secrets.yaml
 			cd $$OLDPWD
 		fi
@@ -112,8 +112,8 @@ create-secrets:
 			done
 			sed -i '$$d' $$tempfile
 			sed -i '/^$$/d' $$tempfile
-			cat "$$tempfile" > addons/apps/$${namespace}/overlays/$${cluster}-$${env}/secrets.yaml
-			cd addons/apps/$${namespace}/overlays/$${cluster}-$${env}
+			cat "$$tempfile" > kustomize/addons/apps/$${namespace}/overlays/$${cluster}-$${env}/secrets.yaml
+			cd kustomize/addons/apps/$${namespace}/overlays/$${cluster}-$${env}
 			kustomize edit add resource secrets.yaml
 			cd $$OLDPWD
 		fi

@@ -80,7 +80,7 @@ function dl_dashboard () {
     exit 1
   fi
   if [ -z "$path" ]; then
-    path=cluster-addons/monitoring/base/dashboards
+    path=rendered-manifests/addons/apps/monitoring/base/dashboards
   fi
 
   args=
@@ -158,8 +158,8 @@ EOF
 
 function render_dashboards_from_helm_template () {
   actual_path=$PWD
-  path=addons/apps/monitoring/base/dashboards
-  yaml=addons/apps/monitoring/base/helm-generator.yaml
+  path=rendered-manifests/addons/apps/monitoring/base/dashboards
+  yaml=rendered-manifests/addons/apps/monitoring/base/helm-generator.yaml
 
   name=$(yq '.name' $yaml)
   version=$(yq '.version' $yaml)

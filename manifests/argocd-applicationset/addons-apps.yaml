@@ -1,26 +1,4 @@
 ---
-# https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: addons-apps
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-  clusterResourceBlacklist:
-  - group: apiextensions.k8s.io
-    kind: CustomResourceDefinition
-  destinations:
-  - name: '*'
-    namespace: '*'
-    server: '*'
-  sourceRepos:
-  - '*'
----
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -34,30 +12,30 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: "addons/apps/*"
-                - path: addons/apps/cert-manager
+                - path: "rendered-manifests/addons/apps/*"
+                - path: rendered-manifests/addons/apps/cert-manager
                   exclude: false
-                - path: addons/apps/external-dns
+                - path: rendered-manifests/addons/apps/external-dns
                   exclude: false
-                - path: addons/apps/ingress-nginx
+                - path: rendered-manifests/addons/apps/ingress-nginx
                   exclude: false
-                - path: addons/apps/keycloak
+                - path: rendered-manifests/addons/apps/keycloak
                   exclude: false
-                - path: addons/apps/kyverno
+                - path: rendered-manifests/addons/apps/kyverno
                   exclude: true
-                - path: addons/apps/loki
+                - path: rendered-manifests/addons/apps/loki
                   exclude: false
-                - path: addons/apps/metallb
+                - path: rendered-manifests/addons/apps/metallb
                   exclude: true
-                - path: addons/apps/minio
+                - path: rendered-manifests/addons/apps/minio
                   exclude: false
-                - path: addons/apps/monitoring
+                - path: rendered-manifests/addons/apps/monitoring
                   exclude: false
-                - path: addons/apps/promtail
+                - path: rendered-manifests/addons/apps/promtail
                   exclude: false
-                - path: addons/apps/trivy-system
+                - path: rendered-manifests/addons/apps/trivy-system
                   exclude: true
-                - path: addons/apps/vector
+                - path: rendered-manifests/addons/apps/vector
                   exclude: false
           - clusters: {}
   template:
@@ -70,10 +48,10 @@ spec:
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "addons/apps/{{path.basename}}/overlays/{{name}}"
+        path: "rendered-manifests/addons/apps/{{path.basename}}/overlays/{{name}}"
         # plugin:
         #   name: argocd-lovely-plugin # https://github.com/crumbhole/argocd-lovely-plugin
-        # kustomize:
+        # rendered-manifests:
 
       destination:
         server: '{{server}}'

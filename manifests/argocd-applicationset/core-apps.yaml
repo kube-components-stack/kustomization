@@ -1,26 +1,4 @@
 ---
-# https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: core-apps
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-  clusterResourceBlacklist:
-  - group: apiextensions.k8s.io
-    kind: CustomResourceDefinition
-  destinations:
-  - name: '*'
-    namespace: '*'
-    server: '*'
-  sourceRepos:
-  - '*'
----
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -34,7 +12,7 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: "core/apps/*"
+                - path: "rendered-manifests/core/apps/*"
           - clusters: {}
   template:
     metadata:
@@ -46,7 +24,7 @@ spec:
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "core/apps/{{path.basename}}/overlays/{{name}}"
+        path: "rendered-manifests/core/apps/{{path.basename}}/overlays/{{name}}"
         # plugin:
         #   name: argocd-lovely-plugin # https://github.com/crumbhole/argocd-lovely-plugin
         # kustomize:

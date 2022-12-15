@@ -1,23 +1,4 @@
 ---
-# https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: addons-crds
-  namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
-spec:
-  clusterResourceWhitelist:
-  - group: apiextensions.k8s.io
-    kind: CustomResourceDefinition
-  destinations:
-  - name: '*'
-    namespace: '*'
-    server: '*'
-  sourceRepos:
-  - '*'
----
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
@@ -33,20 +14,20 @@ spec:
               repoURL: https://github.com/kube-components-stack/kustomization.git
               revision: HEAD
               directories:
-                - path: "addons/crds/*"
-                # - path: addons/crds/argo-cd
+                - path: "rendered-manifests/addons/crds/*"
+                # - path: rendered-manifests/addons/crds/argo-cd
                 #   exclude: false
-                # - path: addons/crds/cert-manager
+                # - path: rendered-manifests/addons/crds/cert-manager
                 #   exclude: false
-                # - path: addons/crds/kube-prometheus-stack
+                # - path: rendered-manifests/addons/crds/kube-prometheus-stack
                 #   exclude: false
-                # - path: addons/crds/kyverno
+                # - path: rendered-manifests/addons/crds/kyverno
                 #   exclude: false
-                - path: addons/crds/metallb
+                - path: rendered-manifests/addons/crds/metallb
                   exclude: true
-                # - path: addons/crds/cert-manager
+                # - path: rendered-manifests/addons/crds/cert-manager
                 #   exclude: false
-                # - path: addons/crds/sealed-secrets
+                # - path: rendered-manifests/addons/crds/sealed-secrets
                 #   exclude: false
           - clusters: {}
   template:
@@ -59,7 +40,7 @@ spec:
       source:
         repoURL: https://github.com/kube-components-stack/kustomization.git
         targetRevision: HEAD
-        path: "addons/crds/{{path.basename}}/overlays/{{name}}"
+        path: "rendered-manifests/addons/crds/{{path.basename}}/overlays/{{name}}"
       destination:
         server: '{{server}}'
       syncPolicy:

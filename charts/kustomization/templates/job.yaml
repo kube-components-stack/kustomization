@@ -43,7 +43,7 @@ spec:
             set -x
             git clone https://github.com/${OWNER}/${REPO}.git --depth=1 --branch ${REF} --single-branch $TMP/${REPO}
 
-            folder=core/crds
+            folder=rendered-manifests/core/crds
             for crd in $(ls ${folder}); do
               kustomize \
                 --stack-trace \
@@ -53,7 +53,7 @@ spec:
                 | kubectl apply --server-side=true --force-conflicts -f -
             done
 
-            folder=addons/crds
+            folder=rendered-manifests/addons/crds
             for crd in $(ls ${folder}); do
               kustomize \
                 --stack-trace \
@@ -63,7 +63,7 @@ spec:
                 | kubectl apply --server-side=true --force-conflicts -f -
             done
 
-            folder=core/apps
+            folder=rendered-manifests/core/apps
             app=kube-system
             kustomize \
               --stack-trace \
@@ -92,10 +92,8 @@ spec:
             kustomize --load-restrictor LoadRestrictionsNone build | kubectl apply -f -
 
             cd $OLDPWD
-            kubectl apply -f $TMP/${REPO}/core-crds.yaml
-            kubectl apply -f $TMP/${REPO}/core-apps.yaml
-            kubectl apply -f $TMP/${REPO}/addons-crds.yaml
-            kubectl apply -f $TMP/${REPO}/addons-apps.yaml
+            kubectl apply -f $TMP/${REPO}/manifests/argocd-appproject
+            kubectl apply -f $TMP/${REPO}/manifests/argocd-applicationset
           EOF
         lifecycle:
           preStop:

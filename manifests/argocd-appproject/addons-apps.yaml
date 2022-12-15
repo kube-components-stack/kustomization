@@ -1,0 +1,22 @@
+---
+# https://argo-cd.readthedocs.io/en/stable/operator-manual/declarative-setup/#projects
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: addons-apps
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  clusterResourceBlacklist:
+  - group: apiextensions.k8s.io
+    kind: CustomResourceDefinition
+  destinations:
+  - name: '*'
+    namespace: '*'
+    server: '*'
+  sourceRepos:
+  - '*'
