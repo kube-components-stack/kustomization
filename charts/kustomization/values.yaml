@@ -6,7 +6,7 @@ image:
   repository: docker.io/alpine/k8s # https://github.com/alpine-docker/k8s
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.25.4"
+  tag: "1.26.0"
 
 imagePullSecrets: []
 nameOverride: ""
