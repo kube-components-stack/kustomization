@@ -135,7 +135,7 @@ prometheus:
       - prometheus.admin.plato-devncoargo.dev-sbr.com
   prometheusSpec:
     retention: 1d
-    retentionSize: 1GB
+    retentionSize: 10GB
     storageSpec:
       volumeClaimTemplate:
         spec:
@@ -143,4 +143,4 @@ prometheus:
           - ReadWriteOnce
           resources:
             requests:
-              storage: 1Gi
+              storage: 100Gi
