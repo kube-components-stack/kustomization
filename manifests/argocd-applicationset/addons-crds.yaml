@@ -35,7 +35,7 @@ spec:
       name: '{{path.basename}}-addons-crd'             # for mono  cluster
       # name: '{{path.basename}}-{{name}}'  # for multi cluster
       annotations:
-        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/addons/crds/{{path.basename}}"
+        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/addons/crds/{{path.basename}}/base;rendered-manifests/addons/crds/{{path.basename}}/overlays/{{name}}"
     spec:
       project: addons-crds
       info: []

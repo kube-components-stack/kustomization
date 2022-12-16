@@ -43,7 +43,7 @@ spec:
       name: '{{path.basename}}-addons-app'             # for mono  cluster
       # name: '{{path.basename}}-{{name}}'  # for multi cluster
       annotations:
-        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/addons/namespaces/{{path.basename}}"
+        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/addons/namespaces/{{path.basename}}/base;rendered-manifests/addons/namespaces/{{path.basename}}/overlays/{{name}}"
     spec:
       project: addons-apps
       info: []

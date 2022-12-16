@@ -21,7 +21,7 @@ spec:
       name: '{{path.basename}}-core-crd'             # for mono  cluster
       # name: '{{path.basename}}-{{name}}'           # for multi cluster
       annotations:
-        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/core/crds/{{path.basename}}"
+        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/core/crds/{{path.basename}}/base;rendered-manifests/core/crds/{{path.basename}}/overlays/{{name}}"
     spec:
       project: core-crds
       info: []

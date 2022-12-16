@@ -19,7 +19,7 @@ spec:
       name: '{{path.basename}}-core-app'             # for mono  cluster
       # name: '{{path.basename}}-{{name}}'           # for multi cluster
       annotations:
-        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/core/namespaces/{{path.basename}}"
+        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/core/namespaces/{{path.basename}}/base;rendered-manifests/core/namespaces/{{path.basename}}/overlays/{{name}}"
     spec:
       project: core-apps
       info: []
