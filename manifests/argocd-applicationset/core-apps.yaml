@@ -18,6 +18,8 @@ spec:
     metadata:
       name: '{{path.basename}}-core-app'             # for mono  cluster
       # name: '{{path.basename}}-{{name}}'           # for multi cluster
+      annotations:
+        argocd.argoproj.io/manifest-generate-paths: "rendered-manifests/core/namespaces/{{path.basename}}"
     spec:
       project: core-apps
       info: []
