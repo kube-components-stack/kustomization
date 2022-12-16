@@ -85,6 +85,9 @@ valuesInline:
         value: /tmp/argocd
       # - name: ARGOCD_SYNC_WAVE_DELAY # controls the delay in seconds between each sync-wave
       #   value: "2" # 2
+      # environment variable that enables collecting RPC performance metrics. Enable it if you need to troubleshoot performance issue. Note: metric is expensive to both query and store!
+      - name: ARGOCD_ENABLE_GRPC_TIME_HISTOGRAM
+        value: "true"
     # -- Additional volumeMounts to the application controller main container
     volumeMounts:
       - name: tmp
@@ -788,6 +791,9 @@ valuesInline:
 
       - name: KUSTOMIZE_PLUGIN_HOME
         value: /usr/local/bin/.kustomize/plugins
+      # environment variable that enables collecting RPC performance metrics. Enable it if you need to troubleshoot performance issue. Note: metric is expensive to both query and store!
+      - name: ARGOCD_ENABLE_GRPC_TIME_HISTOGRAM
+        value: "true"
     extraArgs:
     - --parallelismlimit 5 #70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
     # - --tlsmaxversion 1.2
