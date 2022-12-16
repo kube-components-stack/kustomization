@@ -14,6 +14,15 @@ includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
 valuesInline:
+  ## Argo Configs
+  configs:
+    # Argo CD configuration parameters
+    ## Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cmd-params-cm.yaml
+    params:
+      # -- Enable GZIP compression
+      server.enable.gzip: true
+      # Paths to be excluded from the tarball streamed to plugins. Separate with ;
+      reposerver.plugin.tar.exclusions: ".git/*"
   crds:
     install: false
   fullnameOverride: argocd
@@ -709,14 +718,14 @@ valuesInline:
         image: docker.io/library/alpine:3.9.6 # docker run quay.io/skopeo/stable:latest list-tags docker://docker.io/library/alpine  | yq e -P
         command: [sh, -c]
         args:
-          # - pwd && id
           - set  -x && 
             cd /tmp && 
             OS=$(uname | tr '[:upper:]' '[:lower:]') &&
             ARCH=$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') &&
+            wget -qO- https://github.com/mgoltzsche/khelm/releases/latest/download/khelm-${OS}-${ARCH} > /custom-tools/khelm &&
+            chmod +x /custom-tools/khelm &&
             mkdir -p /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer &&
-            wget -qO- https://github.com/mgoltzsche/khelm/releases/latest/download/khelm-${OS}-${ARCH} > /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer &&
-            chmod +x /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer
+            cp /custom-tools/khelm /custom-tools/.kustomize/plugins/khelm.mgoltzsche.github.com/v2/chartrenderer/ChartRenderer
         volumeMounts:
           - mountPath: /custom-tools
             name: custom-tools
@@ -776,7 +785,15 @@ valuesInline:
     config:
       timeout.reconciliation: 3m #15s
       kustomize.buildOptions: --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone
-
+      # configManagementPlugins: |
+      #   - name: pluginName
+      #     init:
+      #       command: ["sample command"]
+      #       args: ["sample args"]
+      #     generate:
+      #       command: ["sample command"]
+      #       args: ["sample args"]
+      #     lockRepo: true
     # -- The number of server pods to run
     replicas: 1
 
