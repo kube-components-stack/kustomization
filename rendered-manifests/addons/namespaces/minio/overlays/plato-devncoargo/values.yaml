@@ -57,3 +57,7 @@ oidc:
   # Can leave empty
   claimPrefix: ""
   comment: ""
+persistence:
+  accessMode: ReadWriteOnce
+  enabled: true
+  size: 2048Mi #10Gi

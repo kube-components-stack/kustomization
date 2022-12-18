@@ -14,7 +14,7 @@ releaseName: *name
 namespace: *name
 includeCRDs: false
 valuesFile: values.yaml
-valuesMerge: override                 # merge, override or replace
+valuesMerge: merge                 # merge, override or replace
 valuesInline:
   image:
     pullPolicy: Always
