@@ -6,5 +6,6 @@ resources:
 - secrets.yaml
 generators:
 - ../../base/helm-generator.yaml
-patchesStrategicMerge:
-- deployment-patch.yaml
+# env merge issue, remove patchesStrategicMerge
+# patchesStrategicMerge:
+# - deployment-patch.yaml

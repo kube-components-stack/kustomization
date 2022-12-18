@@ -731,6 +731,8 @@ valuesInline:
         emptyDir: {}
       - name: tmp
         emptyDir: {}
+      - name: cache
+        emptyDir: {}
     # 2. Use an init container to download/copy custom binaries into the emptyDir
     # -- Init containers to add to the repo server pods
     initContainers:  #[]
@@ -767,6 +769,8 @@ valuesInline:
       - mountPath: /usr/local/bin/.kustomize
         name: custom-tools
         subPath: .kustomize
+      - mountPath: /home/argocd/.cache/helm
+        name: cache
     # see: https://github.com/argoproj/argo-cd/blob/master/common/common.go
     env:
       # https://github.com/argoproj/argo-cd/issues/2553
@@ -794,6 +798,8 @@ valuesInline:
       # environment variable that enables collecting RPC performance metrics. Enable it if you need to troubleshoot performance issue. Note: metric is expensive to both query and store!
       - name: ARGOCD_ENABLE_GRPC_TIME_HISTOGRAM
         value: "true"
+      - name: HELM_CACHE_HOME
+        value: /home/argocd/.cache/helm
     extraArgs:
     - --parallelismlimit 5 #70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
     # - --tlsmaxversion 1.2
