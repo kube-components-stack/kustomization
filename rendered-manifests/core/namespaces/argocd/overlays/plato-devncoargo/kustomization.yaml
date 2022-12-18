@@ -9,3 +9,13 @@ generators:
 # env merge issue, remove patchesStrategicMerge
 # patchesStrategicMerge:
 # - deployment-patch.yaml
+patches:
+  - target:
+      kind: Deployment
+      name: argocd-repo-server
+    patch: |-
+      - op: add
+        path: "/spec/template/spec/containers/0/env/-"
+        value:
+          name: HELM_CACHE_HOME
+          value: /home/argocd/.cache/helm

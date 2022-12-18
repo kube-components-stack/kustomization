@@ -798,8 +798,8 @@ valuesInline:
       # environment variable that enables collecting RPC performance metrics. Enable it if you need to troubleshoot performance issue. Note: metric is expensive to both query and store!
       - name: ARGOCD_ENABLE_GRPC_TIME_HISTOGRAM
         value: "true"
-      - name: HELM_CACHE_HOME
-        value: /home/argocd/.cache/helm
+      # - name: HELM_CACHE_HOME
+      #   value: /home/argocd/.cache/helm
     extraArgs:
     - --parallelismlimit 5 #70 #Limit on number of concurrent manifests generate requests. Any value less the 1 means no limit.
     # - --tlsmaxversion 1.2
