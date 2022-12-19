@@ -92,6 +92,7 @@ spec:
         - |
           /bin/bash <<'EOF'
             set -euo pipefail
+            set -x
 
             namespace=monitoring
 
