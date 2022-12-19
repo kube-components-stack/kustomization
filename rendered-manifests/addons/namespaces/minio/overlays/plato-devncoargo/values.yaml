@@ -61,3 +61,4 @@ persistence:
   accessMode: ReadWriteOnce
   enabled: true
   size: 2048Mi #10Gi
+  storageClass: gp2-with-volume-expansion
