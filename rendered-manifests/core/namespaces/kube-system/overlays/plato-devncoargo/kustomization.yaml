@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: kube-system
 bases:
 - ../../base
+- ../../base/storage-classe-ebs.yaml
 generators:
 - ../../base/helm-generator.yaml
 - ../../base/helm-generator-metrics-server.yaml
