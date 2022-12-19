@@ -13,13 +13,13 @@ alertmanager:
       hosts:
       - alertmanager.admin.plato-devncoargo.dev-sbr.com
 grafana:
-  ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
-  ##
-  forceDeployDatasources: false
+  # ## ForceDeployDatasources Create datasource configmap even if grafana deployment has been disabled
+  # ##
+  # forceDeployDatasources: false
 
-  ## ForceDeployDashboard Create dashboard configmap even if grafana deployment has been disabled
-  ##
-  forceDeployDashboards: false
+  # ## ForceDeployDashboard Create dashboard configmap even if grafana deployment has been disabled
+  # ##
+  # forceDeployDashboards: false
 
   ## Deploy default dashboards
   ##
@@ -32,65 +32,65 @@ grafana:
 
   sidecar:
     dashboards:
-      enabled: true
-      # Additional environment variables for the dashboards sidecar
-      env: {}
-      # Do not reprocess already processed unchanged resources on k8s API reconnect.
-      # ignoreAlreadyProcessed: true
-      SCProvider: true
-      # label that the configmaps with dashboards are marked with
-      label: grafana_dashboard
-      # value of label that the configmaps with dashboards are set to
-      labelValue: "1"
+      # enabled: true
+      # # Additional environment variables for the dashboards sidecar
+      # env: {}
+      # # Do not reprocess already processed unchanged resources on k8s API reconnect.
+      # # ignoreAlreadyProcessed: true
+      # SCProvider: true
+      # # label that the configmaps with dashboards are marked with
+      # label: grafana_dashboard
+      # # value of label that the configmaps with dashboards are set to
+      # labelValue: "1"
       # Log level. Can be one of: DEBUG, INFO, WARN, ERROR, CRITICAL.
       logLevel: DEBUG
-      # folder in the pod that should hold the collected dashboards (unless `defaultFolderName` is set)
-      folder: /tmp/dashboards
-      # The default folder name, it will create a subfolder under the `folder` and put dashboards in there instead
-      defaultFolderName: null
-      # Namespaces list. If specified, the sidecar will search for config-maps/secrets inside these namespaces.
-      # Otherwise the namespace in which the sidecar is running will be used.
-      # It's also possible to specify ALL to search in all namespaces.
-      searchNamespace: null
-      # Method to use to detect ConfigMap changes. With WATCH the sidecar will do a WATCH requests, with SLEEP it will list all ConfigMaps, then sleep for 60 seconds.
-      watchMethod: WATCH
-      # search in configmap, secret or both
-      resource: both
-      # If specified, the sidecar will look for annotation with this name to create folder and put graph here.
-      # You can use this parameter together with `provider.foldersFromFilesStructure`to annotate configmaps and create folder structure.
-      folderAnnotation: null
-      # Absolute path to shell script to execute after a configmap got reloaded
-      script: null
-      # watchServerTimeout: request to the server, asking it to cleanly close the connection after that.
-      # defaults to 60sec; much higher values like 3600 seconds (1h) are feasible for non-Azure K8S
-      # watchServerTimeout: 3600
-      #
-      # watchClientTimeout: is a client-side timeout, configuring your local socket.
-      # If you have a network outage dropping all packets with no RST/FIN,
-      # this is how long your client waits before realizing & dropping the connection.
-      # defaults to 66sec (sic!)
-      # watchClientTimeout: 60
-      #
+      # # folder in the pod that should hold the collected dashboards (unless `defaultFolderName` is set)
+      # folder: /tmp/dashboards
+      # # The default folder name, it will create a subfolder under the `folder` and put dashboards in there instead
+      # defaultFolderName: null
+      # # Namespaces list. If specified, the sidecar will search for config-maps/secrets inside these namespaces.
+      # # Otherwise the namespace in which the sidecar is running will be used.
+      # # It's also possible to specify ALL to search in all namespaces.
+      # searchNamespace: null
+      # # Method to use to detect ConfigMap changes. With WATCH the sidecar will do a WATCH requests, with SLEEP it will list all ConfigMaps, then sleep for 60 seconds.
+      # watchMethod: WATCH
+      # # search in configmap, secret or both
+      # resource: both
+      # # If specified, the sidecar will look for annotation with this name to create folder and put graph here.
+      # # You can use this parameter together with `provider.foldersFromFilesStructure`to annotate configmaps and create folder structure.
+      # folderAnnotation: null
+      # # Absolute path to shell script to execute after a configmap got reloaded
+      # script: null
+      # # watchServerTimeout: request to the server, asking it to cleanly close the connection after that.
+      # # defaults to 60sec; much higher values like 3600 seconds (1h) are feasible for non-Azure K8S
+      # # watchServerTimeout: 3600
+      # #
+      # # watchClientTimeout: is a client-side timeout, configuring your local socket.
+      # # If you have a network outage dropping all packets with no RST/FIN,
+      # # this is how long your client waits before realizing & dropping the connection.
+      # # defaults to 66sec (sic!)
+      # # watchClientTimeout: 60
+      # #
       # provider configuration that lets grafana manage the dashboards
       provider:
-        # name of the provider, should be unique
-        name: sidecarProvider
-        # orgid as configured in grafana
-        orgid: 1
-        # folder in which the dashboards should be imported in grafana
-        folder: '' #/var/lib/grafana/dashboards
-        # type of the provider
-        type: file
-        # disableDelete to activate a import-only behaviour
-        disableDelete: false
+        # # name of the provider, should be unique
+        # name: sidecarProvider
+        # # orgid as configured in grafana
+        # orgid: 1
+        # # folder in which the dashboards should be imported in grafana
+        # folder: '' #/var/lib/grafana/dashboards
+        # # type of the provider
+        # type: file
+        # # disableDelete to activate a import-only behaviour
+        # disableDelete: false
         # allow updating provisioned dashboards from the UI
         allowUiUpdates: true
-        # allow Grafana to replicate dashboard structure from filesystem
-        foldersFromFilesStructure: false
-      # Additional dashboard sidecar volume mounts
-      extraMounts: []
-      # Sets the size limit of the dashboard sidecar emptyDir volume
-      sizeLimit: {}
+        # # allow Grafana to replicate dashboard structure from filesystem
+        # foldersFromFilesStructure: false
+      # # Additional dashboard sidecar volume mounts
+      # extraMounts: []
+      # # Sets the size limit of the dashboard sidecar emptyDir volume
+      # sizeLimit: {}
 
   # https://grafana.com/docs/grafana/latest/administration/configuration/
   grafana.ini:
