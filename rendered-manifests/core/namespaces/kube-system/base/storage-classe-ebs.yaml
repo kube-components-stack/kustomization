@@ -1,11 +1,12 @@
+# https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/helm-chart-aws-ebs-csi-driver-2.13.0/docs/parameters.md
+allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: ebs
-  annotations:
-    storageclass.kubernetes.io/is-default-class: "true"
-provisioner: kubernetes.io/aws-ebs
+  name: gp2-with-volume-expansion
 parameters:
   type: gp2
   fsType: ext4
-volumeBindingMode: Immediate
+provisioner: kubernetes.io/aws-ebs
+reclaimPolicy: Delete # Retain
+volumeBindingMode: WaitForFirstConsumer # Immediate
