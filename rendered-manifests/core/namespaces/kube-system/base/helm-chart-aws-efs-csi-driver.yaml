@@ -1,0 +1,14 @@
+# values                                                                https://github.com/kubernetes-sigs/aws-efs-csi-driver/blob/helm-chart-aws-efs-csi-driver-2.3.5/charts/aws-efs-csi-driver/values.yaml
+apiVersion: builtin
+kind: HelmChartInflationGenerator
+metadata:
+  name: helm-chart-aws-efs-csi-driver
+name: &name aws-efs-csi-driver
+version: 2.3.5
+repo: https://kubernetes-sigs.github.io/aws-efs-csi-driver/
+releaseName: *name
+namespace: kube-system
+includeCRDs: false
+valuesFile: values-aws-efs-csi-driver.yaml
+valuesMerge: override                 # merge, override or replace
+valuesInline: {}
