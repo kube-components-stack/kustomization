@@ -7,5 +7,5 @@ bases:
 generators:
 - ../../base/helm-generator.yaml
 - ../../base/helm-generator-metrics-server.yaml
-- ../../base/helm-chart-aws-ebs-csi-driver.yaml
+# - ../../base/helm-chart-aws-ebs-csi-driver.yaml
 # - ../../base/helm-chart-aws-efs-csi-driver.yaml
