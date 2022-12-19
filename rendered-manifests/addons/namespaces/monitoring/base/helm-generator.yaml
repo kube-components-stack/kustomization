@@ -31,7 +31,6 @@ valuesMerge: merge                 # merge, override or replace
 valuesInline:
   fullnameOverride: kube-prometheus-stack
   grafana:
-    # defaultDashboardsEnabled: false
     additionalDataSources:
     - name: Loki
       access: proxy
@@ -43,6 +42,25 @@ valuesInline:
     plugins:
     - grafana-piechart-panel
     - grafana-worldmap-panel
+
+    ## Deploy default dashboards
+    ##
+    defaultDashboardsEnabled: false
+
+    ## Timezone for the default dashboards
+    ## Other options are: browser or a specific timezone, i.e. Europe/Luxembourg
+    ##
+    defaultDashboardsTimezone: Europe/Paris
+
+    sidecar:
+      dashboards:
+        # Log level. Can be one of: DEBUG, INFO, WARN, ERROR, CRITICAL.
+        logLevel: DEBUG
+        # provider configuration that lets grafana manage the dashboards
+        provider:
+          # allow updating provisioned dashboards from the UI
+          allowUiUpdates: true
+
   prometheus: {}
     # prometheusOperator:
     #   resources:
