@@ -106,9 +106,9 @@ spec:
             kubectl -n $namespace rollout status deploy/$object
 
             key=grafana-api-key-argocd-notifications
-            id=$(curl -u ${GRAFANA_ADMIN_USER}:${GRAFANA_ADMIN_PASSWORD} -X GET -H "Content-Type: application/json" http://kube-prometheus-stack-grafana.monitoring.svc/api/auth/keys | jq --arg key $key '.[] | select(.name == $key) | .id')
+            id=$(curl -u ${GRAFANA_ADMIN_USER}:${GRAFANA_ADMIN_PASSWORD} -X GET -H "Content-Type: application/json" http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local/api/auth/keys | jq --arg key $key '.[] | select(.name == $key) | .id')
             if [[ -z "$id" ]]; then
-              value=$(curl -u ${GRAFANA_ADMIN_USER}:${GRAFANA_ADMIN_PASSWORD} -X POST -H "Content-Type: application/json" -d '{"name":"'$key'", "role": "Editor"}' http://kube-prometheus-stack-grafana.monitoring.svc/api/auth/keys | jq -r '.key')
+              value=$(curl -u ${GRAFANA_ADMIN_USER}:${GRAFANA_ADMIN_PASSWORD} -X POST -H "Content-Type: application/json" -d '{"name":"'$key'", "role": "Editor"}' http://kube-prometheus-stack-grafana.monitoring.svc.cluster.local/api/auth/keys | jq -r '.key')
               namespace=argocd
               object=argocd-notifications-secret
               cmd="kubectl -n $namespace get secret -o=jsonpath='{.items[?(@.metadata.name==\"'$object'\")].metadata.name}'"
