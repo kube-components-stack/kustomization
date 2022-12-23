@@ -13,6 +13,15 @@ namespace: argocd
 includeCRDs: false
 valuesFile: values.yaml
 valuesMerge: override                 # merge, override or replace
+
+## Render deployments
+# overlay=plato-devncoargo; kind=Deployment;  name=argocd-applicationset-controller;  kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/core/namespaces/argocd/overlays/$overlay |yq -ojson|jq -s|jq --arg name $name --arg kind $kind '.[]|select(.kind == $kind)|select(.metadata.name == $name)'|jq -s|yq e -P
+# overlay=plato-devncoargo; kind=StatefulSet; name=argocd-application-controller;     kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/core/namespaces/argocd/overlays/$overlay |yq -ojson|jq -s|jq --arg name $name --arg kind $kind '.[]|select(.kind == $kind)|select(.metadata.name == $name)'|jq -s|yq e -P
+# overlay=plato-devncoargo; kind=Deployment;  name=argocd-dex-server;                 kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/core/namespaces/argocd/overlays/$overlay |yq -ojson|jq -s|jq --arg name $name --arg kind $kind '.[]|select(.kind == $kind)|select(.metadata.name == $name)'|jq -s|yq e -P
+# overlay=plato-devncoargo; kind=Deployment;  name=argocd-notifications;              kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/core/namespaces/argocd/overlays/$overlay |yq -ojson|jq -s|jq --arg name $name --arg kind $kind '.[]|select(.kind == $kind)|select(.metadata.name == $name)'|jq -s|yq e -P
+# overlay=plato-devncoargo; kind=Deployment;  name=argocd-redis;                      kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/core/namespaces/argocd/overlays/$overlay |yq -ojson|jq -s|jq --arg name $name --arg kind $kind '.[]|select(.kind == $kind)|select(.metadata.name == $name)'|jq -s|yq e -P
+# overlay=plato-devncoargo; kind=Deployment;  name=argocd-repo-server;                kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/core/namespaces/argocd/overlays/$overlay |yq -ojson|jq -s|jq --arg name $name --arg kind $kind '.[]|select(.kind == $kind)|select(.metadata.name == $name)'|jq -s|yq e -P
+# overlay=plato-devncoargo; kind=Deployment;  name=argocd-server;                     kustomize build --enable-alpha-plugins --enable-helm --load-restrictor LoadRestrictionsNone rendered-manifests/core/namespaces/argocd/overlays/$overlay |yq -ojson|jq -s|jq --arg name $name --arg kind $kind '.[]|select(.kind == $kind)|select(.metadata.name == $name)'|jq -s|yq e -P
 valuesInline:
   ## Argo Configs
   configs:
@@ -23,6 +32,10 @@ valuesInline:
       server.enable.gzip: true
       # Paths to be excluded from the tarball streamed to plugins. Separate with ;
       reposerver.plugin.tar.exclusions: ".git/*"
+      # Disable git submodule support
+      reposerver.enable.git.submodule: "false"
+      # Disable git submodule support
+      applicationsetcontroller.enable.git.submodule: "false"
   crds:
     install: false
   fullnameOverride: argocd
@@ -68,6 +81,13 @@ valuesInline:
         enabled: true
         additionalLabels:
           release: kube-prometheus-stack
+    extraEnv:
+      - name: ARGOCD_GIT_MODULES_ENABLED
+        valueFrom:
+          configMapKeyRef:
+            key: applicationsetcontroller.enable.git.submodule
+            name: argocd-cmd-params-cm
+            optional: true
   controller:
     # -- Application controller log format. Either `text` or `json`
     # @default -- `""` (defaults to global.logging.format)
@@ -791,9 +811,6 @@ valuesInline:
 
       # - name: ARGOCD_GIT_RETRY_FACTOR
       #   value: "2" # Default: 2 - Specifies fator of git remote operation retry
-
-      - name: ARGOCD_GIT_MODULES_ENABLED
-        value: "false" # Overrides git submodule support, true by default
 
       - name: KUSTOMIZE_PLUGIN_HOME
         value: /usr/local/bin/.kustomize/plugins
