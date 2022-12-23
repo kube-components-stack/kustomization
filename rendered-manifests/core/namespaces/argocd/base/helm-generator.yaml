@@ -88,6 +88,8 @@ valuesInline:
       # environment variable that enables collecting RPC performance metrics. Enable it if you need to troubleshoot performance issue. Note: metric is expensive to both query and store!
       - name: ARGOCD_ENABLE_GRPC_TIME_HISTOGRAM
         value: "true"
+      - name: ARGOCD_GIT_MODULES_ENABLED
+        value: "false" # Overrides git submodule support, true by default
     # -- Additional volumeMounts to the application controller main container
     volumeMounts:
       - name: tmp
