@@ -792,8 +792,8 @@ valuesInline:
       # - name: ARGOCD_GIT_RETRY_FACTOR
       #   value: "2" # Default: 2 - Specifies fator of git remote operation retry
 
-      # - name: ARGOCD_GIT_MODULES_ENABLED
-      #   value: "false" # Overrides git submodule support, true by default
+      - name: ARGOCD_GIT_MODULES_ENABLED
+        value: "false" # Overrides git submodule support, true by default
 
       - name: KUSTOMIZE_PLUGIN_HOME
         value: /usr/local/bin/.kustomize/plugins
