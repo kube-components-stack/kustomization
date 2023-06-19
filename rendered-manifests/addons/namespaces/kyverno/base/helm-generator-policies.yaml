@@ -8,7 +8,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: kyverno-policies-helm-chart
 name: &name kyverno-policies
-version: v2.5.1
+version: 2.7.5
 repo: https://kyverno.github.io/kyverno
 releaseName: *name
 namespace: kube-system
