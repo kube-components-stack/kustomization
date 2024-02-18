@@ -99,7 +99,7 @@ spec:
                     done
                   fi
                 EOF
-              image: docker.io/alpine/k8s:1.25.4
+              image: docker.io/alpine/k8s:1.29.2
               imagePullPolicy: IfNotPresent
               securityContext:
                 runAsNonRoot: false
