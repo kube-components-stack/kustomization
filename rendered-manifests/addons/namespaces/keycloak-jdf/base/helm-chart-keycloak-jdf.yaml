@@ -3,7 +3,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: helm-chart-keycloak-jdf
 name: &name keycloak
-version: 12.2.0
+version: 18.7.1
 repo: https://charts.bitnami.com/bitnami
 # version: 18.3.0
 # repo: https://codecentric.github.io/helm-charts
