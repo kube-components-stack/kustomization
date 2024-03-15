@@ -5,7 +5,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: helm-chart-external-dns
 name: &name external-dns
-version: 6.12.1
+version: 6.38.0
 repo: https://charts.bitnami.com/bitnami
 releaseName: *name
 namespace: external-dns
