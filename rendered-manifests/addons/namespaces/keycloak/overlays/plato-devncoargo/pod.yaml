@@ -90,7 +90,7 @@ spec:
       - name: LOGGING_LEVEL_ROOT
         value: debug
     # docker run quay.io/skopeo/stable:latest list-tags docker://docker.io/bitnami/keycloak-config-cli  | yq e -P
-    image: docker.io/bitnami/keycloak-config-cli:5.5.0-debian-11-r4
+    image: docker.io/bitnami/keycloak-config-cli:5.12.0-debian-12-r6
     # image: docker.io/bitnami/keycloak-config-cli:5.5.0-debian-11-r8
     imagePullPolicy: IfNotPresent
     resources:
