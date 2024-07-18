@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 # resources:
 # # file sealedsecret-crd.yaml has renamed bitnami.com_sealedsecrets.yaml
-# - https://raw.githubusercontent.com/bitnami-labs/sealed-secrets/helm-v2.7.2/helm/sealed-secrets/crds/bitnami.com_sealedsecrets.yaml
+# - https://raw.githubusercontent.com/bitnami-labs/sealed-secrets/helm-v2.16.1/helm/sealed-secrets/crds/bitnami.com_sealedsecrets.yaml
 
 # use chart generator + filter resources CustomResourceDefinition
 generators:
