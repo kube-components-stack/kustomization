@@ -764,7 +764,7 @@ valuesInline:
       # ('/home/me/.config/kustomize/plugin'; homed in default value of $XDG_CONFIG_HOME),
       # ('/home/me/kustomize/plugin'; homed in home directory)
       - name: download-tools
-        image: docker.io/library/alpine:3.9.6 # docker run quay.io/skopeo/stable:latest list-tags docker://docker.io/library/alpine  | yq e -P
+        image: docker.io/library/alpine:3.20.3 # docker run quay.io/skopeo/stable:latest list-tags docker://docker.io/library/alpine  | yq e -P
         command: [sh, -c]
         args:
           - set  -x && 
