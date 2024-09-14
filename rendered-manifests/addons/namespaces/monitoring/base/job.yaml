@@ -131,7 +131,7 @@ spec:
               secretKeyRef:
                 key: admin-password
                 name: grafana-secret
-        image: "docker.io/alpine/k8s:1.26.0"
+        image: "docker.io/alpine/k8s:1.31.1"
         imagePullPolicy: Always
         name: kubectl
         securityContext:
