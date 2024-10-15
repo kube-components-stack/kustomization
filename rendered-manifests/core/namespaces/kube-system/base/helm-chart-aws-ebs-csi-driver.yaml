@@ -4,7 +4,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: helm-chart-aws-ebs-csi-driver
 name: &name aws-ebs-csi-driver
-version: 2.13.0
+version: 2.36.0
 repo: https://kubernetes-sigs.github.io/aws-ebs-csi-driver/
 releaseName: *name
 namespace: kube-system
