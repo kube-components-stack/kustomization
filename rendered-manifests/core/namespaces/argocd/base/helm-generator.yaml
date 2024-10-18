@@ -6,7 +6,7 @@ kind: HelmChartInflationGenerator
 metadata:
   name: argo-cd-helm-chart
 name: &name argo-cd
-version: 5.16.4 # 4.10.0
+version: 7.6.12 # 4.10.0
 repo: https://argoproj.github.io/argo-helm
 releaseName: *name
 namespace: argocd
